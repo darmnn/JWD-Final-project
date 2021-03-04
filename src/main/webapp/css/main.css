@@ -1,0 +1,50 @@
+
+.header {
+    align-items: rigth;
+    height:100%;
+    display: flex;
+    flex-direction: row-reverse;
+    width:100%
+}
+div {
+    color: #007BFF
+}
+
+.navbar {
+    height: 8vh;
+    background-color: #e3f2fd;
+}
+
+.name-main {
+    font-size: 2rem;
+    text-align: center;
+    padding-top: 2%;
+}
+
+.all_photos{
+    margin-top: 3%;
+    width: 70%;
+}
+
+.image{
+    height: 100%;
+    width: 100%;
+}
+
+.sign-in {
+    text-align: center;
+    margin-right: 13px;
+    width: 120px;
+}
+
+.sign-up {
+    text-align: center;
+    margin-right: 13px;
+    width: 120px;
+    background-color: white;
+    color: #007BFF;
+}
+
+.button-cont{
+    width: 100%;
+}

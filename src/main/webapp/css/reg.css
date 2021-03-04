@@ -1,0 +1,65 @@
+.form-control {
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.container {
+    overflow: hidden;
+    flex-direction: column;
+    width:30%;
+
+}
+
+.button-box {
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-in {
+    margin:1%;
+}
+
+.navbar {
+    height: 8vh;
+    background-color: #e3f2fd;
+}
+
+.name {
+    font-size: 1rem;
+    margin-left: 20px;
+    width:100%;
+}
+
+.sign-up {
+    overflow: hidden;
+    align-content: center;
+    text-align: center;
+    margin-right: 2%;
+    padding-bottom: 5%;
+    align-self: flex-end;
+}
+
+.header {
+    align-items:center;
+    height:100%;
+    display: flex;
+    flex-direction: row;
+    width:100%
+}
+div {
+    color: #007BFF
+}
