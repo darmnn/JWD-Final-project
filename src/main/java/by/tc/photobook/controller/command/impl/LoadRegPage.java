@@ -11,9 +11,11 @@ import by.tc.photobook.controller.command.Command;
 
 public class LoadRegPage implements Command 
 {
+	private static final String REG_PAGE_PATH = "/WEB-INF/jsp/registration.jsp";
+	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(REG_PAGE_PATH);
         requestDispatcher.forward(request, response);
     }
 }

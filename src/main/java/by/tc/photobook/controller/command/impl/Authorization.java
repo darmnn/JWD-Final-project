@@ -13,10 +13,15 @@ import by.tc.photobook.service.UserService;
 
 public class Authorization implements Command
 {
+	private static final String USERNAME_PARAM = "username";
+	private static final String PASSWORD_PARAM = "password";
+	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage";
+	
+	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = request.getParameter(USERNAME_PARAM);
+        String password = request.getParameter(PASSWORD_PARAM);
         
         UserInfo userInfo = new UserInfo(username, password);
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
@@ -24,7 +29,7 @@ public class Authorization implements Command
         
         if(userService.authorization(userInfo))
         {
-        	response.sendRedirect("Controller?command=loadmainpage&message=success");
+        	response.sendRedirect(LOAD_MAIN_PAGE);
         }
     }
 }

@@ -13,6 +13,8 @@ import java.io.IOException;
 public class Controller extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
+    
+    private static final String COMMAND_PARAM = "command";
 
     private final CommandProvider provider = new CommandProvider();
 
@@ -34,7 +36,7 @@ public class Controller extends HttpServlet
         String name;
         Command command;
 
-        name = request.getParameter("command");
+        name = request.getParameter(COMMAND_PARAM);
         command = provider.takeCommand(name);
 
         command.execute(request, response);

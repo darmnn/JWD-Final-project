@@ -11,9 +11,11 @@ import java.io.IOException;
 
 public class LoadMainPage implements Command
 {
+	private static final String MAIN_PAGE_PATH = "/WEB-INF/jsp/main_page.jsp";
+	
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main_page.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(MAIN_PAGE_PATH);
         requestDispatcher.forward(request, response);
     }
 }

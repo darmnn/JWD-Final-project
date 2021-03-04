@@ -13,6 +13,9 @@ import by.tc.photobook.dao.UserDAO;
 
 public class SQLUserDAO implements UserDAO
 {
+	private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/photobook_db";
+	private static final String DB_LOGIN = "root";
+	private static final String DB_PASSWORD = "root";
 	private static final String ADD_NEW_USER = "INSERT INTO users (username, password, email, role) "
 					+ "VALUES (?, ?, ?, ?)";
 	private static final String FIND_USER = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -32,7 +35,7 @@ public class SQLUserDAO implements UserDAO
 		
 		try
 		{
-			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/photobook_db", "root", "root");
+			connection = DriverManager.getConnection(DB_URL, DB_LOGIN, DB_PASSWORD);
 			
 			preparedStatement = connection.prepareStatement(ADD_NEW_USER);
 			
@@ -91,7 +94,7 @@ public class SQLUserDAO implements UserDAO
 		
 		try
 		{
-			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/photobook_db", "root", "root");
+			connection = DriverManager.getConnection(DB_URL, DB_LOGIN, DB_PASSWORD);
 			
 			preparedStatement = connection.prepareStatement(FIND_USER);
 			
