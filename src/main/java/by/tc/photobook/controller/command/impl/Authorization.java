@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import by.tc.photobook.bean.UserInfo;
 import by.tc.photobook.controller.command.Command;
@@ -16,6 +17,7 @@ public class Authorization implements Command
 	private static final String USERNAME_PARAM = "username";
 	private static final String PASSWORD_PARAM = "password";
 	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage";
+	private static final String AUTH_ATTRIBUTE = "auth";
 	
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -27,8 +29,11 @@ public class Authorization implements Command
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         UserService userService = serviceProvider.getUserService();
         
-        if(userService.authorization(userInfo))
+        if(userService.authorization(userInfo) != null)
         {
+        	HttpSession session = request.getSession(true);
+        	session.setAttribute(AUTH_ATTRIBUTE, true);
+        	
         	response.sendRedirect(LOAD_MAIN_PAGE);
         }
     }

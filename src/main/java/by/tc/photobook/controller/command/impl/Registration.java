@@ -28,7 +28,7 @@ public class Registration implements Command
         String checkValue = request.getParameter(CHECKBOX_PARAM);
         boolean isPhotographer = false;
         
-        if(checkValue.equals(CHECKBOX_ON)) 
+        if(checkValue != null && checkValue.equals(CHECKBOX_ON)) 
         {
         	isPhotographer = true;
         }

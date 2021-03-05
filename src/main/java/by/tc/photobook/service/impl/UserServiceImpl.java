@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService
 	}
 	
 	@Override
-	public boolean authorization(UserInfo userInfo)
+	public UserInfo authorization(UserInfo userInfo)
 	{
 		DAOProvider daoProvider = DAOProvider.getInstance();
 		UserDAO userDAO = daoProvider.getUserdao();
