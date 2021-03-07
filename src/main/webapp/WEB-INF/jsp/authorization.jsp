@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Photobook</title>
@@ -10,10 +11,16 @@
 
             <nav class="navbar navbar-light">
                 <div  class="header">
-                    <label class = "name">PhotoBook</label>
-                    <button class="btn btn-outline-primary sign-up">Sign Up</button>
+                	<form action="Controller">
+                	<button type="submit" name="command" value="loadmainpage" class = "name">PhotoBook</button>
+                	</form>
                 </div>
             </nav>
+            
+            <div>
+            	<c:out value = "${message }"/>
+            </div>
+            
             <form id="form" action="Controller" method="get">
                 <p class="display-4">Sign in to Photobook</p>
                 <div class="container p-4 my-3 border">

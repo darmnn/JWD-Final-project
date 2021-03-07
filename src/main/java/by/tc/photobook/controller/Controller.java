@@ -40,5 +40,6 @@ public class Controller extends HttpServlet
         command = provider.takeCommand(name);
 
         command.execute(request, response);
+        
     }
 }

@@ -1,5 +1,6 @@
 package by.tc.photobook.service;
 
+import by.tc.photobook.service.impl.PhotosServiceImpl;
 import by.tc.photobook.service.impl.UserServiceImpl;
 
 public class ServiceProvider 
@@ -9,12 +10,20 @@ public class ServiceProvider
 	private ServiceProvider() {}
 	
 	private final UserService userService = new UserServiceImpl();
+	private final PhotosService photosService = new PhotosServiceImpl();
 	
-	public static ServiceProvider getInstance() {
+	public static ServiceProvider getInstance() 
+	{
 		return instance;
 	}
 
-	public UserService getUserService() {
+	public UserService getUserService() 
+	{
 		return userService;
+	}
+	
+	public PhotosService getPhotosService()
+	{
+		return photosService;
 	}
 }

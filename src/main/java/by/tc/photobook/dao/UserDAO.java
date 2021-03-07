@@ -4,6 +4,6 @@ import by.tc.photobook.bean.UserInfo;
 
 public interface UserDAO 
 {
-	public boolean registration(UserInfo userInfo);
-	public UserInfo authorization(UserInfo userInfo);
+	public boolean registration(UserInfo userInfo) throws DAOException;
+	public UserInfo authorization(UserInfo userInfo) throws DAOException;
 }

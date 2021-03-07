@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import by.tc.photobook.dao.DAOException;
+
 public final class ConnectionPool 
 {
 	private String driver;
@@ -17,9 +19,21 @@ public final class ConnectionPool
 	private BlockingQueue<Connection> connectionQueue;
 	private BlockingQueue<Connection> usedConnections;
 	
-	private static final ConnectionPool instance = new ConnectionPool();
+	private static ConnectionPool instance = null;
 	
-	private ConnectionPool()
+	static
+	{
+		try
+		{
+			instance = new ConnectionPool();
+		}
+		catch(DAOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private ConnectionPool() throws DAOException
 	{
 		DBResourceManager dbResourceManager = DBResourceManager.getInstance();
 		this.driver = dbResourceManager.getValue(DBParameter.DB_DRIVER);
@@ -27,9 +41,11 @@ public final class ConnectionPool
 		this.user = dbResourceManager.getValue(DBParameter.DB_USER);
 		this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
 		this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
+		
+		init();
 	}
 	
-	private void init()
+	private void init() throws DAOException
 	{
 		try
 		{
@@ -45,25 +61,27 @@ public final class ConnectionPool
 		}
 		catch(ClassNotFoundException | SQLException e)
 		{
-			e.printStackTrace();
+			throw new DAOException("Connection error: " + e.getMessage());
 		}
 	}
 	
 	public static ConnectionPool getInstance()
 	{
-		instance.init();
 		return instance;
 	}
 	
-	public Connection getConnection()
+	public Connection getConnection() throws DAOException
 	{
 		Connection connection = null;
 		
-		try {
+		try 
+		{
             connection = connectionQueue.take();
             usedConnections.add(connection);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } 
+		catch (InterruptedException e) 
+		{
+			throw new DAOException("Connection error: " + e.getMessage());
         }
         return connection;
 	}
@@ -77,20 +95,5 @@ public final class ConnectionPool
 		}
 		
 		return false;
-	}
-	
-	public void closeAllConnections() throws SQLException
-	{
-		Connection connection;
-		
-		while((connection = connectionQueue.poll()) != null)
-		{
-			connection.close();
-		}
-		
-		while((connection = usedConnections.poll()) != null)
-		{
-			connection.close();
-		}
 	}
 }

@@ -2,12 +2,14 @@ package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.tc.photobook.bean.UserInfo;
 import by.tc.photobook.controller.command.Command;
+import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 import by.tc.photobook.service.UserService;
 
@@ -19,6 +21,7 @@ public class Registration implements Command
 	private static final String CHECKBOX_PARAM = "checkbox";
 	private static final String CHECKBOX_ON = "on";
 	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage";
+	private static final String REG_PAGE_PATH = "/WEB-INF/jsp/registration.jsp";
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
@@ -37,9 +40,18 @@ public class Registration implements Command
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         UserService userService = serviceProvider.getUserService();
         
-        if(userService.registration(userInfo))
+        try
         {
-        	response.sendRedirect(LOAD_MAIN_PAGE);
+        	if(userService.registration(userInfo))
+        	{
+        		response.sendRedirect(LOAD_MAIN_PAGE);
+        	}
+        }
+        catch(ServiceException e)
+        {
+        	request.setAttribute("message", e.getMessage());
+        	RequestDispatcher requestDispatcher = request.getRequestDispatcher(REG_PAGE_PATH);
+            requestDispatcher.forward(request, response);
         }
     }
 }

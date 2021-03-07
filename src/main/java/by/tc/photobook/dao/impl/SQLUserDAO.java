@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import by.tc.photobook.bean.ClientInfo;
 import by.tc.photobook.bean.PhotographerInfo;
 import by.tc.photobook.bean.UserInfo;
+import by.tc.photobook.dao.DAOException;
 import by.tc.photobook.dao.UserDAO;
 import by.tc.photobook.dao.connection.ConnectionPool;
 
@@ -23,7 +24,7 @@ public class SQLUserDAO implements UserDAO
 	private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 	
 	@Override
-	public boolean registration(UserInfo userInfo)
+	public boolean registration(UserInfo userInfo) throws DAOException
 	{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -45,21 +46,31 @@ public class SQLUserDAO implements UserDAO
 			{
 				preparedStatement.setInt(4, role_client);
 			}
-			preparedStatement.executeUpdate();
+			
+			try
+			{
+				preparedStatement.executeUpdate();
+			}
+			catch(SQLException ex)
+			{
+				throw new DAOException("User with this username already existst!");
+			}
 			
 		}
 		catch(SQLException e)
 		{
-			System.out.print("connection error!!!!!!!" + e);
+			throw new DAOException("Connection error: " + e.getMessage());
 		}
 		finally
 		{
 			if(preparedStatement != null)
 			{
-				try {
+				try 
+				{
 					preparedStatement.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+				}
+				catch (SQLException e) 
+				{
 					e.printStackTrace();
 				}
 			}
@@ -82,7 +93,7 @@ public class SQLUserDAO implements UserDAO
 	}
 	
 	@Override
-	public UserInfo authorization(UserInfo userInfo)
+	public UserInfo authorization(UserInfo userInfo) throws DAOException
 	{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -102,9 +113,6 @@ public class SQLUserDAO implements UserDAO
 			
 			while(resultSet.next())
 			{
-				System.out.print(resultSet.getInt(1) + " " + resultSet.getString(2) + " " +
-						resultSet.getString(3) + " " + resultSet.getString(4) + " " + resultSet.getInt(5));
-				
 				int userRole = resultSet.getInt(5);
 				
 				if(userRole == 2)
@@ -122,7 +130,7 @@ public class SQLUserDAO implements UserDAO
 		}
 		catch(SQLException e)
 		{
-			System.out.print("connection error!!!!!!!" + e);
+			throw new DAOException("Connection error: " + e.getMessage());
 		}
 		finally
 		{
@@ -134,7 +142,6 @@ public class SQLUserDAO implements UserDAO
 				} 
 				catch (SQLException e) 
 				{
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -147,7 +154,6 @@ public class SQLUserDAO implements UserDAO
 				} 
 				catch (SQLException e) 
 				{
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
