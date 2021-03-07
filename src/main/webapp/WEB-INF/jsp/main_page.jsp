@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Photobook</title>
@@ -7,15 +8,6 @@
 </head>
 <body>
 <div>
-<%
-		String message = (String) request.getParameter("message");
-	if (message != null) {
-	%>
-	<font color="red"> <%
- 	out.write(message);
- }
- %>
-	</font>
             <nav class="navbar navbar-light">
                 <form class="header" action="Controller" method="get">
                     <div class="btn-group buttons" role="group" aria-label="Basic example">
@@ -26,34 +18,13 @@
             </nav>
             <div class="name-main">PhotoBook</div>
             <div class="container all_photos">
+            <c:forEach var = "photo" items="${photos}">
                 <div class="row">
-                    <div class="col-sm">
-                        <img src={no_image} class="image"/>
-                    </div>
-                    <div class="col-sm">
-                        <img src={no_image} class="image"/>
-                    </div>
-                    <div class="col-sm">
-                        <img src={no_image} class="image"/>
-                    </div>
-                    <div class="col-sm">
-                        <img src={no_image} class="image"/>
+                    <div class="col-sm image">
+                        <img src="${photo.imagePath }" />
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm">
-                        <img src={no_image} class="image"/>
-                    </div>
-                    <div class="col-sm">
-                        <img src={no_image} class="image"/>
-                    </div>
-                    <div class="col-sm">
-                        <img src={no_image} class="image"/>
-                    </div>
-                    <div class="col-sm">
-                        <img src={no_image} class="image"/>
-                    </div>
-                </div>
+                </c:forEach>
             </div>
         </div>
 </body>

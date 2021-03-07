@@ -3,6 +3,7 @@ package by.tc.photobook.service.impl;
 import java.util.List;
 
 import by.tc.photobook.bean.Photo;
+import by.tc.photobook.dao.DAOException;
 import by.tc.photobook.dao.DAOProvider;
 import by.tc.photobook.dao.PhotosDAO;
 import by.tc.photobook.service.PhotosService;
@@ -16,6 +17,20 @@ public class PhotosServiceImpl implements PhotosService
 		DAOProvider daoProvider = DAOProvider.getInstance();
 		PhotosDAO photosDAO = daoProvider.getPhotosDAO();
 		
-		return photosDAO.takeAll();
+		List<Photo> allPhotos = null;
+		try
+		{
+			allPhotos = photosDAO.takeAll();
+			if(allPhotos.isEmpty())
+			{
+				throw new ServiceException("Error while loading photos!");
+			}
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e.getMessage());
+		}
+		
+		return allPhotos;
 	}
 }

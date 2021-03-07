@@ -6,5 +6,5 @@ import by.tc.photobook.bean.Photo;
 
 public interface PhotosDAO 
 {
-	public List<Photo> takeAll();
+	public List<Photo> takeAll() throws DAOException;
 }

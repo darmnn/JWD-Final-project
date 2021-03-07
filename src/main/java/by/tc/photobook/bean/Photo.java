@@ -5,10 +5,10 @@ import java.util.Objects;
 
 public class Photo
 {
-    String photographer;
-    Date date;
-    String imagePath;
-    int rating;
+    private String photographer;
+    private Date date;
+    private String imagePath;
+    private int rating;
 
     public Photo(String photographer, Date date, String imagePath, int rating)
     {
@@ -16,6 +16,11 @@ public class Photo
         this.date = date;
         this.imagePath = imagePath;
         this.rating = rating;
+    }
+    
+    public Photo(String imagePath)
+    {
+    	this.imagePath = imagePath;
     }
 
     public String getPhotographer() {
