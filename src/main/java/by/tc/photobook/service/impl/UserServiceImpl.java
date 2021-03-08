@@ -6,45 +6,75 @@ import by.tc.photobook.dao.DAOProvider;
 import by.tc.photobook.dao.UserDAO;
 import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.UserService;
+import by.tc.photobook.service.validation.UserValidator;
+import by.tc.photobook.service.validation.ValidatorProvider;
 
 public class UserServiceImpl implements UserService
 {
 	@Override
 	public boolean registration(UserInfo userInfo) throws ServiceException
 	{
+		ValidatorProvider validatorProvider = ValidatorProvider.getInstance(); 
+		UserValidator userValidator = validatorProvider.getUserValidator();
+		
 		DAOProvider daoProvider = DAOProvider.getInstance();
 		UserDAO userDAO = daoProvider.getUserdao();
 		
 		try
 		{
-			boolean successfulRegistration = userDAO.registration(userInfo);
-			return successfulRegistration;
+			if(userValidator.checkRegData(userInfo))
+			{
+				try
+				{
+					boolean successfulRegistration = userDAO.registration(userInfo);
+					return successfulRegistration;
+				}
+				catch(DAOException e)
+				{
+					throw new ServiceException("Error while registration: " + e.getMessage());
+				}
+			}
 		}
-		catch(DAOException e)
+		catch(ServiceException e)
 		{
-			throw new ServiceException("Error while registration: " + e.getMessage());
+			throw new ServiceException(e);
 		}
+		
+		return false;
 	}
 	
 	@Override
 	public UserInfo authorization(UserInfo userInfo) throws ServiceException
 	{
+		ValidatorProvider validatorProvider = ValidatorProvider.getInstance(); 
+		UserValidator userValidator = validatorProvider.getUserValidator();
+		
 		DAOProvider daoProvider = DAOProvider.getInstance();
 		UserDAO userDAO = daoProvider.getUserdao();
 		UserInfo authorizedUser = null;
 		
 		try
 		{
-			authorizedUser = userDAO.authorization(userInfo);
+			if(userValidator.checkAuthData(userInfo))
+			{
+				try
+				{
+					authorizedUser = userDAO.authorization(userInfo);
+				}
+				catch(DAOException e)
+				{
+					throw new ServiceException("Error while authorization: " + e.getMessage());
+				}
+				
+				if(authorizedUser == null)
+				{
+					throw new ServiceException("Invalid login or password!");
+				}
+			}
 		}
-		catch(DAOException e)
+		catch(ServiceException e)
 		{
-			throw new ServiceException("Error while authorization: " + e.getMessage());
-		}
-		
-		if(authorizedUser == null)
-		{
-			throw new ServiceException("Invalid login or password!");
+			throw new ServiceException(e);
 		}
 		
 		return authorizedUser;

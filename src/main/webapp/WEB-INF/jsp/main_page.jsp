@@ -7,9 +7,9 @@
     <link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div>
+	<div class="main-container">
             <nav class="navbar navbar-light">
-                <form class="header" action="Controller" method="get">
+                <form class="header" action="Controller" method="post">
                     <div class="btn-group buttons" role="group" aria-label="Basic example">
                     	<button class="btn btn-primary sign-in" type="submit" name = "command" value="loadauthpage">Sign in</button>
                         <button class="btn btn-primary sign-up" type="submit" name = "command" value="loadregpage">Sign up</button>
@@ -17,13 +17,9 @@
                 </form>
             </nav>
             <div class="name-main">PhotoBook</div>
-            <div class="container all_photos">
+            <div class="container all-photos">
             <c:forEach var = "photo" items="${photos}">
-                <div class="row">
-                    <div class="col-sm image">
                         <img src="${photo.imagePath }" />
-                    </div>
-                </div>
                 </c:forEach>
             </div>
         </div>

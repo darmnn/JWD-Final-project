@@ -1,3 +1,7 @@
+.main-container {
+	display: flex;
+	flex-direction: column;
+}
 
 .header {
     align-items: rigth;
@@ -8,6 +12,12 @@
 }
 div {
     color: #007BFF
+}
+
+img
+{
+	width:24%;
+	margin: 0.3%;
 }
 
 .navbar {
@@ -21,30 +31,24 @@ div {
     padding-top: 2%;
 }
 
-.all_photos{
+.all-photos{
     margin-top: 3%;
     width: 70%;
+    height: 90%;
 }
 
-.image{
-    height: 300px;
-    width: 300px;
+.buttons {
+	width: 20%;
 }
 
 .sign-in {
-    text-align: center;
+	line-height: 100%;
     margin-right: 13px;
-    width: 120px;
 }
 
 .sign-up {
-    text-align: center;
+	line-height: 100%;
     margin-right: 13px;
-    width: 120px;
     background-color: white;
     color: #007BFF;
-}
-
-.button-cont{
-    width: 100%;
 }
