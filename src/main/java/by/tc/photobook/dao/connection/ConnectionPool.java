@@ -81,7 +81,7 @@ public final class ConnectionPool
         } 
 		catch (InterruptedException e) 
 		{
-			throw new DAOException("Connection error: " + e.getMessage());
+			throw new DAOException("Taking connection error: " + e.getMessage());
         }
         return connection;
 	}

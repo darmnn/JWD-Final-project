@@ -38,7 +38,7 @@ public class LoadMainPage implements Command
     	{
     		String errorMessage = e.getMessage();
     		request.setAttribute("message", errorMessage);
-    		RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PAGE_PATH);
+    		RequestDispatcher requestDispatcher = request.getRequestDispatcher(MAIN_PAGE_PATH);
             requestDispatcher.forward(request, response);
     	}
     	

@@ -9,18 +9,31 @@
 <body>
 	<div class="main-container">
             <nav class="navbar navbar-light">
-                <form class="header" action="Controller" method="post">
+                <c:choose>
+  				<c:when test="${sessionScope.auth != null}">
+    				<form class="header" action="Controller" method="get">
+                    	<button class="btn btn-primary profile" type="submit" name = "command" value="loadprofilepage">Profile</button>
+                    	<button class="btn btn-primary sign-up" type="submit" name = "command" value="logout">Log out</button>
+                	</form>
+  				</c:when>
+  				<c:otherwise>
+                	<form class="header" action="Controller" method="post">
                     <div class="btn-group buttons" role="group" aria-label="Basic example">
                     	<button class="btn btn-primary sign-in" type="submit" name = "command" value="loadauthpage">Sign in</button>
                         <button class="btn btn-primary sign-up" type="submit" name = "command" value="loadregpage">Sign up</button>
                     </div>
-                </form>
+                	</form>
+ 				 </c:otherwise>
+			</c:choose>
             </nav>
             <div class="name-main">PhotoBook</div>
+            <div>
+            	<c:out value = "${message }"/>
+            </div>
             <div class="container all-photos">
             <c:forEach var = "photo" items="${photos}">
                         <img src="${photo.imagePath }" />
-                </c:forEach>
+             </c:forEach>
             </div>
         </div>
 </body>

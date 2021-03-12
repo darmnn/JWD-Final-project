@@ -2,12 +2,11 @@ package by.tc.photobook.dao.impl;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import by.tc.photobook.bean.ClientInfo;
-import by.tc.photobook.bean.PhotographerInfo;
 import by.tc.photobook.bean.UserInfo;
 import by.tc.photobook.dao.DAOException;
 import by.tc.photobook.dao.UserDAO;
@@ -38,7 +37,7 @@ public class SQLUserDAO implements UserDAO
 			preparedStatement.setString(1, userInfo.getUsername());
 			preparedStatement.setString(2, userInfo.getPassword());
 			preparedStatement.setString(3, userInfo.getEmail());
-			if(userInfo.isPhotographer())
+			if(userInfo.getisPhotographer())
 			{
 				preparedStatement.setInt(4, role_ph);
 			}
@@ -59,7 +58,7 @@ public class SQLUserDAO implements UserDAO
 		}
 		catch(SQLException e)
 		{
-			throw new DAOException("Connection error: " + e.getMessage());
+			throw new DAOException("reg Connection error: " + e.getMessage());
 		}
 		finally
 		{
@@ -117,20 +116,20 @@ public class SQLUserDAO implements UserDAO
 				
 				if(userRole == 2)
 				{
-					authorizedUser = new PhotographerInfo(resultSet.getString(2), resultSet.getString(4),
+					authorizedUser = new UserInfo(resultSet.getString(2), resultSet.getString(4),
 							resultSet.getString(3), true, resultSet.getString(6), resultSet.getString(7), 
 							resultSet.getInt(8));
 				}
 				else
 				{
-					authorizedUser = new ClientInfo(resultSet.getString(2), resultSet.getString(4),
-							resultSet.getString(3), false, resultSet.getString(6), resultSet.getString(7));
+					authorizedUser = new UserInfo(resultSet.getString(2), resultSet.getString(4),
+							resultSet.getString(3), false, resultSet.getString(6), resultSet.getString(7), null);
 				}
 			}
 		}
 		catch(SQLException e)
 		{
-			throw new DAOException("Connection error: " + e.getMessage());
+			throw new DAOException(" auth Connection error: " + e.getMessage());
 		}
 		finally
 		{

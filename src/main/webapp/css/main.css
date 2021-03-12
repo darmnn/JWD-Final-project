@@ -10,6 +10,7 @@
     flex-direction: row-reverse;
     width:100%
 }
+
 div {
     color: #007BFF
 }
@@ -51,4 +52,9 @@ img
     margin-right: 13px;
     background-color: white;
     color: #007BFF;
+}
+
+.profile {
+	position: relative;
+	right: 90%;
 }

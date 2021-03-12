@@ -8,6 +8,9 @@ public class UserInfo
 	private String email;
 	private String password;
 	private boolean isPhotographer;
+	private String profileDecs;
+	private String profilePicPath;
+	private Integer totalRating;
 	
 	public UserInfo(String username, String email, String password, boolean isPhotographer)
 	{
@@ -23,24 +26,72 @@ public class UserInfo
 		this.password = password;
 	}
 	
-	public String getUsername()
+	public UserInfo(String username, String email, String password, boolean isPhotographer, 
+            String profileDecs, String profilePicPath, Integer totalRating) 
 	{
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.isPhotographer = isPhotographer;
+		this.profileDecs = profileDecs;
+		this.profilePicPath = profilePicPath;
+		this.totalRating = totalRating;
+	}
+
+	public String getUsername() {
 		return username;
 	}
-	
-	public String getEmail()
-	{
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getEmail() {
 		return email;
 	}
-	
-	public String getPassword()
-	{
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
 		return password;
 	}
-	
-	public boolean isPhotographer()
-	{
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean getisPhotographer() {
 		return isPhotographer;
+	}
+
+	public void setIsPhotographer(boolean isPhotographer) {
+		this.isPhotographer = isPhotographer;
+	}
+
+	public String getProfileDecs() {
+		return profileDecs;
+	}
+
+	public void setProfileDecs(String profileDecs) {
+		this.profileDecs = profileDecs;
+	}
+
+	public String getProfilePicPath() {
+		return profilePicPath;
+	}
+
+	public void setProfilePicPath(String profilePicPath) {
+		this.profilePicPath = profilePicPath;
+	}
+
+	public Integer getTotalRating() {
+		return totalRating;
+	}
+
+	public void setTotalRating(Integer totalRating) {
+		this.totalRating = totalRating;
 	}
 	
 	@Override
@@ -50,24 +101,25 @@ public class UserInfo
 				"\n username: " + username +
 				"\n email: " + email +
 				"\n password: " + password +
-				"\n isPhotographer: " + isPhotographer;
+				"\n isPhotographer: " + isPhotographer +
+				"\n profileDecs: " + profileDecs +
+				"\n profilePicPath: " + profilePicPath +
+				"\n totalRating: " + totalRating;
 	}
 	
 	@Override
-	public int hashCode()
-	{
-		return Objects.hash(username, email, password, isPhotographer);
-	}
-	
-	@Override
-	public boolean equals(Object o)
-	{
-		if (this == o) return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        
-        UserInfo userinfo = (UserInfo)o;
-        
-        return username.equals(userinfo.username) && email.equals(userinfo.email)
-        		&& password.equals(userinfo.password) && userinfo.isPhotographer == this.isPhotographer;
-	}
+        UserInfo userInfo = (UserInfo) o;
+        return isPhotographer == userInfo.isPhotographer && totalRating == userInfo.totalRating && 
+        		username.equals(userInfo.username) && email.equals(userInfo.email) && 
+        		password.equals(userInfo.password) && profileDecs.equals(userInfo.profileDecs) && 
+        		profilePicPath.equals(userInfo.profilePicPath);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, email, password, isPhotographer, profileDecs, profilePicPath, totalRating);
+    }
 }

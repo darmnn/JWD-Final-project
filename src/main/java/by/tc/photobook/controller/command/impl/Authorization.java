@@ -20,6 +20,7 @@ public class Authorization implements Command
 	private static final String PASSWORD_PARAM = "password";
 	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage";
 	private static final String AUTH_ATTRIBUTE = "auth";
+	private static final String MESSAGE_ATTRIBUTE = "message";
 	private static final String AUTH_PAGE_PATH = "/WEB-INF/jsp/authorization.jsp";
 	
 	
@@ -37,14 +38,16 @@ public class Authorization implements Command
         try
         {
         	authorizedUser = userService.authorization(userInfo);
+        	
         	HttpSession session = request.getSession(true);
         	session.setAttribute(AUTH_ATTRIBUTE, true);
+        	session.setAttribute("user", authorizedUser);
         	
         	response.sendRedirect(LOAD_MAIN_PAGE);
         }
         catch(ServiceException e)
         {
-        	request.setAttribute("message", e.getMessage());
+        	request.setAttribute(MESSAGE_ATTRIBUTE, e.getMessage());
         	RequestDispatcher requestDispatcher = request.getRequestDispatcher(AUTH_PAGE_PATH);
             requestDispatcher.forward(request, response);
         }

@@ -18,8 +18,8 @@ public class UserValidatorImpl implements UserValidator
 	private static final String INVALID_USERNAME = "Username must contain only letters and numbers!";
 	private static final String INVALID_EMAIL = "Invalid format of email!";
 	
-	private static final String CHARACTERS_AND_NUMBERS = "[A-Z0-9]+";
-	private static final String EMAIL_FORMAT = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+	private static final String NOT_CHARACTER_OR_NUMBER = "\\W";
+	private static final String EMAIL_FORMAT = "([.[^@\s]]+)@([.[^@\\s]]+)\\.([a-z]+)";
 	
 	private static final int MIN_LENGTH = 6;
 	private static final int MAX_LENGTH = 30;
@@ -52,10 +52,10 @@ public class UserValidatorImpl implements UserValidator
 			throw new ServiceException(LONG_USERNAME);
 		}
 		
-		Pattern usernamePattern = Pattern.compile(CHARACTERS_AND_NUMBERS);
+		Pattern usernamePattern = Pattern.compile(NOT_CHARACTER_OR_NUMBER);
 		Matcher usernameMatcher = usernamePattern.matcher(userInfo.getUsername());
 		
-		if(!usernameMatcher.find())
+		if(usernameMatcher.find())
 		{
 			throw new ServiceException(INVALID_USERNAME);
 		}
