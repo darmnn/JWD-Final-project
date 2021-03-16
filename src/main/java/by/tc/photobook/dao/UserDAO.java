@@ -6,5 +6,5 @@ public interface UserDAO
 {
 	public boolean registration(UserInfo userInfo) throws DAOException;
 	public UserInfo authorization(UserInfo userInfo) throws DAOException;
-	public boolean updateProfileDesc(String newProfileDesc) throws DAOException;
+	public boolean updateProfileDesc(String username, String newProfileDesc) throws DAOException;
 }

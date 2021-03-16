@@ -17,6 +17,7 @@ public class SQLUserDAO implements UserDAO
 	private static final String ADD_NEW_USER = "INSERT INTO users (username, password, email, role) "
 					+ "VALUES (?, ?, ?, ?)";
 	private static final String FIND_USER = "SELECT * FROM users WHERE username = ? AND password = ?";
+	private static final String UPDATE_PROFILE_DESC = "UPDATE users SET profile_desc = ? WHERE username = ?";
 	private static int role_client = 1; //to do - load from db
 	private static int role_ph = 2;
 	
@@ -175,9 +176,54 @@ public class SQLUserDAO implements UserDAO
 	}
 	
 	@Override
-	public boolean updateProfileDesc(String newProfileDesc) throws DAOException
+	public boolean updateProfileDesc(String username, String newProfileDesc) throws DAOException
 	{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 		
+		try
+		{
+			connection = connectionPool.getConnection();
+			
+			preparedStatement = connection.prepareStatement(UPDATE_PROFILE_DESC);
+			
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, newProfileDesc);
+			
+			preparedStatement.executeUpdate();
+			
+		}
+		catch(SQLException e)
+		{
+			throw new DAOException("Connection error: " + e.getMessage());
+		}
+		finally
+		{
+			if(preparedStatement != null)
+			{
+				try 
+				{
+					preparedStatement.close();
+				} 
+				catch (SQLException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			if(connection != null)
+			{
+				try
+				{
+					connection.close();
+					connectionPool.releaseConnection(connection);
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
 		return true;
 	}
 }

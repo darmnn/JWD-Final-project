@@ -79,4 +79,27 @@ public class UserServiceImpl implements UserService
 		
 		return authorizedUser;
 	}
+	
+	@Override
+	public boolean updateProfileDesc(String username, String newProfileDesc) throws ServiceException
+	{
+		DAOProvider daoProvider = DAOProvider.getInstance();
+		UserDAO userDAO = daoProvider.getUserdao();
+		
+		boolean updated = false;
+		try
+		{
+			updated = userDAO.updateProfileDesc(username, newProfileDesc);
+			if(!updated)
+			{
+				throw new ServiceException("Server error! Changes are not saved");
+			}
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e.getMessage());
+		}
+		
+		return true;
+	}
 }
