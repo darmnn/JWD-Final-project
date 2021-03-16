@@ -19,12 +19,12 @@ import by.tc.photobook.service.ServiceProvider;
 
 public class LoadProfilePage implements Command
 {
-	private static final String MAIN_PAGE_PATH = "/WEB-INF/jsp/main_page.jsp";
 	private static final String PROFILE_PAGE_PATH = "/WEB-INF/jsp/profile_page.jsp";
 	private static final String AUTH_ATTRIBUTE = "auth";
 	private static final String USER_ATTRIBUTE = "user";
+	private static final String PHOTOS_ATTRIBUTE = "photos";
 	private static final String MESSAGE_ATTRIBUTE = "message";
-	private static final String SESSION_ERROR_MESSAGE = "Session is expired, please log in!";
+	private static final String LOAD_MAIN_PAGE_WITH_ERROR = "Controller?command=loadmainpage&message=Session is expired!";
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
@@ -44,7 +44,7 @@ public class LoadProfilePage implements Command
 				{
 					userPhotos = photosService.takeUserPhotos(user);
     		
-					request.setAttribute("photos", userPhotos);
+					request.setAttribute(PHOTOS_ATTRIBUTE, userPhotos);
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROFILE_PAGE_PATH);
 					requestDispatcher.forward(request, response);
 				}
@@ -64,9 +64,7 @@ public class LoadProfilePage implements Command
 		}
 		else
 		{
-			request.setAttribute(MESSAGE_ATTRIBUTE, SESSION_ERROR_MESSAGE);
-        	RequestDispatcher requestDispatcher = request.getRequestDispatcher(MAIN_PAGE_PATH);
-            requestDispatcher.forward(request, response);
+			response.sendRedirect(LOAD_MAIN_PAGE_WITH_ERROR);
 		}
 	}
 }

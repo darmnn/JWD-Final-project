@@ -17,8 +17,8 @@ import java.util.List;
 public class LoadMainPage implements Command
 {
 	private static final String MAIN_PAGE_PATH = "/WEB-INF/jsp/main_page.jsp";
-	private static final String ERROR_PAGE_PATH = "error_page_global.jsp";
 	private static final String PHOTOS_ATTR = "photos";
+	private static final String MESSAGE_PARAM = "message";
 	
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
@@ -30,6 +30,7 @@ public class LoadMainPage implements Command
     		List<Photo> allPhotos = photosService.takeALl();
     		
     		request.setAttribute(PHOTOS_ATTR, allPhotos);
+    		request.setAttribute(MESSAGE_PARAM, request.getParameter(MESSAGE_PARAM));
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(MAIN_PAGE_PATH);
             requestDispatcher.forward(request, response);
@@ -37,7 +38,7 @@ public class LoadMainPage implements Command
     	catch(ServiceException e)
     	{
     		String errorMessage = e.getMessage();
-    		request.setAttribute("message", errorMessage);
+    		request.setAttribute(MESSAGE_PARAM, errorMessage);
     		RequestDispatcher requestDispatcher = request.getRequestDispatcher(MAIN_PAGE_PATH);
             requestDispatcher.forward(request, response);
     	}

@@ -173,4 +173,11 @@ public class SQLUserDAO implements UserDAO
 		
 		return authorizedUser;
 	}
+	
+	@Override
+	public boolean updateProfileDesc(String newProfileDesc) throws DAOException
+	{
+		
+		return true;
+	}
 }

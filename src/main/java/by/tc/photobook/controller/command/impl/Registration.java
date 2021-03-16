@@ -22,6 +22,7 @@ public class Registration implements Command
 	private static final String CHECKBOX_ON = "on";
 	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage";
 	private static final String REG_PAGE_PATH = "/WEB-INF/jsp/registration.jsp";
+	private static final String MESSAGE_ATTRIBUTE = "message";
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
@@ -49,7 +50,7 @@ public class Registration implements Command
         }
         catch(ServiceException e)
         {
-        	request.setAttribute("message", e.getMessage());
+        	request.setAttribute(MESSAGE_ATTRIBUTE, e.getMessage());
         	RequestDispatcher requestDispatcher = request.getRequestDispatcher(REG_PAGE_PATH);
             requestDispatcher.forward(request, response);
         }

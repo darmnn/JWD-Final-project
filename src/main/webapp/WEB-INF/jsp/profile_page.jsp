@@ -4,8 +4,9 @@
 <head>
     <title>Photobook</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link href="css/main.css" rel="stylesheet" type="text/css">
     <link href="css/profile.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    
 </head>
 <body>
 <div>
@@ -26,25 +27,42 @@
     	</c:choose>
     	<div class="container inner">
     		<p class="username"><c:out value ="${sessionScope.user.username }"/> </p>
-    		<div class="card about">
+    		<c:choose>
+    			<c:when test="${requestScope.edit == true }">
+    			<form action="Controller" method="post" class="form-edit">
+    				<div class="card about">
                         <div class="card-body about-body">
-                            <p class="card-text">${sessionScope.user.profileDecs }</p>
-                            <!-- <textarea class="card-text"></textarea>-->
+                        	<textarea name="new_profile_desc" class="card-text">${sessionScope.user.profileDecs }</textarea>
                         </div>
-             </div>
-             <c:if test = "${sessionScope.user.isPhotographer == true }">
-                        	<c:forEach var = "i" begin = "1" end = "${sessionScope.user.totalRating }">
-                        	<img src="images/star.png" class="float-left star"/>
-                        	</c:forEach>
-              </c:if>
+             		</div>
+             			<input type="file" name="new_profile_pic"></input>
+              			<button type="submit" name="command" value="savechanges" class="btn btn-primary edit">Save</button>
+              	</form>
+    			</c:when>
+    			<c:otherwise>
+    				<div class="card about">
+                    	<div class="card-body about-body">
+                            <p class="card-text">${sessionScope.user.profileDecs }</p>
+                        </div>
+             		</div>
+             		<c:if test = "${sessionScope.user.isPhotographer == true }">
+                    	<c:forEach var = "i" begin = "1" end = "${sessionScope.user.totalRating }">
+                       		<img src="images/star.png" class="float-left star"/>
+                       	</c:forEach>
+              		</c:if>
+              		<form action="Controller" method="post" class="form-edit">
+              			<button type="submit" name="command" value="editprofile" class="btn btn-primary edit">Edit profile</button>
+              		</form>
+    			</c:otherwise>
+    		</c:choose>
     	</div>
     </div>
     <c:if test = "${sessionScope.user.isPhotographer == true }">
     	<div class="container all-photos">
     		<c:out value="${message }"/>
             <c:forEach var = "photo" items="${photos}">
-                        <img src="${photo.imagePath }" />
-             </c:forEach>
+            	<img src="${photo.imagePath }" />
+            </c:forEach>
      	</div>
     </c:if>
 </div>
