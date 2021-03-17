@@ -23,12 +23,37 @@ public class LoadProfilePage implements Command
 	private static final String AUTH_ATTRIBUTE = "auth";
 	private static final String USER_ATTRIBUTE = "user";
 	private static final String PHOTOS_ATTRIBUTE = "photos";
-	private static final String MESSAGE_ATTRIBUTE = "message";
+	private static final String URL_ATTRIBUTE = "url";
+	private static final String MESSAGE_PARAM = "message";
+	private static final String EDIT_PARAM = "edit";
+	private static final String TRUE = "true";
 	private static final String LOAD_MAIN_PAGE_WITH_ERROR = "Controller?command=loadmainpage&message=Session is expired!";
+	private static final String LOAD_PROFILE_PAGE_WITH_MESSAGE = "Controller?command=loadprofilepage&message=";
+	private static final String LOAD_EDIT_PROFILE_PAGE = "Controller?command=loadprofilepage&edit=";
+	private static final String LOAD_PROFILE_PAGE = "Controller?command=loadprofilepage";
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();
+		String message = request.getParameter(MESSAGE_PARAM);
+		String edit = request.getParameter(EDIT_PARAM);
+		
+		if(message != null && edit != null)
+    	{
+    		session.setAttribute(URL_ATTRIBUTE, LOAD_PROFILE_PAGE_WITH_MESSAGE+message+"&edit="+edit);
+    	}
+    	if(message == null && edit != null)
+    	{
+    		session.setAttribute(URL_ATTRIBUTE, LOAD_EDIT_PROFILE_PAGE+edit);
+    	}
+    	if(edit != null && message != null)
+    	{
+    		session.setAttribute(URL_ATTRIBUTE, LOAD_PROFILE_PAGE_WITH_MESSAGE+message);
+    	}
+    	if(edit == null && message == null)
+    	{
+    		session.setAttribute(URL_ATTRIBUTE, LOAD_PROFILE_PAGE);
+    	}
 		
 		if(session.getAttribute(AUTH_ATTRIBUTE) != null && session.getAttribute(USER_ATTRIBUTE) != null)
 		{
@@ -44,19 +69,25 @@ public class LoadProfilePage implements Command
 				{
 					userPhotos = photosService.takeUserPhotos(user);
     		
+					if(edit != null)
+					{
+						request.setAttribute(EDIT_PARAM, true);
+					}
 					request.setAttribute(PHOTOS_ATTRIBUTE, userPhotos);
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROFILE_PAGE_PATH);
 					requestDispatcher.forward(request, response);
 				}
 				catch(ServiceException e)
 				{
-					request.setAttribute(MESSAGE_ATTRIBUTE, e.getMessage());
-		        	RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROFILE_PAGE_PATH);
-		        	requestDispatcher.forward(request, response);
+					response.sendRedirect(LOAD_PROFILE_PAGE_WITH_MESSAGE+e.getMessage());
 				}
 			}
 			else
 			{
+				if(edit != null)
+				{
+					request.setAttribute(EDIT_PARAM, true);
+				}
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROFILE_PAGE_PATH);
 				requestDispatcher.forward(request, response);
 			}

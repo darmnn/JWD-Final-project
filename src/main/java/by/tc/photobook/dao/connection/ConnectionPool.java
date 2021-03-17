@@ -41,11 +41,9 @@ public final class ConnectionPool
 		this.user = dbResourceManager.getValue(DBParameter.DB_USER);
 		this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
 		this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
-		
-		init();
 	}
 	
-	private void init() throws DAOException
+	public void init() throws ConnectionException
 	{
 		try
 		{
@@ -61,7 +59,7 @@ public final class ConnectionPool
 		}
 		catch(ClassNotFoundException | SQLException e)
 		{
-			throw new DAOException("Connection error: " + e.getMessage());
+			throw new ConnectionException(e);
 		}
 	}
 	
@@ -95,5 +93,10 @@ public final class ConnectionPool
 		}
 		
 		return false;
+	}
+	
+	public void destroy() throws ConnectionException
+	{
+		//to do
 	}
 }

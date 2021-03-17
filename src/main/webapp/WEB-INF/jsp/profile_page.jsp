@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <title>Photobook</title>
@@ -7,15 +8,29 @@
     <link href="css/profile.css" rel="stylesheet" type="text/css">
     <link href="css/main.css" rel="stylesheet" type="text/css">
     
+    <fmt:setLocale value="${sessionScope.locale }"/>
+    <fmt:setBundle basename="locale" var="loc"/>
+    
+    <fmt:message bundle="${loc}" key="button.logout" var="logout"/>
+    <fmt:message bundle="${loc}" key="button.edit" var="edit"/>
+    <fmt:message bundle="${loc}" key="button.save" var="save"/>
+    <fmt:message bundle="${loc}" key="button.en" var="en"/>
+    <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
+    
 </head>
 <body>
 <div>
 	<nav class="navbar navbar-light">
     	<a href = "index.jsp" class = "loadmain">PhotoBook</a>
     	<form class="header-profile" action="Controller" method="get">
-        	<button class="btn btn-primary sign-up" type="submit" name = "command" value="logout">Log out</button>
+        	<button class="btn btn-primary sign-up" type="submit" name = "command" value="logout">${logout }</button>
          </form>
     </nav>
+    <form action="Controller" method="get" class="btn-group local" role="group" aria-label="Basic outlined example">
+  				<button type="submit" name="command" value="en" class="btn btn-outline-primary">${en }</button>
+  				<button type="submit" name="command" value="ru" class="btn btn-outline-primary">${ru }</button>
+			</form>
+			
     <div class="container outer">
     	<c:choose>
     	<c:when test="${sessionScope.user.profilePicPath != null}">
@@ -36,7 +51,7 @@
                         </div>
              		</div>
              			<input type="file" name="new_profile_pic"></input>
-              			<button type="submit" name="command" value="savechanges" class="btn btn-primary edit">Save</button>
+              			<button type="submit" name="command" value="savechanges" class="btn btn-primary edit">${save }</button>
               	</form>
     			</c:when>
     			<c:otherwise>
@@ -51,7 +66,7 @@
                        	</c:forEach>
               		</c:if>
               		<form action="Controller" method="post" class="form-edit">
-              			<button type="submit" name="command" value="editprofile" class="btn btn-primary edit">Edit profile</button>
+              			<button type="submit" name="command" value="editprofile" class="btn btn-primary edit">${edit }</button>
               		</form>
     			</c:otherwise>
     		</c:choose>

@@ -100,6 +100,6 @@ public class UserServiceImpl implements UserService
 			throw new ServiceException(e.getMessage());
 		}
 		
-		return true;
+		return updated;
 	}
 }

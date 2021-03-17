@@ -29,7 +29,6 @@ img
 .name-main {
     font-size: 2rem;
     text-align: center;
-    padding-top: 2%;
 }
 
 .all-photos{
@@ -57,4 +56,16 @@ img
 .profile {
 	position: relative;
 	right: 90%;
+}
+
+.local {
+	width: 5%;
+	height: 30px;
+	margin-top:1%;
+	position: relative;
+	left: 86%;
+}
+
+.btn {
+	line-height: 100%;
 }

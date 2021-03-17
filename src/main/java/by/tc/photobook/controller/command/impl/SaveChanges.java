@@ -16,7 +16,7 @@ import by.tc.photobook.service.UserService;
 public class SaveChanges implements Command
 {
 	private static String NEW_PROFILE_DESC_PARAM = "new_profile_desc";
-	private static String NEW_PROFILE_PIC_PARAM = "new_profile_pic";
+	//private static String NEW_PROFILE_PIC_PARAM = "new_profile_pic";
 	private static final String AUTH_ATTRIBUTE = "auth";
 	private static final String USER_ATTRIBUTE = "user";
 	private static final String LOAD_MAIN_PAGE_WITH_ERROR = "Controller?command=loadmainpage&message=Session is expired!";
@@ -26,7 +26,7 @@ public class SaveChanges implements Command
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String newProfileDesc = request.getParameter(NEW_PROFILE_DESC_PARAM);
-		String newProfilePicPath = request.getParameter(NEW_PROFILE_PIC_PARAM);
+		//String newProfilePicPath = request.getParameter(NEW_PROFILE_PIC_PARAM);
 		
 		HttpSession session = request.getSession();
 		

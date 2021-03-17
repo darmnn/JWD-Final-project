@@ -2,7 +2,6 @@ package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,10 +18,9 @@ public class Authorization implements Command
 	private static final String USERNAME_PARAM = "username";
 	private static final String PASSWORD_PARAM = "password";
 	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage";
+	private static final String LOAD_AUTH_PAGE_WITH_MESSAGE = "Controller?command=loadauthpage&message=";
 	private static final String AUTH_ATTRIBUTE = "auth";
 	private static final String USER_ATTRIBUTE = "user";
-	private static final String MESSAGE_ATTRIBUTE = "message";
-	private static final String AUTH_PAGE_PATH = "/WEB-INF/jsp/authorization.jsp";
 	
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -48,9 +46,7 @@ public class Authorization implements Command
         }
         catch(ServiceException e)
         {
-        	request.setAttribute(MESSAGE_ATTRIBUTE, e.getMessage());
-        	RequestDispatcher requestDispatcher = request.getRequestDispatcher(AUTH_PAGE_PATH);
-            requestDispatcher.forward(request, response);
+            response.sendRedirect(LOAD_AUTH_PAGE_WITH_MESSAGE+e.getMessage());
         }
     }
 }

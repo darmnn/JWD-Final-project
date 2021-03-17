@@ -3,6 +3,7 @@ package by.tc.photobook.controller.command;
 import java.util.HashMap;
 
 import by.tc.photobook.controller.command.impl.Authorization;
+import by.tc.photobook.controller.command.impl.ChangeLocale;
 import by.tc.photobook.controller.command.impl.EditProfile;
 import by.tc.photobook.controller.command.impl.LoadAuthPage;
 import by.tc.photobook.controller.command.impl.LoadMainPage;
@@ -27,6 +28,8 @@ public class CommandProvider
         commands.put(CommandName.LOADPROFILEPAGE, new LoadProfilePage());
         commands.put(CommandName.EDITPROFILE, new EditProfile());
         commands.put(CommandName.SAVECHANGES, new SaveChanges());
+        commands.put(CommandName.EN, new ChangeLocale());
+        commands.put(CommandName.RU, new ChangeLocale());
     }
 
     public Command takeCommand(String name)
