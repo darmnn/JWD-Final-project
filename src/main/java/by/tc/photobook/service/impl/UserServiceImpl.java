@@ -11,36 +11,28 @@ import by.tc.photobook.service.validation.ValidatorProvider;
 
 public class UserServiceImpl implements UserService
 {
+	private static final String INVALID_LOGIN_PASSWORD_MESSAGE = "Invalid login or password!";
+	private static final String NO_UPDATE_ERROR = "Server error! Changes are not saved";
+	
 	@Override
 	public boolean registration(UserInfo userInfo) throws ServiceException
 	{
 		ValidatorProvider validatorProvider = ValidatorProvider.getInstance(); 
 		UserValidator userValidator = validatorProvider.getUserValidator();
+		userValidator.checkRegData(userInfo);
 		
 		DAOProvider daoProvider = DAOProvider.getInstance();
 		UserDAO userDAO = daoProvider.getUserdao();
 		
 		try
 		{
-			if(userValidator.checkRegData(userInfo))
-			{
-				try
-				{
-					boolean successfulRegistration = userDAO.registration(userInfo);
-					return successfulRegistration;
-				}
-				catch(DAOException e)
-				{
-					throw new ServiceException("Error while registration: " + e.getMessage());
-				}
-			}
+			boolean successfulRegistration = userDAO.registration(userInfo);
+			return successfulRegistration;
 		}
-		catch(ServiceException e)
+		catch(DAOException e)
 		{
 			throw new ServiceException(e);
 		}
-		
-		return false;
 	}
 	
 	@Override
@@ -48,6 +40,7 @@ public class UserServiceImpl implements UserService
 	{
 		ValidatorProvider validatorProvider = ValidatorProvider.getInstance(); 
 		UserValidator userValidator = validatorProvider.getUserValidator();
+		userValidator.checkAuthData(userInfo);
 		
 		DAOProvider daoProvider = DAOProvider.getInstance();
 		UserDAO userDAO = daoProvider.getUserdao();
@@ -55,26 +48,17 @@ public class UserServiceImpl implements UserService
 		
 		try
 		{
-			if(userValidator.checkAuthData(userInfo))
-			{
-				try
-				{
-					authorizedUser = userDAO.authorization(userInfo);
-				}
-				catch(DAOException e)
-				{
-					throw new ServiceException("Error while authorization: " + e.getMessage());
-				}
-				
-				if(authorizedUser == null)
-				{
-					throw new ServiceException("Invalid login or password!");
-				}
-			}
+			authorizedUser = userDAO.authorization(userInfo);
 		}
-		catch(ServiceException e)
+		catch(DAOException e)
 		{
 			throw new ServiceException(e);
+		}
+				
+		if(authorizedUser == null)
+		{
+			throw new ServiceException(INVALID_LOGIN_PASSWORD_MESSAGE);
+				
 		}
 		
 		return authorizedUser;
@@ -92,12 +76,35 @@ public class UserServiceImpl implements UserService
 			updated = userDAO.updateProfileDesc(username, newProfileDesc);
 			if(!updated)
 			{
-				throw new ServiceException("Server error! Changes are not saved");
+				throw new ServiceException(NO_UPDATE_ERROR);
 			}
 		}
 		catch(DAOException e)
 		{
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(e);
+		}
+		
+		return updated;
+	}
+	
+	@Override
+	public boolean updateProfilePic(String username, String newProfilePicPath) throws ServiceException
+	{
+		DAOProvider daoProvider = DAOProvider.getInstance();
+		UserDAO userDAO = daoProvider.getUserdao();
+		
+		boolean updated = false;
+		try
+		{
+			updated = userDAO.updateProfilePic(username, newProfilePicPath);
+			if(!updated)
+			{
+				throw new ServiceException(NO_UPDATE_ERROR);
+			}
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
 		}
 		
 		return updated;

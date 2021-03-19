@@ -7,11 +7,14 @@ import by.tc.photobook.controller.command.impl.ChangeLocale;
 import by.tc.photobook.controller.command.impl.EditProfile;
 import by.tc.photobook.controller.command.impl.LoadAuthPage;
 import by.tc.photobook.controller.command.impl.LoadMainPage;
+import by.tc.photobook.controller.command.impl.LoadPhoto;
 import by.tc.photobook.controller.command.impl.LoadProfilePage;
 import by.tc.photobook.controller.command.impl.LoadRegPage;
 import by.tc.photobook.controller.command.impl.Logout;
 import by.tc.photobook.controller.command.impl.Registration;
 import by.tc.photobook.controller.command.impl.SaveChanges;
+import by.tc.photobook.controller.command.impl.SaveNewPhoto;
+import by.tc.photobook.controller.command.impl.SavePhotoChanges;
 
 public class CommandProvider
 {
@@ -28,8 +31,11 @@ public class CommandProvider
         commands.put(CommandName.LOADPROFILEPAGE, new LoadProfilePage());
         commands.put(CommandName.EDITPROFILE, new EditProfile());
         commands.put(CommandName.SAVECHANGES, new SaveChanges());
+        commands.put(CommandName.SAVEPHOTOCHANGES, new SavePhotoChanges());
         commands.put(CommandName.EN, new ChangeLocale());
         commands.put(CommandName.RU, new ChangeLocale());
+        commands.put(CommandName.ADDPHOTO, new LoadPhoto());
+        commands.put(CommandName.SAVENEWPHOTO, new SaveNewPhoto());
     }
 
     public Command takeCommand(String name)

@@ -12,6 +12,9 @@ import by.tc.photobook.service.ServiceException;
 
 public class PhotosServiceImpl implements PhotosService
 {
+	private static final String NO_PHOTOS_MESSAGE = "No photos uploaded";
+	private static final String ERROR_WHILE_ADDING_PHOTO = "Error while loading new photo occured! The photo wasn't uploaded";
+	
 	@Override
 	public List<Photo> takeALl() throws ServiceException
 	{
@@ -24,12 +27,12 @@ public class PhotosServiceImpl implements PhotosService
 			allPhotos = photosDAO.takeAll();
 			if(allPhotos.isEmpty())
 			{
-				throw new ServiceException("No photos uploaded");
+				throw new ServiceException(NO_PHOTOS_MESSAGE);
 			}
 		}
 		catch(DAOException e)
 		{
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(e);
 		}
 		
 		return allPhotos;
@@ -45,16 +48,34 @@ public class PhotosServiceImpl implements PhotosService
 		try
 		{
 			userPhotos = photosDAO.takeUserPhotos(user);
-			if(userPhotos.isEmpty())
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+		
+		return userPhotos;
+	}
+	
+	@Override
+	public boolean addNewPhoto(Photo newPhoto) throws ServiceException
+	{
+		DAOProvider daoProvider = DAOProvider.getInstance();
+		PhotosDAO photosDAO = daoProvider.getPhotosDAO();
+		
+		boolean uploaded = false;
+		try
+		{
+			uploaded = photosDAO.addNewPhoto(newPhoto);
+			if(!uploaded)
 			{
-				throw new ServiceException("No photos uploaded");
+				throw new ServiceException(ERROR_WHILE_ADDING_PHOTO);
 			}
 		}
 		catch(DAOException e)
 		{
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(e);
 		}
-		
-		return userPhotos;
+		return uploaded;
 	}
 }

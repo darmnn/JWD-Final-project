@@ -9,4 +9,5 @@ public interface PhotosService
 {
 	public List<Photo> takeALl() throws ServiceException;
 	public List<Photo> takeUserPhotos(UserInfo user) throws ServiceException;
+	public boolean addNewPhoto(Photo newPhoto) throws ServiceException;
 }

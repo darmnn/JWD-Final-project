@@ -16,6 +16,7 @@
     <fmt:message bundle="${loc}" key="button.save" var="save"/>
     <fmt:message bundle="${loc}" key="button.en" var="en"/>
     <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
+    <fmt:message bundle="${loc}" key="button.add_photo" var="add_photo"/>
     
 </head>
 <body>
@@ -29,7 +30,7 @@
     <form action="Controller" method="get" class="btn-group local" role="group" aria-label="Basic outlined example">
   				<button type="submit" name="command" value="en" class="btn btn-outline-primary">${en }</button>
   				<button type="submit" name="command" value="ru" class="btn btn-outline-primary">${ru }</button>
-			</form>
+	</form>
 			
     <div class="container outer">
     	<c:choose>
@@ -49,9 +50,10 @@
                         <div class="card-body about-body">
                         	<textarea name="new_profile_desc" class="card-text">${sessionScope.user.profileDecs }</textarea>
                         </div>
+                        <button type="submit" name="command" value="savechanges" class="btn btn-primary edit">${save }</button>
              		</div>
              			<input type="file" name="new_profile_pic"></input>
-              			<button type="submit" name="command" value="savechanges" class="btn btn-primary edit">${save }</button>
+              			<button type="submit" name="command" value="savephotochanges" class="btn btn-primary edit">${save }</button>
               	</form>
     			</c:when>
     			<c:otherwise>
@@ -78,6 +80,19 @@
             <c:forEach var = "photo" items="${photos}">
             	<img src="${photo.imagePath }" />
             </c:forEach>
+            <c:choose>
+            	<c:when test="${requestScope.add_photo == true }">
+            		<form action="Controller" method="post">
+            			<input type="file" name="new_photo"></input>
+              			<button type="submit" name="command" value="savenewphoto" class="btn btn-primary edit">${save }</button>
+            		</form>
+            	</c:when>
+            	<c:otherwise>
+            		<form action="Controller" method="post">
+            			<button type="submit" name="command" value="addphoto" class="btn btn-primary">${add_photo }</button>
+            		</form>
+            	</c:otherwise>
+            </c:choose>
      	</div>
     </c:if>
 </div>

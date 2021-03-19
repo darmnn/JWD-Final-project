@@ -1,15 +1,24 @@
 package by.tc.photobook.dao.connection;
 
 import java.sql.Connection;
+
+
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import by.tc.photobook.dao.DAOException;
+import org.apache.log4j.Logger;
 
 public final class ConnectionPool 
 {
+	private static final Logger log = Logger.getLogger(ConnectionPool.class);
+	
+	private static final String TAKING_CONNECTION_ERROR_MESSAGE = "Error while taking connection!";
+	private static final String CREATION_ERROR = "Error while creating connection pool: ";
+	private static final String INIT_ERROR = "Error while initializing connection pool: ";
+	
 	private String driver;
 	private String url;
 	private String user;
@@ -27,13 +36,13 @@ public final class ConnectionPool
 		{
 			instance = new ConnectionPool();
 		}
-		catch(DAOException e)
+		catch(ConnectionException e)
 		{
-			e.printStackTrace();
+			log.error(CREATION_ERROR + e);
 		}
 	}
 	
-	private ConnectionPool() throws DAOException
+	private ConnectionPool() throws ConnectionException
 	{
 		DBResourceManager dbResourceManager = DBResourceManager.getInstance();
 		this.driver = dbResourceManager.getValue(DBParameter.DB_DRIVER);
@@ -59,6 +68,7 @@ public final class ConnectionPool
 		}
 		catch(ClassNotFoundException | SQLException e)
 		{
+			log.error(INIT_ERROR + e);
 			throw new ConnectionException(e);
 		}
 	}
@@ -68,7 +78,7 @@ public final class ConnectionPool
 		return instance;
 	}
 	
-	public Connection getConnection() throws DAOException
+	public Connection getConnection() throws ConnectionException
 	{
 		Connection connection = null;
 		
@@ -79,7 +89,8 @@ public final class ConnectionPool
         } 
 		catch (InterruptedException e) 
 		{
-			throw new DAOException("Taking connection error: " + e.getMessage());
+			log.error(TAKING_CONNECTION_ERROR_MESSAGE + e);
+			throw new ConnectionException(TAKING_CONNECTION_ERROR_MESSAGE, e);
         }
         return connection;
 	}

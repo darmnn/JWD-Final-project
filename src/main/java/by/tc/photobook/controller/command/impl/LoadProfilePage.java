@@ -26,17 +26,25 @@ public class LoadProfilePage implements Command
 	private static final String URL_ATTRIBUTE = "url";
 	private static final String MESSAGE_PARAM = "message";
 	private static final String EDIT_PARAM = "edit";
-	private static final String TRUE = "true";
+	private static final String ADD_PHOTO_PARAM = "add_photo";
 	private static final String LOAD_MAIN_PAGE_WITH_ERROR = "Controller?command=loadmainpage&message=Session is expired!";
-	private static final String LOAD_PROFILE_PAGE_WITH_MESSAGE = "Controller?command=loadprofilepage&message=";
+	private static final String LOAD_PROFILE_PAGE_WITH_MESSAGE = "Controller?command=loadpprofilepage&message=";
 	private static final String LOAD_EDIT_PROFILE_PAGE = "Controller?command=loadprofilepage&edit=";
 	private static final String LOAD_PROFILE_PAGE = "Controller?command=loadprofilepage";
+	private static final String NO_PHOTOS_MESSAGE = "No photos uploaded yet";
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();
+		
+		if(session == null)
+		{
+			response.sendRedirect(LOAD_MAIN_PAGE_WITH_ERROR);
+		}
+		
 		String message = request.getParameter(MESSAGE_PARAM);
 		String edit = request.getParameter(EDIT_PARAM);
+		String addPhoto = request.getParameter(ADD_PHOTO_PARAM);
 		
 		if(message != null && edit != null)
     	{
@@ -68,18 +76,31 @@ public class LoadProfilePage implements Command
 				try
 				{
 					userPhotos = photosService.takeUserPhotos(user);
+					
+					if(userPhotos == null || userPhotos.isEmpty())
+					{
+						request.setAttribute(MESSAGE_PARAM, NO_PHOTOS_MESSAGE);
+					}
     		
 					if(edit != null)
 					{
 						request.setAttribute(EDIT_PARAM, true);
 					}
+					
+					if(addPhoto != null)
+					{
+						request.setAttribute(ADD_PHOTO_PARAM, true);
+					}
+					
 					request.setAttribute(PHOTOS_ATTRIBUTE, userPhotos);
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROFILE_PAGE_PATH);
 					requestDispatcher.forward(request, response);
 				}
 				catch(ServiceException e)
 				{
-					response.sendRedirect(LOAD_PROFILE_PAGE_WITH_MESSAGE+e.getMessage());
+					request.setAttribute(MESSAGE_PARAM, e.getMessage());
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROFILE_PAGE_PATH);
+					requestDispatcher.forward(request, response);
 				}
 			}
 			else
