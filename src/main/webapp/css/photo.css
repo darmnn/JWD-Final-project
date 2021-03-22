@@ -1,0 +1,116 @@
+.header-profile {
+    align-items: rigth;
+    height:100%;
+    display: flex;
+    flex-direction: row-reverse;
+    width:80%
+}
+
+div {
+    color: #007BFF
+}
+
+.loadmain {
+	text-decoration: none;
+	margin-left: 3%;
+	margin-bottom: 1.5%;
+	font-size: 2rem;
+	line-height: 100%;
+}
+
+.sign-in {
+	line-height: 100%;
+    margin-right: 13px;
+}
+
+.sign-up {
+	line-height: 100%;
+    margin-right: 13px;
+    background-color: white;
+    color: #007BFF;
+}
+
+.star{
+    height: 15px;
+    width: 15px;
+    margin-right: 1%;
+}
+
+.username-container {
+	font-weight: bolder;
+}
+
+.photo-container {
+	width:100%;
+}
+
+.comments-container {
+	width:45%;
+	height: 732px;
+	position:relative;
+}
+
+.comment {
+	margin: 1%;
+	font-size:0.85em;
+}
+
+.photo {
+	width: 100%;
+}
+
+.date {
+	color: #787878;
+	display: inline-block;
+	font-size: 0.87em;
+	position: absolute;
+	right:2%;
+}
+
+.date-comment {
+	color: #787878;
+	display: flex;
+	flex-direction: column;
+	align-items:flex-end;
+	font-size: 0.87em;
+}
+
+.container {
+	width: 100%;
+	margin-top:2%;
+	display: flex;
+}
+
+.new-comment {
+	margin:1%;
+	position:absolute;
+	bottom:2px;
+	width:98%;
+}	
+
+.btn-sm {
+	margin-top:1%;
+}
+
+.author_pic {
+	width:35px;
+	height:35px;
+	margin-right:5%;
+}
+
+.comment-text {
+	font-size: 1.1em;
+	color: black;
+}
+
+.footer-container {
+	position: relative;
+	height:80px;
+}
+
+.rate-form {
+	display:inline-block;
+	margin-top:1%;
+	position: absolute;
+	left:40%;
+}

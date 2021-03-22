@@ -1,5 +1,6 @@
 package by.tc.photobook.dao;
 
+import by.tc.photobook.dao.impl.SQLCommentsDAO;
 import by.tc.photobook.dao.impl.SQLPhotosDAO;
 import by.tc.photobook.dao.impl.SQLUserDAO;
 
@@ -9,6 +10,7 @@ public class DAOProvider
 	
 	private final UserDAO userdao = new SQLUserDAO();
 	private final PhotosDAO photosDAO = new SQLPhotosDAO();
+	private final CommentsDAO commentsDAO = new SQLCommentsDAO();
 	
 	private DAOProvider() {}
 	
@@ -23,5 +25,10 @@ public class DAOProvider
 	public PhotosDAO getPhotosDAO()
 	{
 		return photosDAO;
+	}
+	
+	public CommentsDAO getCommentsDAO()
+	{
+		return commentsDAO;
 	}
 }

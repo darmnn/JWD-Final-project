@@ -15,7 +15,17 @@ div {
     color: #007BFF
 }
 
-img
+.form-photo {
+	display:inline-block;
+	width:24%;
+}
+
+.img1 {
+	width:100%;
+	margin:0.3%;
+}
+
+.img
 {
 	width:24%;
 	margin: 0.3%;

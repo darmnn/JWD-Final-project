@@ -47,7 +47,12 @@
             </div>
             <div class="container all-photos">
             <c:forEach var = "photo" items="${photos}">
-                        <img src="${photo.imagePath }" />
+            	<form action="Controller" method="get" class="form-photo">
+            		<input type="hidden" name="photo" value="${photo }"/>
+                        <button type="submit" name="command" value="loadphotopage" style="border: 0; background: transparent">
+                        	<img class="img1" src="${photo.imagePath }"/>
+                        </button>
+                 </form>
              </c:forEach>
             </div>
         </div>

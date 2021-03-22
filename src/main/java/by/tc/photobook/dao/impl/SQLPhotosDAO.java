@@ -1,6 +1,7 @@
 package by.tc.photobook.dao.impl;
 
 import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,12 +27,15 @@ public class SQLPhotosDAO implements PhotosDAO
 	private static final String ERROR_WHILE_CLOSING_CONNECTION = "Error while closing connection: ";
 	private static final String ERROR_WHILE_CLOSING_STATEMENT = "Error while closing statement: ";
 	private static final String ERROR_WHILE_CLOSING_RESULTSET = "Error while closing result set: ";
+	private static final String UPDATE_RATING_ERROR = "Error while updating rating";
 	
-	private static final String GET_ALL_PHOTOS = "SELECT * FROM photos";
-	private static final String GET_USER_PHOTOS = "SELECT users.username, photos.date_time, photos.image, "
+	private static final String GET_ALL_PHOTOS = "SELECT photos.photo_id, users.username, photos.date_time, photos.image, "
+			+ "photos.rating FROM photos JOIN users ON users.id_user = photos.photographer";
+	private static final String GET_USER_PHOTOS = "SELECT photos.photo_id, users.username, photos.date_time, photos.image, "
 			+ "photos.rating FROM photos JOIN users ON users.id_user = photos.photographer WHERE users.username = ?";
 	private static final String GET_USER_ID_BY_NAME = "SELECT id_user FROM users WHERE username=?";
 	private static final String UPLOAD_NEW_PHOTO = "INSERT INTO photos(photographer, date_time, image, rating) VALUES(?, ?, ?, ?)";
+	private static final String UPDATE_PHOTO_RATING = "UPDATE photos SET rating=? WHERE photo_id=?";
 
 	private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 	
@@ -60,8 +64,8 @@ public class SQLPhotosDAO implements PhotosDAO
 			
 			while(resultSet.next())
 			{
-				String imagePath = resultSet.getString(4);
-				allPhotos.add(new Photo(imagePath));
+				allPhotos.add(new Photo(resultSet.getInt(1), resultSet.getString(2), resultSet.getDate(3).toLocalDate(), 
+						resultSet.getString(4), resultSet.getInt(5)));
 			}
 		}
 		catch(SQLException e)
@@ -97,15 +101,7 @@ public class SQLPhotosDAO implements PhotosDAO
 			
 			if(connection != null)
 			{
-				try
-				{
-					connection.close();
-					connectionPool.releaseConnection(connection);
-				}
-				catch(SQLException e)
-				{
-					log.error(ERROR_WHILE_CLOSING_CONNECTION + e.getMessage());
-				}
+				connectionPool.releaseConnection(connection);
 			}
 		}
 	
@@ -138,8 +134,8 @@ public class SQLPhotosDAO implements PhotosDAO
 			
 			while(resultSet.next())
 			{
-				userPhotos.add(new Photo(resultSet.getString(1), resultSet.getDate(2), 
-						resultSet.getString(3), resultSet.getInt(4)));
+				userPhotos.add(new Photo(resultSet.getInt(1), resultSet.getString(2), resultSet.getDate(3).toLocalDate(), 
+						resultSet.getString(4), resultSet.getInt(5)));
 			}
 		}
 		catch(SQLException e)
@@ -175,15 +171,7 @@ public class SQLPhotosDAO implements PhotosDAO
 			
 			if(connection != null)
 			{
-				try
-				{
-					connection.close();
-					connectionPool.releaseConnection(connection);
-				}
-				catch(SQLException e)
-				{
-					log.error(ERROR_WHILE_CLOSING_CONNECTION + e.getMessage());
-				}
+				connectionPool.releaseConnection(connection);
 			}
 		}
 		
@@ -213,6 +201,7 @@ public class SQLPhotosDAO implements PhotosDAO
 			preparedStatement.setString(1, username);
 			resultSet = preparedStatement.executeQuery();
 			
+			
 			int userId;
 			if(resultSet.next())
 			{
@@ -223,11 +212,10 @@ public class SQLPhotosDAO implements PhotosDAO
 				throw new DAOException(USER_NOT_FOUND_MESSAGE);
 			}
 			
-			Date date = new Date(newPhoto.getDate().getYear(), newPhoto.getDate().getMonth(), newPhoto.getDate().getDay());
 			
 			preparedStatement = connection.prepareStatement(UPLOAD_NEW_PHOTO);
 			preparedStatement.setInt(1, userId);
-			preparedStatement.setDate(2, date);
+			preparedStatement.setDate(2, Date.valueOf(newPhoto.getDate()));
 			preparedStatement.setString(3, newPhoto.getImagePath());
 			preparedStatement.setInt(4, newPhoto.getRating());
 			
@@ -269,18 +257,63 @@ public class SQLPhotosDAO implements PhotosDAO
 			
 			if(connection != null)
 			{
-				try
-				{
-					connection.close();
-					connectionPool.releaseConnection(connection);
-				}
-				catch(SQLException e)
-				{
-					log.error(ERROR_WHILE_CLOSING_CONNECTION + e.getMessage());
-				}
+				connectionPool.releaseConnection(connection);
 			}
 		}
 	
+		return true;
+	}
+	
+	public boolean updatePhotoRating(int photoId, int newRating) throws DAOException
+	{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try
+		{
+			 connection = connectionPool.getConnection();
+		}
+		catch (ConnectionException e) 
+		{
+			throw new DAOException(e);
+		}
+		
+		try 
+		{
+			preparedStatement = connection.prepareStatement(UPDATE_PHOTO_RATING);
+			preparedStatement.setInt(1, newRating);
+			preparedStatement.setInt(2, photoId);
+			
+			if(preparedStatement.executeUpdate() < 1)
+			{
+				throw new DAOException(UPDATE_RATING_ERROR);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			log.error(UPDATE_RATING_ERROR + e.getMessage());
+			throw new DAOException(e);
+		}
+		finally
+		{
+			if(preparedStatement != null)
+			{
+				try 
+				{
+					preparedStatement.close();
+				} 
+				catch (SQLException e) 
+				{
+					log.error(ERROR_WHILE_CLOSING_STATEMENT + e.getMessage());
+				}
+			}
+			
+			if(connection != null)
+			{
+				connectionPool.releaseConnection(connection);
+			}
+		}
+		
 		return true;
 	}
 }

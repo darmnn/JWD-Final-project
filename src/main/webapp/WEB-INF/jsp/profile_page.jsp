@@ -35,7 +35,7 @@
     <div class="container outer">
     	<c:choose>
     	<c:when test="${sessionScope.user.profilePicPath != null}">
-    	<img src="${sessionScope.user.profilePicPath }" class="rounded-circle float-left"/>
+    	<img src="${sessionScope.user.profilePicPath }" class="rounded-circle float-left img"/>
     	</c:when>
     	<c:otherwise>
     	<img src="images/user_pic.png" class="rounded-circle float-left"/>
@@ -78,7 +78,12 @@
     	<div class="container all-photos">
     		<c:out value="${message }"/>
             <c:forEach var = "photo" items="${photos}">
-            	<img src="${photo.imagePath }" />
+            	<form action="Controller" method="get" class="form-photo">
+            		<input type="hidden" name="photo" value="${photo }"/>
+                        <button type="submit" name="command" value="loadphotopage" style="border: 0; background: transparent">
+                        	<img class="img1" src="${photo.imagePath }"/>
+                        </button>
+                 </form>
             </c:forEach>
             <c:choose>
             	<c:when test="${requestScope.add_photo == true }">

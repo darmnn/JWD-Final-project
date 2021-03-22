@@ -99,6 +99,10 @@ public class LoadProfilePage implements Command
 				catch(ServiceException e)
 				{
 					request.setAttribute(MESSAGE_PARAM, e.getMessage());
+					if(edit != null)
+					{
+						request.setAttribute(EDIT_PARAM, true);
+					}
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROFILE_PAGE_PATH);
 					requestDispatcher.forward(request, response);
 				}

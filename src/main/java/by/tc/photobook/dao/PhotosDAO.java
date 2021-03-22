@@ -10,4 +10,5 @@ public interface PhotosDAO
 	public List<Photo> takeAll() throws DAOException;
 	public List<Photo> takeUserPhotos(UserInfo user) throws DAOException;
 	public boolean addNewPhoto(Photo newPhoto) throws DAOException;
+	public boolean updatePhotoRating(int photoId, int newRating) throws DAOException;
 }

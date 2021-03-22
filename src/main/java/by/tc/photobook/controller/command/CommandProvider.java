@@ -8,9 +8,12 @@ import by.tc.photobook.controller.command.impl.EditProfile;
 import by.tc.photobook.controller.command.impl.LoadAuthPage;
 import by.tc.photobook.controller.command.impl.LoadMainPage;
 import by.tc.photobook.controller.command.impl.LoadPhoto;
+import by.tc.photobook.controller.command.impl.LoadPhotoPage;
 import by.tc.photobook.controller.command.impl.LoadProfilePage;
 import by.tc.photobook.controller.command.impl.LoadRegPage;
 import by.tc.photobook.controller.command.impl.Logout;
+import by.tc.photobook.controller.command.impl.NewComment;
+import by.tc.photobook.controller.command.impl.RatePhoto;
 import by.tc.photobook.controller.command.impl.Registration;
 import by.tc.photobook.controller.command.impl.SaveChanges;
 import by.tc.photobook.controller.command.impl.SaveNewPhoto;
@@ -36,6 +39,9 @@ public class CommandProvider
         commands.put(CommandName.RU, new ChangeLocale());
         commands.put(CommandName.ADDPHOTO, new LoadPhoto());
         commands.put(CommandName.SAVENEWPHOTO, new SaveNewPhoto());
+        commands.put(CommandName.LOADPHOTOPAGE, new LoadPhotoPage());
+        commands.put(CommandName.NEWCOMMENT, new NewComment());
+        commands.put(CommandName.RATEPHOTO, new RatePhoto());
     }
 
     public Command takeCommand(String name)

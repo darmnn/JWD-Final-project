@@ -1,7 +1,7 @@
 package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +46,7 @@ public class SaveNewPhoto implements Command
 			UserInfo user = (UserInfo)session.getAttribute(USER_ATTRIBUTE);
 			String username = user.getUsername();
 			
-			Date date = new Date();
+			LocalDate date = LocalDate.now();
 			Photo newPhoto = new Photo(username, date, photoPath, START_RATING);
 			
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();

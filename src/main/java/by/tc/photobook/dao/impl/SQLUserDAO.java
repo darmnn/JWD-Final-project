@@ -91,15 +91,7 @@ public class SQLUserDAO implements UserDAO
 			}
 			if(connection != null)
 			{
-				try
-				{
-					connection.close();
-					connectionPool.releaseConnection(connection);
-				}
-				catch(SQLException e)
-				{
-					log.error(ERROR_WHILE_CLOSING_CONNECTION + e.getMessage());
-				}
+				connectionPool.releaseConnection(connection);
 			}
 		}
 		
@@ -138,13 +130,13 @@ public class SQLUserDAO implements UserDAO
 				
 				if(userRole == 2)
 				{
-					authorizedUser = new UserInfo(resultSet.getString(2), resultSet.getString(4),
+					authorizedUser = new UserInfo(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(4),
 							resultSet.getString(3), true, resultSet.getString(6), resultSet.getString(7), 
 							resultSet.getInt(8));
 				}
 				else
 				{
-					authorizedUser = new UserInfo(resultSet.getString(2), resultSet.getString(4),
+					authorizedUser = new UserInfo(resultSet.getInt(1),resultSet.getString(2), resultSet.getString(4),
 							resultSet.getString(3), false, resultSet.getString(6), resultSet.getString(7), null);
 				}
 			}
@@ -182,15 +174,7 @@ public class SQLUserDAO implements UserDAO
 			
 			if(connection != null)
 			{
-				try
-				{
-					connection.close();
-					connectionPool.releaseConnection(connection);
-				}
-				catch(SQLException e)
-				{
-					log.error(ERROR_WHILE_CLOSING_CONNECTION + e.getMessage());
-				}
+				connectionPool.releaseConnection(connection);
 			}
 		}
 		
@@ -245,15 +229,7 @@ public class SQLUserDAO implements UserDAO
 			
 			if(connection != null)
 			{
-				try
-				{
-					connection.close();
-					connectionPool.releaseConnection(connection);
-				}
-				catch(SQLException e)
-				{
-					log.error(ERROR_WHILE_CLOSING_CONNECTION + e.getMessage());
-				}
+				connectionPool.releaseConnection(connection);
 			}
 		}
 		return true;
@@ -307,15 +283,7 @@ public class SQLUserDAO implements UserDAO
 			
 			if(connection != null)
 			{
-				try
-				{
-					connection.close();
-					connectionPool.releaseConnection(connection);
-				}
-				catch(SQLException e)
-				{
-					log.error(ERROR_WHILE_CLOSING_CONNECTION + e.getMessage());
-				}
+				connectionPool.releaseConnection(connection);
 			}
 		}
 		return true;
