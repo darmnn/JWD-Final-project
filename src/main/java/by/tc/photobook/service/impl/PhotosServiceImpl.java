@@ -15,6 +15,7 @@ public class PhotosServiceImpl implements PhotosService
 	private static final String NO_PHOTOS_MESSAGE = "No photos uploaded";
 	private static final String ERROR_WHILE_ADDING_PHOTO = "Error while loading new photo occured! The photo wasn't uploaded";
 	private static final String ERROR_WHILE_RATING = "Error while updating photo rating! Your grade wasn't saved";
+	private static final String ERROR_WHILE_DELETING = "Error while deleting photo!";
 	
 	@Override
 	public List<Photo> takeALl() throws ServiceException
@@ -100,5 +101,27 @@ public class PhotosServiceImpl implements PhotosService
 		}
 		
 		return updated;
+	}
+	
+	public boolean deletePhoto(int photoId) throws ServiceException
+	{
+		DAOProvider daoProvider = DAOProvider.getInstance();
+		PhotosDAO photosDAO = daoProvider.getPhotosDAO();
+		
+		boolean deleted = false;
+		try
+		{
+			deleted = photosDAO.deletePhoto(photoId);
+			if(!deleted)
+			{
+				throw new ServiceException(ERROR_WHILE_DELETING);
+			}
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+		
+		return deleted;
 	}
 }

@@ -23,6 +23,7 @@ public class SQLPhotosDAO implements PhotosDAO
 	
 	private static final String USER_NOT_FOUND_MESSAGE = "User is not found!";
 	private static final String ERROR_WHILE_LOADING_MESSAGE = "Sorry! Server error while loading photos occured!";
+	private static final String ERROR_WHILE_DELETING = "Sorry! Server error while deleting photo occured!";
 	private static final String ERROR_WHILE_UPLOADING_MESSAGE = "Sorry! Server error while uploading new photo occured!";
 	private static final String ERROR_WHILE_CLOSING_CONNECTION = "Error while closing connection: ";
 	private static final String ERROR_WHILE_CLOSING_STATEMENT = "Error while closing statement: ";
@@ -36,6 +37,7 @@ public class SQLPhotosDAO implements PhotosDAO
 	private static final String GET_USER_ID_BY_NAME = "SELECT id_user FROM users WHERE username=?";
 	private static final String UPLOAD_NEW_PHOTO = "INSERT INTO photos(photographer, date_time, image, rating) VALUES(?, ?, ?, ?)";
 	private static final String UPDATE_PHOTO_RATING = "UPDATE photos SET rating=? WHERE photo_id=?";
+	private static final String DELETE_PHOTO = "DELETE FROM photos WHERE photo_id= ?";
 
 	private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 	
@@ -292,6 +294,58 @@ public class SQLPhotosDAO implements PhotosDAO
 		catch (SQLException e) 
 		{
 			log.error(UPDATE_RATING_ERROR + e.getMessage());
+			throw new DAOException(e);
+		}
+		finally
+		{
+			if(preparedStatement != null)
+			{
+				try 
+				{
+					preparedStatement.close();
+				} 
+				catch (SQLException e) 
+				{
+					log.error(ERROR_WHILE_CLOSING_STATEMENT + e.getMessage());
+				}
+			}
+			
+			if(connection != null)
+			{
+				connectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return true;
+	}
+	
+	public boolean deletePhoto(int photoId) throws DAOException
+	{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try
+		{
+			 connection = connectionPool.getConnection();
+		}
+		catch (ConnectionException e) 
+		{
+			throw new DAOException(e);
+		}
+		
+		try
+		{
+			preparedStatement = connection.prepareStatement(DELETE_PHOTO);
+			preparedStatement.setInt(1, photoId);
+			
+			if(preparedStatement.executeUpdate() < 1)
+			{
+				throw new DAOException(ERROR_WHILE_DELETING);
+			}
+		}
+		catch(SQLException e)
+		{
+			log.error(ERROR_WHILE_DELETING+e.getMessage());
 			throw new DAOException(e);
 		}
 		finally

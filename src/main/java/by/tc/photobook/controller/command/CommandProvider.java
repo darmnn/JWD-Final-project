@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import by.tc.photobook.controller.command.impl.Authorization;
 import by.tc.photobook.controller.command.impl.ChangeLocale;
+import by.tc.photobook.controller.command.impl.DeletePhoto;
 import by.tc.photobook.controller.command.impl.EditProfile;
 import by.tc.photobook.controller.command.impl.LoadAuthPage;
 import by.tc.photobook.controller.command.impl.LoadMainPage;
@@ -11,6 +12,7 @@ import by.tc.photobook.controller.command.impl.LoadPhoto;
 import by.tc.photobook.controller.command.impl.LoadPhotoPage;
 import by.tc.photobook.controller.command.impl.LoadProfilePage;
 import by.tc.photobook.controller.command.impl.LoadRegPage;
+import by.tc.photobook.controller.command.impl.LoadUserPage;
 import by.tc.photobook.controller.command.impl.Logout;
 import by.tc.photobook.controller.command.impl.NewComment;
 import by.tc.photobook.controller.command.impl.RatePhoto;
@@ -42,6 +44,8 @@ public class CommandProvider
         commands.put(CommandName.LOADPHOTOPAGE, new LoadPhotoPage());
         commands.put(CommandName.NEWCOMMENT, new NewComment());
         commands.put(CommandName.RATEPHOTO, new RatePhoto());
+        commands.put(CommandName.DELETEPHOTO, new DeletePhoto());
+        commands.put(CommandName.LOADUSERPAGE, new LoadUserPage());
     }
 
     public Command takeCommand(String name)

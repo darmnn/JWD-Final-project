@@ -16,7 +16,7 @@ import by.tc.photobook.service.ServiceProvider;
 
 public class RatePhoto implements Command
 {
-	private static final String COMMENT_ERROR_MESSAGE = "Your rate wasn't submitted, log in to rate photos!";
+	private static final String ERROR_MESSAGE = "Your rate wasn't submitted, log in to rate photos!";
 	private static final String USER_PARAM = "user";
 	private static final String PHOTO_PARAM = "photo";
 	private static final String RATING_PARAM = "rating";
@@ -29,7 +29,7 @@ public class RatePhoto implements Command
 		
 		if(session == null || session.getAttribute(USER_PARAM) == null)
 		{
-			response.sendRedirect(LOAD_PHOTO_PAGE_WITH_MESSAGE+COMMENT_ERROR_MESSAGE);
+			response.sendRedirect(LOAD_PHOTO_PAGE_WITH_MESSAGE+ERROR_MESSAGE);
 		}
 		
 		String photoInfo = request.getParameter(PHOTO_PARAM);

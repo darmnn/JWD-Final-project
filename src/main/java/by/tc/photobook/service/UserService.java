@@ -8,4 +8,5 @@ public interface UserService
 	public UserInfo authorization(UserInfo userInfo) throws ServiceException;
 	public boolean updateProfileDesc(String username, String newProfileDesc) throws ServiceException;
 	public boolean updateProfilePic(String username, String newProfilePicPath) throws ServiceException;
+	public UserInfo getInfoByUsername(String username) throws ServiceException;
 }

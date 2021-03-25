@@ -13,6 +13,7 @@ public class UserServiceImpl implements UserService
 {
 	private static final String INVALID_LOGIN_PASSWORD_MESSAGE = "Invalid login or password!";
 	private static final String NO_UPDATE_ERROR = "Server error! Changes are not saved";
+	private static final String LOADING_USER_ERROR = "Error while loading user data!";
 	
 	@Override
 	public boolean registration(UserInfo userInfo) throws ServiceException
@@ -108,5 +109,29 @@ public class UserServiceImpl implements UserService
 		}
 		
 		return updated;
+	}
+	
+	public UserInfo getInfoByUsername(String username) throws ServiceException
+	{
+		UserInfo user = null;
+		DAOProvider daoProvider = DAOProvider.getInstance();
+		UserDAO userDAO = daoProvider.getUserdao();
+		
+		try
+		{
+			user = userDAO.getInfoByUsername(username);
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e);
+		}
+				
+		if(user == null)
+		{
+			throw new ServiceException(LOADING_USER_ERROR);
+				
+		}
+		
+		return user;
 	}
 }

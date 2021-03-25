@@ -11,4 +11,5 @@ public interface PhotosService
 	public List<Photo> takeUserPhotos(UserInfo user) throws ServiceException;
 	public boolean addNewPhoto(Photo newPhoto) throws ServiceException;
 	public boolean updatePhotoRating(int photoId, int newRating) throws ServiceException;
+	public boolean deletePhoto(int photoId) throws ServiceException;
 }

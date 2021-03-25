@@ -38,6 +38,7 @@ div {
 
 .username-container {
 	font-weight: bolder;
+	position:relative;
 }
 
 .photo-container {
@@ -90,6 +91,7 @@ div {
 
 .btn-sm {
 	margin-top:1%;
+	display:inline-block;
 }
 
 .author_pic {
@@ -113,4 +115,15 @@ div {
 	margin-top:1%;
 	position: absolute;
 	left:40%;
+}
+
+.delete {
+	
+	display:inline-block;
+}
+
+.btn-danger {
+	position:absolute;
+	right: 1%;
+	margin-top:0px;
 }

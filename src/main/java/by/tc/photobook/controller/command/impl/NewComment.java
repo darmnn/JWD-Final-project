@@ -21,7 +21,6 @@ import by.tc.photobook.service.ServiceProvider;
 public class NewComment implements Command
 {
 	private static final String COMMENT_ERROR_MESSAGE = "Your comment wasn't submitted, log in to leave comments!";
-	private static final String MESSAGE_PARAM = "message";
 	private static final String USER_PARAM = "user";
 	private static final String PHOTO_PARAM = "photo";
 	private static final String COMMENT_PARAM = "comment_text";

@@ -19,6 +19,7 @@
     <fmt:message bundle="${loc}" key="button.new_comment" var="new_comment"/>
     <fmt:message bundle="${loc}" key="placeholder.new_comment" var="new_comment_placeholder"/>
     <fmt:message bundle="${loc}" key="button.rate" var="rate_button"/>
+    <fmt:message bundle="${loc}" key="button.delete" var="delete"/>
     <fmt:message bundle="${loc}" key="rate.message" var="rate"/>
 </head>
 <body>
@@ -46,7 +47,15 @@
 	
 	<div class="container">
         	<div class="card border-success mb-3 photo-container">
-  				<div class="card-header bg-transparent border-success username-container">${requestScope.photo.photographer }</div>
+  				<div class="card-header bg-transparent border-success username-container">
+  				<a href="Controller?command=loaduserpage&user=${photo.photographer}">${requestScope.photo.photographer }</a>
+  				<c:if test="${photo.photographer == sessionScope.user.username }">
+  					<form class="delete" action="Controller" method="post">
+  						<input type="hidden" name="photo_id" value="${photo.id }"/>
+  						<button type="submit" name="command" value="deletephoto" class="btn btn-danger btn-sm">${delete}</button>
+  					</form>
+  				</c:if>
+  				</div>
   				<div class="card-body text-success image-container">
     				<img class="photo" src="${requestScope.photo.imagePath }"/>
   				</div>
@@ -76,7 +85,17 @@
 			<c:forEach var = "comment" items = "${comments }">
 				<div class="card comment">
   				<div class="card-body">
-  					<p><img src="${comment.authorPic }" class="rounded-circle float-left author_pic"/>${comment.author }</p>
+  					<p>
+  					<c:choose>
+    				<c:when test="${comment.authorPic != null}">
+    					<img src="${comment.authorPic }" class="rounded-circle float-left author_pic"/>
+    				</c:when>
+    				<c:otherwise>
+    					<img src="images/user_pic.png" class="rounded-circle float-left author_pic"/>
+    				</c:otherwise>
+    				</c:choose>
+  					
+  					<a href="Controller?command=loaduserpage&user=${comment.author}">${comment.author }</a></p>
     				<div class="comment-text">${comment.text }</div>
     				<div class="date-comment">${comment.date }</div>
     			</div>

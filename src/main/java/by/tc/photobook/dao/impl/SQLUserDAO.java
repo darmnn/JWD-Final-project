@@ -26,12 +26,14 @@ public class SQLUserDAO implements UserDAO
 	private static final String ERROR_WHILE_CLOSING_CONNECTION = "Error while closing connection: ";
 	private static final String ERROR_WHILE_CLOSING_STATEMENT = "Error while closing statement: ";
 	private static final String ERROR_WHILE_CLOSING_RESULTSET = "Error while closing result set: ";
+	private static final String ERROR_WHILE_FINDING_USER = "Error while finding user! ";
 	
 	private static final String ADD_NEW_USER = "INSERT INTO users (username, password, email, role) "
 					+ "VALUES (?, ?, ?, ?)";
 	private static final String FIND_USER = "SELECT * FROM users WHERE username = ? AND password = ?";
 	private static final String UPDATE_PROFILE_DESC = "UPDATE users SET profile_desc = ? WHERE username = ?";
 	private static final String UPDATE_PROFILE_PIC = "UPDATE users SET profile_pic = ? WHERE username = ?";
+	private static final String FIND_USER_BY_USERNAME = "SELECT * FROM users WHERE username=?";
 	private static int role_client = 1; //to do - load from db
 	private static int role_ph = 2;
 	
@@ -287,5 +289,84 @@ public class SQLUserDAO implements UserDAO
 			}
 		}
 		return true;
+	}
+	
+	public UserInfo getInfoByUsername(String username) throws DAOException
+	{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		UserInfo user = null;
+		
+		try 
+		{
+			connection = connectionPool.getConnection();
+		} 
+		catch (ConnectionException e) 
+		{
+			throw new DAOException(e);
+		}
+		
+		try 
+		{
+			preparedStatement = connection.prepareStatement(FIND_USER_BY_USERNAME);
+			preparedStatement.setString(1, username);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next())
+			{
+				int userRole = resultSet.getInt(5);
+				if(userRole == 2)
+				{
+					user = new UserInfo(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(4),
+							resultSet.getString(3), true, resultSet.getString(6), resultSet.getString(7), 
+							resultSet.getInt(8));
+				}
+				else
+				{
+					user = new UserInfo(resultSet.getInt(1),resultSet.getString(2), resultSet.getString(4),
+							resultSet.getString(3), false, resultSet.getString(6), resultSet.getString(7), null);
+				}
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			log.error(ERROR_WHILE_FINDING_USER + e.getMessage());
+			throw new DAOException(e);
+		}
+		finally
+		{
+			if(resultSet != null)
+			{
+				try 
+				{
+					resultSet.close();
+				} 
+				catch (SQLException e) 
+				{
+					log.error(ERROR_WHILE_CLOSING_RESULTSET + e.getMessage());
+				}
+			}
+			
+			if(preparedStatement != null)
+			{
+				try 
+				{
+					preparedStatement.close();
+				} 
+				catch (SQLException e) 
+				{
+					log.error(ERROR_WHILE_CLOSING_STATEMENT + e.getMessage());
+				}
+			}
+			
+			if(connection != null)
+			{
+				connectionPool.releaseConnection(connection);
+			}
+		}
+		
+		return user;
 	}
 }

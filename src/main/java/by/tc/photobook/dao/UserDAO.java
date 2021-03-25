@@ -8,4 +8,5 @@ public interface UserDAO
 	public UserInfo authorization(UserInfo userInfo) throws DAOException;
 	public boolean updateProfileDesc(String username, String newProfileDesc) throws DAOException;
 	public boolean updateProfilePic(String username, String newProfilePicPath) throws DAOException;
+	public UserInfo getInfoByUsername(String username) throws DAOException;
 }
