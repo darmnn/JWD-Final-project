@@ -1,13 +1,18 @@
 package by.tc.photobook.controller.listener;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+
+import org.apache.log4j.Logger;
+
 
 import by.tc.photobook.dao.connection.ConnectionException;
 import by.tc.photobook.dao.connection.ConnectionPool;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 public class ContextListener implements ServletContextListener
 {
+	private static final Logger log = Logger.getLogger(ContextListener.class);
+	
 	public void contextInitialized(ServletContextEvent servletContextEvent)
 	{
 		try 
@@ -16,8 +21,7 @@ public class ContextListener implements ServletContextListener
 		} 
 		catch (ConnectionException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 	
@@ -26,10 +30,10 @@ public class ContextListener implements ServletContextListener
 		try 
 		{
 			ConnectionPool.getInstance().destroy();
-		}
+		} 
 		catch (ConnectionException e) 
 		{
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 }

@@ -12,7 +12,7 @@ public class PhotoInfoParser
 	private static final String DATE = "date=";
 	private static final String RATING = "rating=";
 	private static final String COMMA = ",";
-	private static final String CLOSING_BRACKET = "}";
+	private static final String CLOSING_BRACKET = ";";
 	private static final String DATE_DELIMITER = "-";
 	
 	private static final PhotoInfoParser instance = new PhotoInfoParser();

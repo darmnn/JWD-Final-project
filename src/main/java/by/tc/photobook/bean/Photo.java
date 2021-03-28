@@ -81,12 +81,12 @@ public class Photo
 
     @Override
     public String toString() {
-        return "Photo{" +
+        return "Photo:" +
                 "id=" + id +
                 ", photographer=" + photographer + 
                 ", date=" + date +
                 ", imagePath=" + imagePath +
                 ", rating=" + rating +
-                '}';
+                ';';
     }
 }

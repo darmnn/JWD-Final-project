@@ -19,7 +19,7 @@ public class UserValidatorImpl implements UserValidator
 	private static final String INVALID_EMAIL = "Invalid format of email!";
 	
 	private static final String NOT_CHARACTER_OR_NUMBER = "\\W";
-	private static final String EMAIL_FORMAT = "([.[^@\s]]+)@([.[^@\\s]]+)\\.([a-z]+)";
+	private static final String EMAIL_FORMAT = "([.[^@\\s]]+)@([.[^@\\s]]+)\\.([a-z]+)";
 	
 	private static final int MIN_LENGTH = 6;
 	private static final int MAX_LENGTH = 30;
@@ -27,6 +27,8 @@ public class UserValidatorImpl implements UserValidator
 	@Override
 	public boolean checkAuthData(UserInfo userInfo) throws ServiceException
 	{
+		System.out.println(userInfo.getUsername());
+		
 		if(userInfo.getUsername().isEmpty() || userInfo.getUsername() == null)
 		{
 			throw new ServiceException(EMPTY_USERNAME);
@@ -52,13 +54,13 @@ public class UserValidatorImpl implements UserValidator
 			throw new ServiceException(LONG_USERNAME);
 		}
 		
-		Pattern usernamePattern = Pattern.compile(NOT_CHARACTER_OR_NUMBER);
+		/*Pattern usernamePattern = Pattern.compile(NOT_CHARACTER_OR_NUMBER);
 		Matcher usernameMatcher = usernamePattern.matcher(userInfo.getUsername());
 		
 		if(usernameMatcher.find())
 		{
 			throw new ServiceException(INVALID_USERNAME);
-		}
+		}*/
 		
 		return true;
 	}

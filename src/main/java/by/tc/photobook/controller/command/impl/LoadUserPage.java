@@ -3,11 +3,8 @@ package by.tc.photobook.controller.command.impl;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
+import jakarta.servlet.*;
 
 import by.tc.photobook.bean.Photo;
 import by.tc.photobook.bean.UserInfo;
@@ -21,6 +18,7 @@ public class LoadUserPage implements Command
 {
 	private static final String USER_PARAM = "user";
 	private static final String URL_ATTRIBUTE = "url";
+	private static final String PARAM_ATTRIBUTE = "parameter";
 	private static final String MESSAGE_PARAM = "message";
 	private static final String PHOTOS_PARAM = "photos";
 	private static final String LOAD_USER_PAGE = "Controller?command=loaduserpage&user=";
@@ -31,7 +29,8 @@ public class LoadUserPage implements Command
 	{
 		String username = request.getParameter(USER_PARAM);
 		HttpSession session = request.getSession(true);
-		session.setAttribute(URL_ATTRIBUTE, LOAD_USER_PAGE+username);
+		session.setAttribute(URL_ATTRIBUTE, LOAD_USER_PAGE);
+		session.setAttribute(PARAM_ATTRIBUTE, username);
 		
 		ServiceProvider serviceProvider = ServiceProvider.getInstance();
 		UserService userService = serviceProvider.getUserService();

@@ -1,17 +1,18 @@
 package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.net.URLEncoder;
 
 import by.tc.photobook.controller.command.Command;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class ChangeLocale implements Command
 {
 	private static final String URL_ATTRIBUTE = "url";
+	private static final String PARAM_ATTRIBUTE = "parameter";
 	private static final String COMMAND_PARAM = "command";
 	private static final String LOCALE_ATTRIBUTE = "locale";
 	
@@ -20,10 +21,24 @@ public class ChangeLocale implements Command
 	{
 		HttpSession session = request.getSession(true);
 		String url = (String) session.getAttribute(URL_ATTRIBUTE);
+		String parameter = (String) session.getAttribute(PARAM_ATTRIBUTE);
+		
 		session.removeAttribute(URL_ATTRIBUTE);
+		if(parameter != null)
+		{
+			session.removeAttribute(PARAM_ATTRIBUTE);
+		}
 		String newLocale = request.getParameter(COMMAND_PARAM);
 		
 		session.setAttribute(LOCALE_ATTRIBUTE, newLocale);
-		response.sendRedirect(url);
+		if(parameter != null)
+		{
+			response.sendRedirect(url + URLEncoder.encode(parameter, "UTF-8"));
+		}
+		else
+		{
+			response.sendRedirect(url);
+		}
+		
 	}
 }

@@ -1,12 +1,11 @@
 package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 
 import by.tc.photobook.bean.Comment;
 import by.tc.photobook.bean.Photo;
@@ -57,11 +56,11 @@ public class NewComment implements Command
 		try 
 		{
 			commentAdded = commentsService.loadNewComment(newComment, photoId, userId);
-			response.sendRedirect(LOAD_PHOTO_PAGE+"&"+PHOTO_PARAM+"="+photo);
+			response.sendRedirect(LOAD_PHOTO_PAGE+"&"+PHOTO_PARAM+"="+URLEncoder.encode(photo.toString(), "UTF-8"));
 		} 
 		catch (ServiceException e) 
 		{
-			response.sendRedirect(LOAD_PHOTO_PAGE_WITH_MESSAGE + e.getMessage()+"&"+PHOTO_PARAM+"="+photo);
+			response.sendRedirect(LOAD_PHOTO_PAGE_WITH_MESSAGE + e.getMessage()+"&"+PHOTO_PARAM+"="+URLEncoder.encode(photo.toString(), "UTF-8"));
 		}
 	}
 }

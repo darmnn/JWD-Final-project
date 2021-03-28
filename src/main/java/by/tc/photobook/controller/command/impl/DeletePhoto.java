@@ -2,15 +2,14 @@ package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import by.tc.photobook.controller.command.Command;
 import by.tc.photobook.service.PhotosService;
 import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class DeletePhoto implements Command
 {

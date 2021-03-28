@@ -3,11 +3,11 @@
          xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id="WebApp_ID" version="2.5">
-  <display-name>photobook</display-name>
+
+  <display-name>Archetype Created Web Application</display-name>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-
   <servlet>
     <servlet-name>Controller</servlet-name>
     <servlet-class>by.tc.photobook.controller.Controller</servlet-class>
@@ -36,5 +36,5 @@
   <listener>
   	<listener-class>by.tc.photobook.controller.listener.ContextListener</listener-class>
   </listener>
- 
+  
 </web-app>

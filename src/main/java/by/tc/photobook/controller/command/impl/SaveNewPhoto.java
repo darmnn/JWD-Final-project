@@ -3,10 +3,8 @@ package by.tc.photobook.controller.command.impl;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 
 import by.tc.photobook.bean.Photo;
 import by.tc.photobook.bean.UserInfo;

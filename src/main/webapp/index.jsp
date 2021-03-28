@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Insert title here</title>
+    <title>Photobook</title>
 </head>
 <body>
     <c:redirect url="Controller?command=loadmainpage"/>

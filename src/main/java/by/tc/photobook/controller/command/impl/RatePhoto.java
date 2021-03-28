@@ -1,11 +1,10 @@
 package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
+import jakarta.servlet.*;
 
 import by.tc.photobook.bean.Photo;
 import by.tc.photobook.controller.command.Command;
@@ -50,7 +49,7 @@ public class RatePhoto implements Command
 		try
 		{
 			photosService.updatePhotoRating(photoId, rating);
-			response.sendRedirect(LOAD_PHOTO_PAGE+"&"+PHOTO_PARAM+"="+photo);
+			response.sendRedirect(LOAD_PHOTO_PAGE+"&"+PHOTO_PARAM+"="+URLEncoder.encode(photo.toString(), "UTF-8"));
 		}
 		catch (ServiceException e) 
 		{

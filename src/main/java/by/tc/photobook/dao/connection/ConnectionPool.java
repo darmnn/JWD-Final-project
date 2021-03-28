@@ -2,8 +2,6 @@ package by.tc.photobook.dao.connection;
 
 import java.sql.Connection;
 
-
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -18,6 +16,7 @@ public final class ConnectionPool
 	private static final String TAKING_CONNECTION_ERROR_MESSAGE = "Error while taking connection!";
 	private static final String CREATION_ERROR = "Error while creating connection pool: ";
 	private static final String INIT_ERROR = "Error while initializing connection pool: ";
+	private static final String CLOSING_CONNECTION_ERROR = "Error while closing connection: ";
 	
 	private String driver;
 	private String url;
@@ -106,8 +105,44 @@ public final class ConnectionPool
 		return false;
 	}
 	
+	private void closeConnectionQueue(BlockingQueue<Connection> queue) throws ConnectionException 
+	{
+		Connection connection;
+		
+		while ((connection = queue.poll()) != null) 
+		{
+			try 
+			{
+				if (!connection.getAutoCommit()) 
+				{
+					connection.commit();
+				}
+				
+				try 
+				{
+					connection.close();
+				} 
+				catch (SQLException e) 
+				{
+					throw new ConnectionException(CLOSING_CONNECTION_ERROR, e);
+				}
+
+			} 
+			catch (SQLException e) 
+			{
+				throw new ConnectionException(CLOSING_CONNECTION_ERROR, e);
+			}
+		}
+	}
+	
+	private void clearConnectionQueue() throws ConnectionException
+	{
+		closeConnectionQueue(connectionQueue);
+		closeConnectionQueue(usedConnections);
+	}
+	
 	public void destroy() throws ConnectionException
 	{
-		//to do
+		clearConnectionQueue();
 	}
 }
