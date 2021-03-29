@@ -7,4 +7,6 @@ import by.tc.photobook.bean.PhotoshootOption;
 public interface PhotoshootOptionsDAO 
 {
 	public List<PhotoshootOption> getPhotoshootOptions(int photographer) throws DAOException;
+	public boolean addPhotoshootOption(int photographer, int photoshootType, double price) throws DAOException;
+	public boolean deletePhotoshootOption(int photoshootOption) throws DAOException;
 }

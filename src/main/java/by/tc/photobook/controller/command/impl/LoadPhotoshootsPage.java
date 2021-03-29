@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.List;
 
 import by.tc.photobook.bean.PhotoshootOption;
+import by.tc.photobook.bean.PhotoshootType;
 import by.tc.photobook.bean.UserInfo;
 import by.tc.photobook.controller.command.Command;
 import by.tc.photobook.service.PhotoshootOptionsService;
+import by.tc.photobook.service.PhotoshootTypesService;
 import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 import jakarta.servlet.RequestDispatcher;
@@ -22,11 +24,14 @@ public class LoadPhotoshootsPage implements Command
 	private static final String USER_ATTRIBUTE = "user";
 	private static final String PH_OPTIONS_PARAM = "photoshoot_options";
 	private static final String URL_ATTRIBUTE = "url";
+	private static final String ADD_PHOTOSHOOT_ATTRIBUTE = "add_photoshoot";
 	private static final String PARAM_ATTRIBUTE = "parameter";
+	private static final String PHOTOSHOOT_TYPES_ATTR = "photoshoot_types";
 	private static final String MESSAGE_PARAM = "message";
+	private static final String PHOTOSHOOT_OPTION_PARAM = "option_to_edit";
 	private static final String LOAD_MAIN_PAGE_WITH_ERROR = "Controller?command=loadmainpage&message=Session is expired!";
-	private static final String LOAD_PROFILE_PAGE_WITH_MESSAGE = "Controller?command=loadpprofilepage&message=";
 	private static final String LOAD_PHOTOSHOOT_PAGE = "Controller?command=loadphotoshootpage";
+	private static final String LOAD_PHOTOSHOOT_PAGE_WITH_MESSAGE = "Controller?command=loadphotoshootpage&message=";
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
@@ -39,6 +44,12 @@ public class LoadPhotoshootsPage implements Command
 		
 		session.setAttribute(URL_ATTRIBUTE, LOAD_PHOTOSHOOT_PAGE);
 		session.setAttribute(PARAM_ATTRIBUTE, null);
+		
+		String message = request.getParameter(MESSAGE_PARAM);
+		if(message != null)
+		{
+			session.setAttribute(URL_ATTRIBUTE, LOAD_PHOTOSHOOT_PAGE_WITH_MESSAGE+message);
+		}
 		
 		if(session.getAttribute(AUTH_ATTRIBUTE) != null && session.getAttribute(USER_ATTRIBUTE) != null)
 		{
@@ -56,8 +67,35 @@ public class LoadPhotoshootsPage implements Command
 			{
 				request.setAttribute(MESSAGE_PARAM, e.getMessage());
 			}
+			
+			try
+			{
+				if(request.getParameter(ADD_PHOTOSHOOT_ATTRIBUTE) != null || request.getParameter(PHOTOSHOOT_OPTION_PARAM) != null)
+				{
+					PhotoshootTypesService phTypesService = serviceProvider.getPhotoshootTypesService();
+					List<PhotoshootType> allTypes = phTypesService.takeAll();
+					request.setAttribute(PHOTOSHOOT_TYPES_ATTR, allTypes);
+				}
+			}
+			catch(ServiceException e)
+			{
+				request.setAttribute(MESSAGE_PARAM, e.getMessage());
+			}
+			
 			finally
 			{
+				if(request.getParameter(ADD_PHOTOSHOOT_ATTRIBUTE) != null)
+				{
+					request.setAttribute(ADD_PHOTOSHOOT_ATTRIBUTE, true);
+				}
+				
+				if(request.getParameter(PHOTOSHOOT_OPTION_PARAM) != null)
+				{
+					String phOptionToEdit = request.getParameter(PHOTOSHOOT_OPTION_PARAM);
+					request.setAttribute(PHOTOSHOOT_OPTION_PARAM, phOptionToEdit);
+				}
+				
+				request.setAttribute(MESSAGE_PARAM, message);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(PHOTOSHOOT_PAGE_PATH);
 				requestDispatcher.forward(request, response);
 			}

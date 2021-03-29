@@ -7,4 +7,6 @@ import by.tc.photobook.bean.PhotoshootOption;
 public interface PhotoshootOptionsService 
 {
 	public List<PhotoshootOption> getPhotoshootOptions(int photographer) throws ServiceException;
+	public boolean addPhotoshootOption(int photographer, int photoshootType, double price) throws ServiceException;
+	public boolean deletePhotoshootOption(int photoshootOption) throws ServiceException;
 }

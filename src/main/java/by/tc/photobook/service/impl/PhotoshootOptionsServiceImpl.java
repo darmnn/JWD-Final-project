@@ -35,4 +35,38 @@ public class PhotoshootOptionsServiceImpl implements PhotoshootOptionsService
 		
 		return allOptions;
 	}
+	
+	public boolean addPhotoshootOption(int photographer, int photoshootType, double price) throws ServiceException
+	{
+		DAOProvider daoProvider = DAOProvider.getInstance();
+		PhotoshootOptionsDAO phOptionsDAO = daoProvider.getPhotoshootOptionsDAO();
+		
+		try 
+		{
+			phOptionsDAO.addPhotoshootOption(photographer, photoshootType, price);
+		} 
+		catch (DAOException e) 
+		{
+			throw new ServiceException(e);
+		}
+		
+		return true;
+	}
+	
+	public boolean deletePhotoshootOption(int photoshootOption) throws ServiceException
+	{
+		DAOProvider daoProvider = DAOProvider.getInstance();
+		PhotoshootOptionsDAO phOptionsDAO = daoProvider.getPhotoshootOptionsDAO();
+		
+		try
+		{
+			phOptionsDAO.deletePhotoshootOption(photoshootOption);
+		}
+		catch (DAOException e) 
+		{
+			throw new ServiceException(e);
+		}
+		
+		return true;
+	}
 }

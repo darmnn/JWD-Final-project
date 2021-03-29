@@ -1,0 +1,12 @@
+.container {
+	width:80%;
+}
+
+.add-form {
+	position:relative;
+}
+
+.add-btn {
+	position: absolute;
+	right:0px;
+}

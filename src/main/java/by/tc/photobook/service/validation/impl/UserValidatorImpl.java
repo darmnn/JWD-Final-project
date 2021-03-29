@@ -27,8 +27,6 @@ public class UserValidatorImpl implements UserValidator
 	@Override
 	public boolean checkAuthData(UserInfo userInfo) throws ServiceException
 	{
-		System.out.println(userInfo.getUsername());
-		
 		if(userInfo.getUsername().isEmpty() || userInfo.getUsername() == null)
 		{
 			throw new ServiceException(EMPTY_USERNAME);

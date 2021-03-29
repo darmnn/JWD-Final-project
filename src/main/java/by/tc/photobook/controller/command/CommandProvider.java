@@ -2,9 +2,12 @@ package by.tc.photobook.controller.command;
 
 import java.util.HashMap;
 
+import by.tc.photobook.controller.command.impl.AddPhotoshoot;
 import by.tc.photobook.controller.command.impl.Authorization;
 import by.tc.photobook.controller.command.impl.ChangeLocale;
 import by.tc.photobook.controller.command.impl.DeletePhoto;
+import by.tc.photobook.controller.command.impl.DeletePhotoshoot;
+import by.tc.photobook.controller.command.impl.EditPhotoshoot;
 import by.tc.photobook.controller.command.impl.EditProfile;
 import by.tc.photobook.controller.command.impl.LoadAuthPage;
 import by.tc.photobook.controller.command.impl.LoadMainPage;
@@ -21,6 +24,7 @@ import by.tc.photobook.controller.command.impl.Registration;
 import by.tc.photobook.controller.command.impl.SaveChanges;
 import by.tc.photobook.controller.command.impl.SaveNewPhoto;
 import by.tc.photobook.controller.command.impl.SavePhotoChanges;
+import by.tc.photobook.controller.command.impl.SavePhotoshoot;
 
 public class CommandProvider
 {
@@ -48,6 +52,10 @@ public class CommandProvider
         commands.put(CommandName.DELETEPHOTO, new DeletePhoto());
         commands.put(CommandName.LOADUSERPAGE, new LoadUserPage());
         commands.put(CommandName.LOADPHOTOSHOOTPAGE, new LoadPhotoshootsPage());
+        commands.put(CommandName.ADDPHOTOSHOOT, new AddPhotoshoot());
+        commands.put(CommandName.SAVEPHOTOSHOOT, new SavePhotoshoot());
+        commands.put(CommandName.DELETEPHOTOSHOOT, new DeletePhotoshoot());
+        commands.put(CommandName.EDITPHOTOSHOOT, new EditPhotoshoot());
     }
 
     public Command takeCommand(String name)

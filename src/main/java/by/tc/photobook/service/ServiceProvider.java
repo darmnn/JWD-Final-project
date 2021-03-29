@@ -3,6 +3,7 @@ package by.tc.photobook.service;
 import by.tc.photobook.service.impl.CommentsServiceImpl;
 import by.tc.photobook.service.impl.PhotosServiceImpl;
 import by.tc.photobook.service.impl.PhotoshootOptionsServiceImpl;
+import by.tc.photobook.service.impl.PhotoshootTypesServiceImpl;
 import by.tc.photobook.service.impl.UserServiceImpl;
 
 public class ServiceProvider 
@@ -15,6 +16,7 @@ public class ServiceProvider
 	private final PhotosService photosService = new PhotosServiceImpl();
 	private final CommentsService commentsService = new CommentsServiceImpl();
 	private final PhotoshootOptionsService phOptionsService = new PhotoshootOptionsServiceImpl();
+	private final PhotoshootTypesService phTypesService = new PhotoshootTypesServiceImpl();
 	
 	public static ServiceProvider getInstance() 
 	{
@@ -39,5 +41,10 @@ public class ServiceProvider
 	public PhotoshootOptionsService getPhotoshootOptionsService()
 	{
 		return phOptionsService;
+	}
+	
+	public PhotoshootTypesService getPhotoshootTypesService() 
+	{
+		return phTypesService;
 	}
 }
