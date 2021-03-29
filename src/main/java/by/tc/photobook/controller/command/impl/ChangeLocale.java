@@ -19,7 +19,7 @@ public class ChangeLocale implements Command
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(false);
 		String url = (String) session.getAttribute(URL_ATTRIBUTE);
 		String parameter = (String) session.getAttribute(PARAM_ATTRIBUTE);
 		
@@ -27,6 +27,7 @@ public class ChangeLocale implements Command
 		if(parameter != null)
 		{
 			session.removeAttribute(PARAM_ATTRIBUTE);
+			
 		}
 		String newLocale = request.getParameter(COMMAND_PARAM);
 		

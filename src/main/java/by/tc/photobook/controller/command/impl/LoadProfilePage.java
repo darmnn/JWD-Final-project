@@ -23,6 +23,7 @@ public class LoadProfilePage implements Command
 	private static final String USER_ATTRIBUTE = "user";
 	private static final String PHOTOS_ATTRIBUTE = "photos";
 	private static final String URL_ATTRIBUTE = "url";
+	private static final String PARAM_ATTRIBUTE = "parameter";
 	private static final String MESSAGE_PARAM = "message";
 	private static final String EDIT_PARAM = "edit";
 	private static final String ADD_PHOTO_PARAM = "add_photo";
@@ -61,6 +62,7 @@ public class LoadProfilePage implements Command
     	{
     		session.setAttribute(URL_ATTRIBUTE, LOAD_PROFILE_PAGE);
     	}
+    	session.setAttribute(PARAM_ATTRIBUTE, null);
 		
 		if(session.getAttribute(AUTH_ATTRIBUTE) != null && session.getAttribute(USER_ATTRIBUTE) != null)
 		{

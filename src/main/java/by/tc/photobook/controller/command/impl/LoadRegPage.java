@@ -14,6 +14,7 @@ public class LoadRegPage implements Command
 	private static final String REG_PAGE_PATH = "/WEB-INF/jsp/registration.jsp";
 	private static final String MESSAGE_PARAM = "message";
 	private static final String URL_ATTRIBUTE = "url";
+	private static final String PARAM_ATTRIBUTE = "parameter";
 	private static final String LOAD_REG_PAGE_WITH_MESSAGE = "Controller?command=loadregpage&message=";
 	private static final String LOAD_REG_PAGE = "Controller?command=loadregpage";
 	
@@ -30,6 +31,7 @@ public class LoadRegPage implements Command
     	{
     		session.setAttribute(URL_ATTRIBUTE, LOAD_REG_PAGE);
     	}
+		session.setAttribute(PARAM_ATTRIBUTE, null);
 		
 		request.setAttribute(MESSAGE_PARAM, message);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(REG_PAGE_PATH);

@@ -17,6 +17,7 @@
     <fmt:message bundle="${loc}" key="button.profile" var="profile"/>
     <fmt:message bundle="${loc}" key="button.en" var="en"/>
     <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
+    <fmt:message bundle="${loc}" key="button.photoshoots" var="photoshoots"/>
     
 </head>
 <body>
@@ -65,6 +66,9 @@
             	<c:forEach var = "i" begin = "1" end = "${user.totalRating }">
                 	<img src="images/star.png" class="float-left star"/>
                 </c:forEach>
+                <form action="Controller" method="post" class="form-edit">
+              			<button type="submit" name="command" value="loadphotoshootpage" class="btn btn-primary edit">${photoshoots }</button>
+              		</form>
             </c:if>
     	</div>
     </div>

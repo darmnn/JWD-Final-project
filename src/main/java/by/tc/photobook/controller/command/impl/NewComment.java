@@ -1,6 +1,7 @@
 package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
+
 import java.net.URLEncoder;
 import java.time.LocalDate;
 
@@ -13,7 +14,6 @@ import by.tc.photobook.bean.UserInfo;
 import by.tc.photobook.controller.command.Command;
 import by.tc.photobook.controller.parser.PhotoInfoParser;
 import by.tc.photobook.service.CommentsService;
-import by.tc.photobook.service.PhotosService;
 import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 
@@ -51,11 +51,10 @@ public class NewComment implements Command
 		
 		ServiceProvider serviceProvider = ServiceProvider.getInstance();
         CommentsService commentsService = serviceProvider.getCommentsService();
-		boolean commentAdded = false;
 		
 		try 
 		{
-			commentAdded = commentsService.loadNewComment(newComment, photoId, userId);
+			commentsService.loadNewComment(newComment, photoId, userId);
 			response.sendRedirect(LOAD_PHOTO_PAGE+"&"+PHOTO_PARAM+"="+URLEncoder.encode(photo.toString(), "UTF-8"));
 		} 
 		catch (ServiceException e) 

@@ -10,6 +10,7 @@ import by.tc.photobook.controller.command.impl.LoadAuthPage;
 import by.tc.photobook.controller.command.impl.LoadMainPage;
 import by.tc.photobook.controller.command.impl.LoadPhoto;
 import by.tc.photobook.controller.command.impl.LoadPhotoPage;
+import by.tc.photobook.controller.command.impl.LoadPhotoshootsPage;
 import by.tc.photobook.controller.command.impl.LoadProfilePage;
 import by.tc.photobook.controller.command.impl.LoadRegPage;
 import by.tc.photobook.controller.command.impl.LoadUserPage;
@@ -46,6 +47,7 @@ public class CommandProvider
         commands.put(CommandName.RATEPHOTO, new RatePhoto());
         commands.put(CommandName.DELETEPHOTO, new DeletePhoto());
         commands.put(CommandName.LOADUSERPAGE, new LoadUserPage());
+        commands.put(CommandName.LOADPHOTOSHOOTPAGE, new LoadPhotoshootsPage());
     }
 
     public Command takeCommand(String name)

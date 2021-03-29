@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpSession;
 
 public class DeletePhoto implements Command
 {
-	private static final String MESSAGE_PARAM = "message";
 	private static final String PHOTOID_PARAM = "photo_id";
 	private static final String USER_PARAM = "user";
 	private static final String ERROR_MESSAGE = "Your photo wasn't deleted! Session is expired, please log in";

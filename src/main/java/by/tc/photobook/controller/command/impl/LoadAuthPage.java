@@ -15,6 +15,7 @@ public class LoadAuthPage implements Command
 	private static final String AUTH_PAGE_PATH = "/WEB-INF/jsp/authorization.jsp";
 	private static final String MESSAGE_PARAM = "message";
 	private static final String URL_ATTRIBUTE = "url";
+	private static final String PARAM_ATTRIBUTE = "parameter";
 	private static final String LOAD_AUTH_PAGE_WITH_MESSAGE = "Controller?command=loadauthpage&message=";
 	private static final String LOAD_AUTH_PAGE = "Controller?command=loadauthpage";
 	
@@ -31,6 +32,7 @@ public class LoadAuthPage implements Command
     	{
     		session.setAttribute(URL_ATTRIBUTE, LOAD_AUTH_PAGE);
     	}
+		session.setAttribute(PARAM_ATTRIBUTE, null);
 		
 		request.setAttribute(MESSAGE_PARAM, message);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(AUTH_PAGE_PATH);

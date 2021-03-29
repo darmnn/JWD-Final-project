@@ -16,6 +16,7 @@
     <fmt:message bundle="${loc}" key="button.save" var="save"/>
     <fmt:message bundle="${loc}" key="button.en" var="en"/>
     <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
+    <fmt:message bundle="${loc}" key="button.photoshoots" var="photoshoots"/>
     <fmt:message bundle="${loc}" key="button.add_photo" var="add_photo"/>
     
 </head>
@@ -69,6 +70,9 @@
               		</c:if>
               		<form action="Controller" method="post" class="form-edit">
               			<button type="submit" name="command" value="editprofile" class="btn btn-primary edit">${edit }</button>
+              		</form>
+              		<form action="Controller" method="post" class="form-edit">
+              			<button type="submit" name="command" value="loadphotoshootpage" class="btn btn-primary edit">${photoshoots }</button>
               		</form>
     			</c:otherwise>
     		</c:choose>

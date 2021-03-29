@@ -19,6 +19,7 @@ public class LoadMainPage implements Command
 {
 	private static final String MAIN_PAGE_PATH = "/WEB-INF/jsp/main_page.jsp";
 	private static final String PHOTOS_ATTRIBUTE = "photos";
+	private static final String PARAM_ATTRIBUTE = "parameter";
 	private static final String MESSAGE_PARAM = "message";
 	private static final String LOAD_MAIN_PAGE_WITH_MESSAGE = "Controller?command=loadmainpage&message=";
 	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage";
@@ -36,6 +37,7 @@ public class LoadMainPage implements Command
     	{
     		session.setAttribute(URL_ATTRIBUTE, LOAD_MAIN_PAGE);
     	}
+    	session.setAttribute(PARAM_ATTRIBUTE, null);
     	
     	ServiceProvider serviceProvider = ServiceProvider.getInstance();
     	PhotosService photosService = serviceProvider.getPhotosService();
