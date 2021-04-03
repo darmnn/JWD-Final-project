@@ -1,0 +1,72 @@
+.header-profile {
+    align-items: rigth;
+    height:100%;
+    display: flex;
+    flex-direction: row-reverse;
+    width:50%
+}
+
+.loadmain {
+	text-decoration: none;
+	margin-left: 3%;
+	margin-bottom: 1.5%;
+	font-size: 2rem;
+	line-height: 100%;
+}
+
+.outer {
+	width: 45%;
+    margin-top: 3%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.inner{
+    width: 100%;
+    margin-left: 5%;
+}
+
+.username{
+    font-size: 1.2rem;
+    margin-bottom: 3.5%;
+}
+
+.about{
+    margin-bottom: 2%;
+    width: 80%;
+}
+
+.about-body{
+    padding: 2.5%;
+    color: #5b5b5b;
+    font-size: 0.88rem;
+}
+
+.star{
+    height: 15px;
+    width: 15px;
+    margin-right: 1%;
+}
+
+.all_photos{
+    margin-top: 6%;
+    width: 70%;
+}
+
+.form-edit {
+	display: inline;
+}
+
+.edit{
+	height:30px;
+    font-size: 0.88rem;
+    background-color: #e3f2fd;
+    color: #007BFF;
+    margin-left: 34%;
+    line-height: 100%;
+}
+
+textarea {
+	width: 100%;
+}

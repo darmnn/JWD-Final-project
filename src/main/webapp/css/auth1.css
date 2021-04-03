@@ -1,0 +1,47 @@
+div {
+     color: #007BFF;
+ }
+ 
+.navbar {
+    height: 8vh;
+    background-color: #e3f2fd;
+}
+
+.loadmain {
+	text-decoration: none;
+	margin-left: 3%;
+	font-size: 2rem;
+	line-height: 100%;
+}
+
+.form-control {
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom:3%;
+}
+
+.check {
+	margin-bottom:4%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+	margin-top:-4%;
+}
+
+.container {
+    overflow: hidden;
+    flex-direction: column;
+    width:30%;
+
+}
+
+.error-msg {
+	margin-top:5%;
+}
