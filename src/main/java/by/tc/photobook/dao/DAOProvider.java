@@ -1,6 +1,7 @@
 package by.tc.photobook.dao;
 
 import by.tc.photobook.dao.impl.SQLCommentsDAO;
+import by.tc.photobook.dao.impl.SQLComplaintsDAO;
 import by.tc.photobook.dao.impl.SQLOrdersDAO;
 import by.tc.photobook.dao.impl.SQLPhotosDAO;
 import by.tc.photobook.dao.impl.SQLPhotoshootOptionsDAO;
@@ -17,6 +18,7 @@ public class DAOProvider
 	private final PhotoshootOptionsDAO phOptionsDAO = new SQLPhotoshootOptionsDAO();
 	private final PhotoshootTypesDAO phTypesDAO = new SQLPhotoshootTypesDAO();
 	private final OrdersDAO ordersDAO = new SQLOrdersDAO();
+	private final ComplaintsDAO complaintsDAO = new SQLComplaintsDAO();
 	
 	private DAOProvider() {}
 	
@@ -51,5 +53,10 @@ public class DAOProvider
 	public OrdersDAO getOrdersDAO()
 	{
 		return ordersDAO;
+	}
+	
+	public ComplaintsDAO getComplaintsDAO()
+	{
+		return complaintsDAO;
 	}
 }

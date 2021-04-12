@@ -2,11 +2,12 @@ package by.tc.photobook.view;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.log4j.Logger;
+
+import jakarta.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.tagext.TagSupport;
 
 
 public class WelcomeTag extends TagSupport

@@ -1,5 +1,7 @@
 package by.tc.photobook.service.impl;
 
+import java.util.List;
+
 import by.tc.photobook.bean.UserInfo;
 import by.tc.photobook.dao.DAOException;
 import by.tc.photobook.dao.DAOProvider;
@@ -13,6 +15,8 @@ import by.tc.photobook.service.validation.ValidatorProvider;
 public class UserServiceImpl implements UserService
 {
 	private static final String INVALID_LOGIN_PASSWORD_MESSAGE = "message.invalid_login_password";
+	private static final String UNLOCK_ACTION = "unlock";
+	private static final String BLOCK_ACTION = "block";
 	
 	@Override
 	public boolean registration(UserInfo userInfo) throws ServiceException
@@ -124,5 +128,50 @@ public class UserServiceImpl implements UserService
 		}
 		
 		return user;
+	}
+	
+	public List<UserInfo> getAllUsers() throws ServiceException
+	{
+		List<UserInfo> allUsers = null;
+		DAOProvider daoProvider = DAOProvider.getInstance();
+		UserDAO userDAO = daoProvider.getUserdao();
+		
+		try
+		{
+			allUsers = userDAO.getAllUsers();
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e.getDescription(), e);
+		}
+		
+		return allUsers;
+	}
+	
+	public boolean blockUnlock(int userId, String actionString) throws ServiceException
+	{
+		DAOProvider daoProvider = DAOProvider.getInstance();
+		UserDAO userDAO = daoProvider.getUserdao();
+		int action;
+		
+		if(actionString.equals(UNLOCK_ACTION))
+		{
+			action = 1;
+		}
+		else
+		{
+			action = 2;
+		}
+		
+		try
+		{
+			userDAO.blockUnlock(userId, action);
+		}
+		catch(DAOException e)
+		{
+			throw new ServiceException(e.getDescription(), e);
+		}
+		
+		return true;
 	}
 }

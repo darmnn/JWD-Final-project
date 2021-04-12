@@ -5,13 +5,19 @@ import java.util.HashMap;
 
 
 
+
 import by.tc.photobook.controller.command.impl.AddPhotoshootType;
 import by.tc.photobook.controller.command.impl.Authorization;
+import by.tc.photobook.controller.command.impl.BlockUnlock;
 import by.tc.photobook.controller.command.impl.CancelOrder;
 import by.tc.photobook.controller.command.impl.ChangeLocale;
+import by.tc.photobook.controller.command.impl.DeleteComment;
 import by.tc.photobook.controller.command.impl.DeletePhoto;
 import by.tc.photobook.controller.command.impl.DeletePhotoshoot;
+import by.tc.photobook.controller.command.impl.LoadAllUsers;
 import by.tc.photobook.controller.command.impl.LoadAuthPage;
+import by.tc.photobook.controller.command.impl.LoadComplaintsPage;
+import by.tc.photobook.controller.command.impl.LoadEmailPage;
 import by.tc.photobook.controller.command.impl.LoadMainPage;
 import by.tc.photobook.controller.command.impl.LoadOrdersPage;
 import by.tc.photobook.controller.command.impl.LoadPhotoPage;
@@ -19,19 +25,23 @@ import by.tc.photobook.controller.command.impl.LoadPhotoshoots;
 import by.tc.photobook.controller.command.impl.LoadPhotoshootsPage;
 import by.tc.photobook.controller.command.impl.LoadProfilePage;
 import by.tc.photobook.controller.command.impl.LoadRegPage;
+import by.tc.photobook.controller.command.impl.LoadReportPage;
 import by.tc.photobook.controller.command.impl.LoadUserPage;
 import by.tc.photobook.controller.command.impl.Logout;
 import by.tc.photobook.controller.command.impl.NewComment;
+import by.tc.photobook.controller.command.impl.NewComplaint;
 import by.tc.photobook.controller.command.impl.OrderPhotoshoot;
 import by.tc.photobook.controller.command.impl.ProcessOrder;
 import by.tc.photobook.controller.command.impl.RatePhoto;
 import by.tc.photobook.controller.command.impl.Registration;
 import by.tc.photobook.controller.command.impl.SaveChanges;
-import by.tc.photobook.controller.command.impl.SaveNewPhoto;
 import by.tc.photobook.controller.command.impl.SaveOrder;
 import by.tc.photobook.controller.command.impl.SavePhotoChanges;
 import by.tc.photobook.controller.command.impl.SavePhotoshoot;
 import by.tc.photobook.controller.command.impl.SavePhotoshootEdit;
+import by.tc.photobook.controller.command.impl.SearchUser;
+import by.tc.photobook.controller.command.impl.SendEmail;
+import by.tc.photobook.controller.command.impl.ViewComplaint;
 
 public class CommandProvider
 {
@@ -50,7 +60,6 @@ public class CommandProvider
         commands.put(CommandName.SAVEPHOTOCHANGES, new SavePhotoChanges());
         commands.put(CommandName.EN, new ChangeLocale());
         commands.put(CommandName.RU, new ChangeLocale());
-        commands.put(CommandName.SAVENEWPHOTO, new SaveNewPhoto());
         commands.put(CommandName.LOADPHOTOPAGE, new LoadPhotoPage());
         commands.put(CommandName.NEWCOMMENT, new NewComment());
         commands.put(CommandName.RATEPHOTO, new RatePhoto());
@@ -67,6 +76,16 @@ public class CommandProvider
         commands.put(CommandName.LOADORDERSPAGE, new LoadOrdersPage());
         commands.put(CommandName.CANCELORDER, new CancelOrder());
         commands.put(CommandName.ADDPHOTOSHOOTTYPE, new AddPhotoshootType());
+        commands.put(CommandName.LOADEMAILPAGE, new LoadEmailPage());
+        commands.put(CommandName.SENDEMAIL, new SendEmail());
+        commands.put(CommandName.SEARCHUSER, new SearchUser());
+        commands.put(CommandName.LOADALLUSERSPAGE, new LoadAllUsers());
+        commands.put(CommandName.BLOCKUNLOCK, new BlockUnlock());
+        commands.put(CommandName.DELETECOMMENT, new DeleteComment());
+        commands.put(CommandName.NEWCOMPLAINT, new NewComplaint());
+        commands.put(CommandName.LOADREPORTPAGE, new LoadReportPage());
+        commands.put(CommandName.LOADCOMPLAINTSPAGE, new LoadComplaintsPage());
+        commands.put(CommandName.VIEWCOMPLAINT, new ViewComplaint());
     }
 
     public Command takeCommand(String name)

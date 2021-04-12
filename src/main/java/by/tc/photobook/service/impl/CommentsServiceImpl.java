@@ -47,4 +47,21 @@ public class CommentsServiceImpl implements CommentsService
 		
 		return true;
 	}
+	
+	public boolean deleteComment(int commentId) throws ServiceException
+	{
+		DAOProvider daoProvider = DAOProvider.getInstance();
+		CommentsDAO commentsDAO = daoProvider.getCommentsDAO();
+		
+		try 
+		{
+			commentsDAO.deleteComment(commentId);
+		} 
+		catch (DAOException e) 
+		{
+			throw new ServiceException(e.getDescription(), e);
+		}
+		
+		return true;
+	}
 }

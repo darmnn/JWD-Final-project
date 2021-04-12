@@ -1,19 +1,22 @@
 package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import by.tc.photobook.bean.Order;
 import by.tc.photobook.bean.PhotoshootOption;
-import by.tc.photobook.bean.UserInfo;
+import by.tc.photobook.bean.Timetable;
 import by.tc.photobook.controller.command.Command;
+import by.tc.photobook.service.OrdersService;
 import by.tc.photobook.service.PhotoshootOptionsService;
 import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 public class LoadPhotoshoots implements Command
 {
@@ -29,6 +32,8 @@ public class LoadPhotoshoots implements Command
 	private static final String SESSION_EXPIRED_MESSAGE="message.session_expired";
 	private static final String LOAD_MAIN_PAGE_WITH_MESSAGE = "Controller?command=loadmainpage&message=";
 	private static final String LOAD_PHOTOSHOOT_PAGE = "Controller?command=loadphotoshoots&photographer=";
+	private static final String TIMETABLE_PARAM = "timetable";
+	private static final String DAYS_PARAM = "days";
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -46,15 +51,25 @@ public class LoadPhotoshoots implements Command
 			session.setAttribute(URL_ATTRIBUTE, LOAD_PHOTOSHOOT_PAGE);
 			session.setAttribute(PARAM_ATTRIBUTE, photographer.toString());
 			
-			UserInfo user = (UserInfo) session.getAttribute(USER_ATTRIBUTE);
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			PhotoshootOptionsService phOptionsService = serviceProvider.getPhotoshootOptionsService();
+			OrdersService ordersService = serviceProvider.getOrdersService();
 			List<PhotoshootOption> allOptions = null;
 				
 			try
 			{
 				allOptions = phOptionsService.getPhotoshootOptions(photographer);
 				request.setAttribute(PH_OPTIONS_PARAM, allOptions);
+				
+				Timetable[] timetable = ordersService.getTimetable();
+				ArrayList<HashMap<Integer, Order>> daysOfMonths = new ArrayList<HashMap<Integer, Order>>();
+				for(int i = 0; i < timetable.length; i++)
+				{
+					daysOfMonths.add(ordersService.getBusyDaysOfMonth(photographer, timetable[i].getDate()));
+				}
+				
+				request.setAttribute(DAYS_PARAM, daysOfMonths);
+				request.setAttribute(TIMETABLE_PARAM, timetable);
 			}
 			catch(ServiceException e)
 			{
@@ -73,7 +88,7 @@ public class LoadPhotoshoots implements Command
 				{
 					request.setAttribute(ORDER_OPTION_PARAM, orderOption);
 				}
-					
+		
 				request.setAttribute(PHOTOGRAPHER_PARAM, photographer);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(PHOTOSHOOT_PAGE_PATH);
 				requestDispatcher.forward(request, response);

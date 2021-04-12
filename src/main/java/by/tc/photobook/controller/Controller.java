@@ -2,12 +2,13 @@ package by.tc.photobook.controller;
 
 import java.io.IOException;
 
+
+
 import by.tc.photobook.controller.command.Command;
 import by.tc.photobook.controller.command.CommandProvider;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
+
 
 public class Controller extends HttpServlet
 {
@@ -27,7 +28,8 @@ public class Controller extends HttpServlet
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException 
+    {
         process(request, response);
     }
 

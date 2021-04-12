@@ -12,9 +12,11 @@ public class UserInfo implements Serializable
 	private String email;
 	private String password;
 	private boolean isPhotographer;
+	private boolean isAdmin;
 	private String profileDecs;
 	private String profilePicPath;
 	private Integer totalRating;
+	private int state;
 	
 	public UserInfo(String username, String email, String password, boolean isPhotographer)
 	{
@@ -30,17 +32,19 @@ public class UserInfo implements Serializable
 		this.password = password;
 	}
 	
-	public UserInfo(int id, String username, String email, String password, boolean isPhotographer, 
-            String profileDecs, String profilePicPath, Integer totalRating) 
+	public UserInfo(int id, String username, String email, String password, boolean isPhotographer, boolean isAdmin,
+            String profileDecs, String profilePicPath, Integer totalRating, int state) 
 	{
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.isPhotographer = isPhotographer;
+		this.isAdmin = isAdmin;
 		this.profileDecs = profileDecs;
 		this.profilePicPath = profilePicPath;
 		this.totalRating = totalRating;
+		this.state = state;
 	}
 
 	public int getId() {
@@ -82,6 +86,14 @@ public class UserInfo implements Serializable
     public void setPhotographer(boolean photographer) {
         isPhotographer = photographer;
     }
+    
+    public boolean getisAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 
     public String getProfileDecs() {
         return profileDecs;
@@ -99,12 +111,22 @@ public class UserInfo implements Serializable
         this.profilePicPath = profilePicPath;
     }
 
-    public int getTotalRating() {
+    public Integer getTotalRating() {
         return totalRating;
     }
 
     public void setTotalRating(int totalRating) {
         this.totalRating = totalRating;
+    }
+    
+    public int getState()
+    {
+    	return state;
+    }
+    
+    public void setState(int state)
+    {
+    	this.state = state;
     }
 
     @Override

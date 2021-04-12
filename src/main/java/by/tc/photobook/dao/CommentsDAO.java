@@ -8,4 +8,5 @@ public interface CommentsDAO
 {
 	public List<Comment> takePhotoComments(int photoId) throws DAOException;
 	public boolean loadNewComment(Comment comment, int photoId, int authorId) throws DAOException;
+	public boolean deleteComment(int commentId) throws DAOException;
 }

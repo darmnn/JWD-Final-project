@@ -1,12 +1,15 @@
 package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
-
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import by.tc.photobook.bean.Order;
 import by.tc.photobook.bean.PhotoshootOption;
 import by.tc.photobook.bean.PhotoshootType;
+import by.tc.photobook.bean.Timetable;
 import by.tc.photobook.bean.UserInfo;
 import by.tc.photobook.controller.command.Command;
 import by.tc.photobook.service.OrdersService;
@@ -16,9 +19,7 @@ import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 public class LoadPhotoshootsPage implements Command
 {
@@ -38,6 +39,8 @@ public class LoadPhotoshootsPage implements Command
 	private static final String SESSION_EXPIRED_MESSAGE="message.session_expired";
 	private static final String LOAD_PHOTOSHOOT_PAGE = "Controller?command=loadphotoshootpage";
 	private static final String LOAD_PHOTOSHOOT_PAGE_WITH_MESSAGE = "Controller?command=loadphotoshootpage&message=";
+	private static final String TIMETABLE_PARAM = "timetable";
+	private static final String DAYS_PARAM = "days";
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
@@ -82,6 +85,16 @@ public class LoadPhotoshootsPage implements Command
 				
 				allOrders = ordersService.getOrdersByPhotographer(user.getId());
 				request.setAttribute(ORDERS_ATTRIBUTE, allOrders);
+				
+				Timetable[] timetable = ordersService.getTimetable();
+				ArrayList<HashMap<Integer, Order>> daysOfMonths = new ArrayList<HashMap<Integer, Order>>();
+				for(int i = 0; i < timetable.length; i++)
+				{
+					daysOfMonths.add(ordersService.getBusyDaysOfMonth(user.getId(), timetable[i].getDate()));
+				}
+				
+				request.setAttribute(DAYS_PARAM, daysOfMonths);
+				request.setAttribute(TIMETABLE_PARAM, timetable);
 			}
 			catch(ServiceException e)
 			{

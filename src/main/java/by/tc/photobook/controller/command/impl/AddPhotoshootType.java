@@ -2,14 +2,14 @@ package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
 
+
+
 import by.tc.photobook.controller.command.Command;
 import by.tc.photobook.service.PhotoshootTypesService;
 import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 public class AddPhotoshootType implements Command
 {

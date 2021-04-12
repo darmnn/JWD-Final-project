@@ -8,10 +8,19 @@ public class Comment implements Serializable
 {
 	private static final long serialVersionUID = 6932883176165943198L;
 	
+	private int id;
 	private String text;
 	private String author;
 	private LocalDate date;
 	private String authorPic;
+	
+	public Comment(int id, String text, String author, LocalDate date, String authorPic) {
+		this.id = id;
+        this.text = text;
+        this.author = author;
+        this.date = date;
+        this.authorPic = authorPic;
+    }
 	
 	public Comment(String text, String author, LocalDate date, String authorPic) {
         this.text = text;
@@ -20,6 +29,16 @@ public class Comment implements Serializable
         this.authorPic = authorPic;
     }
 
+	public int getId()
+	{
+		return id;
+	}
+	
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+	
     public String getText() {
         return text;
     }

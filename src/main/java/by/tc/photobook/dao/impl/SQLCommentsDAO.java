@@ -18,16 +18,18 @@ import by.tc.photobook.dao.connection.ConnectionPool;
 
 public class SQLCommentsDAO implements CommentsDAO
 {
-	private static final String GET_COMMENTS_TO_PHOTO = "SELECT comments.comment_text, users.username, comments.date_time, "
+	private static final String GET_COMMENTS_TO_PHOTO = "SELECT comments.comment_id, comments.comment_text, users.username, comments.date_time, "
 			+ "comments.author_pic FROM comments JOIN users ON users.id_user = comments.author_id WHERE "
 			+ "comments.photo_id = ?";
 	private static final String ADD_NEW_COMMENT = "INSERT INTO comments(comment_text, photo_id, author_id, date_time, author_pic) "
 			+ "VALUES(?, ?, ?, ?, ?)";
+	private static final String DELETE_COMMENT= "DELETE FROM comments WHERE comment_id=?";
 	
 	private static final String GET_COMMENTS_ERROR = "Error while loading comments";
 	private static final String ERROR_WHILE_CLOSING_STATEMENT = "Error while closing statement: ";
 	private static final String ERROR_WHILE_CLOSING_RESULTSET = "Error while closing result set: ";
 	
+	private static final String ERROR_DELETING_COMMENT = "message.delete_comment_error";
 	private static final String SERVER_ERROR = "message.server_error";
 	private static final String ADD_COMMENT_ERROR = "message.add_comment_error";
 	
@@ -59,8 +61,8 @@ public class SQLCommentsDAO implements CommentsDAO
 			
 			while(resultSet.next())
 			{
-				comments.add(new Comment(resultSet.getString(1), resultSet.getString(2), resultSet.getDate(3).toLocalDate(), 
-						resultSet.getString(4)));
+				comments.add(new Comment(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDate(4).toLocalDate(), 
+						resultSet.getString(5)));
 			}
 		} 
 		catch (SQLException e) 
@@ -114,6 +116,42 @@ public class SQLCommentsDAO implements CommentsDAO
 			closeAll(null, preparedStatement, connection);
 		}
 		
+		return true;
+	}
+	
+	public boolean deleteComment(int commentId) throws DAOException
+	{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try
+		{
+			 connection = connectionPool.getConnection();
+		}
+		catch (ConnectionException e) 
+		{
+			throw new DAOException(SERVER_ERROR, e);
+		}
+		
+		try
+		{
+			preparedStatement = connection.prepareStatement(DELETE_COMMENT);
+			preparedStatement.setInt(1, commentId);
+			
+			if(preparedStatement.executeUpdate() < 1)
+			{
+				throw new DAOException(ERROR_DELETING_COMMENT);
+			}
+		}
+		catch (SQLException e) 
+		{
+			log.error(e);
+			throw new DAOException(SERVER_ERROR, e);
+		}
+		finally
+		{
+			closeAll(null, preparedStatement, connection);
+		}
 		return true;
 	}
 	

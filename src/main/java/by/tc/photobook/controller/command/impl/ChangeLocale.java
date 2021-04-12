@@ -1,13 +1,13 @@
 package by.tc.photobook.controller.command.impl;
 
 import java.io.IOException;
+
+
 import java.net.URLEncoder;
 
 import by.tc.photobook.controller.command.Command;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 public class ChangeLocale implements Command
 {

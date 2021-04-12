@@ -1,6 +1,8 @@
 package by.tc.photobook.service;
 
 import by.tc.photobook.service.impl.CommentsServiceImpl;
+import by.tc.photobook.service.impl.ComplaintsServiceImpl;
+import by.tc.photobook.service.impl.EmailServiceImpl;
 import by.tc.photobook.service.impl.OrdersServiceImpl;
 import by.tc.photobook.service.impl.PhotosServiceImpl;
 import by.tc.photobook.service.impl.PhotoshootOptionsServiceImpl;
@@ -19,6 +21,8 @@ public class ServiceProvider
 	private final PhotoshootOptionsService phOptionsService = new PhotoshootOptionsServiceImpl();
 	private final PhotoshootTypesService phTypesService = new PhotoshootTypesServiceImpl();
 	private final OrdersService ordersService = new OrdersServiceImpl();
+	private final EmailService emailService = new EmailServiceImpl();
+	private final ComplaintsService complaintsService = new ComplaintsServiceImpl();
 	
 	public static ServiceProvider getInstance() 
 	{
@@ -53,5 +57,15 @@ public class ServiceProvider
 	public OrdersService getOrdersService()
 	{
 		return ordersService;
+	}
+	
+	public EmailService getEmailService()
+	{
+		return emailService;
+	}
+	
+	public ComplaintsService getComplaintsService()
+	{
+		return complaintsService;
 	}
 }

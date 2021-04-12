@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -15,6 +17,7 @@ import by.tc.photobook.dao.DAOException;
 import by.tc.photobook.dao.UserDAO;
 import by.tc.photobook.dao.connection.ConnectionException;
 import by.tc.photobook.dao.connection.ConnectionPool;
+import by.tc.photobook.service.ServiceException;
 
 public class SQLUserDAO implements UserDAO
 {
@@ -25,21 +28,32 @@ public class SQLUserDAO implements UserDAO
 	private static final String ERROR_WHILE_FINDING_USER = "Error while finding user! ";
 	
 	private static final String SERVER_ERROR = "message.server_error";
+	private static final String NO_SUCH_USER = "message.no_such_user";
 	private static final String USER_ALREADY_EXISTS_ERROR = "message.user_already_exists";
 	private static final String ERROR_WHILE_UPD_MESSAGE = "message.updating_profile_error";
+	private static final String ERROR_WHILE_UNLOCK="message.error_unlocking";
+	private static final String ERROR_WHILE_BLOCK="message.error_blocking";
+	private static final String YOU_ARE_BLOCKED = "message.you_are_blocked";
+	private static final String USER_BLOCKED = "message.user_blocked";
 	
 	private static final String ADD_NEW_USER = "INSERT INTO users (username, password, email, role) "
 					+ "VALUES (?, ?, ?, ?)";
 	private static final String FIND_USER = "SELECT users.id_user, users.username, users.password, users.email, "
-			+ "user_roles.role, users.profile_desc, users.profile_pic, users.total_rating FROM users JOIN user_roles "
+			+ "user_roles.role, users.profile_desc, users.profile_pic, users.total_rating, users.state FROM users JOIN user_roles "
 			+ "ON users.role=user_roles.id_role WHERE users.username = ? AND users.password = ?";
 	private static final String UPDATE_PROFILE_DESC = "UPDATE users SET profile_desc = ? WHERE username = ?";
 	private static final String UPDATE_PROFILE_PIC = "UPDATE users SET profile_pic = ? WHERE username = ?";
 	private static final String FIND_USER_BY_USERNAME = "SELECT users.id_user, users.username, users.password, "
-			+ "users.email, user_roles.role, users.profile_desc, users.profile_pic, users.total_rating FROM users "
+			+ "users.email, user_roles.role, users.profile_desc, users.profile_pic, users.total_rating, users.state FROM users "
 			+ "JOIN user_roles ON users.role=user_roles.id_role WHERE username=?";
+	private static final String GET_ALL_USERS = "SELECT users.id_user, users.username, users.password, users.email,"
+			+ " user_roles.role, users.profile_desc, users.profile_pic, users.total_rating, users.state FROM users JOIN user_roles"
+			+ " ON users.role=user_roles.id_role";
+	private static final String BLOCK_UNLOCK = "UPDATE users SET state=? WHERE id_user=?";
+	
 	private static final String ROLE_CLIENT = "клиент";
 	private static final String ROLE_PHOTOGRAPHER = "фотограф";
+	private static final String ROLE_ADMIN = "администратор";
 	private static int role_client = 1;
 	private static int role_ph = 2;
 	
@@ -123,13 +137,27 @@ public class SQLUserDAO implements UserDAO
 				if(userRole.equals(ROLE_PHOTOGRAPHER))
 				{
 					authorizedUser = new UserInfo(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(4),
-							resultSet.getString(3), true, resultSet.getString(6), resultSet.getString(7), 
-							resultSet.getInt(8));
+							resultSet.getString(3), true, false, resultSet.getString(6), resultSet.getString(7), 
+							resultSet.getInt(8), resultSet.getInt(9));
 				}
 				else
 				{
-					authorizedUser = new UserInfo(resultSet.getInt(1),resultSet.getString(2), resultSet.getString(4),
-							resultSet.getString(3), false, resultSet.getString(6), resultSet.getString(7), null);
+					if(userRole.equals(ROLE_ADMIN))
+					{
+						authorizedUser = new UserInfo(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(4),
+								resultSet.getString(3), false, true, resultSet.getString(6), resultSet.getString(7), 
+								resultSet.getInt(8), resultSet.getInt(9));
+					}
+					else
+					{
+						authorizedUser = new UserInfo(resultSet.getInt(1),resultSet.getString(2), resultSet.getString(4),
+								resultSet.getString(3), false, false, resultSet.getString(6), resultSet.getString(7), null,  resultSet.getInt(9));
+					}
+				}
+				
+				if(authorizedUser.getState() == 2)
+				{
+					throw new DAOException(YOU_ARE_BLOCKED);
 				}
 			}
 		}
@@ -247,22 +275,37 @@ public class SQLUserDAO implements UserDAO
 			while(resultSet.next())
 			{
 				String userRole = resultSet.getString(5);
+				
 				if(userRole.equals(ROLE_PHOTOGRAPHER))
 				{
+					
 					user = new UserInfo(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(4),
-							resultSet.getString(3), true, resultSet.getString(6), resultSet.getString(7), 
-							resultSet.getInt(8));
+							resultSet.getString(3), true, false, resultSet.getString(6), resultSet.getString(7), 
+							resultSet.getInt(8), resultSet.getInt(9));
 				}
 				else
 				{
-					user = new UserInfo(resultSet.getInt(1),resultSet.getString(2), resultSet.getString(4),
-							resultSet.getString(3), false, resultSet.getString(6), resultSet.getString(7), null);
+					if(userRole.equals(ROLE_ADMIN))
+					{
+						user = new UserInfo(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(4),
+								resultSet.getString(3), false, true, resultSet.getString(6), resultSet.getString(7), 
+								resultSet.getInt(8), resultSet.getInt(9));
+					}
+					else
+					{
+						user = new UserInfo(resultSet.getInt(1),resultSet.getString(2), resultSet.getString(4),
+								resultSet.getString(3), false, false, resultSet.getString(6), resultSet.getString(7), null,  resultSet.getInt(9));
+					}
 				}
+				
 			}
-			
 			if(user == null)
 			{
-				throw new DAOException(SERVER_ERROR);
+				throw new DAOException(NO_SUCH_USER);
+			}
+			if(user.getState() == 2)
+			{
+				throw new DAOException(USER_BLOCKED);
 			}
 		} 
 		catch (SQLException e) 
@@ -276,6 +319,113 @@ public class SQLUserDAO implements UserDAO
 		}
 		
 		return user;
+	}
+	
+	public List<UserInfo> getAllUsers() throws DAOException
+	{
+		List<UserInfo> allUsers = new ArrayList<UserInfo>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try 
+		{
+			connection = connectionPool.getConnection();
+		} 
+		catch (ConnectionException e) 
+		{
+			throw new DAOException(SERVER_ERROR, e);
+		}
+		
+		try
+		{
+			preparedStatement = connection.prepareStatement(GET_ALL_USERS);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next())
+			{
+				UserInfo user;
+				String userRole = resultSet.getString(5);
+				
+				if(userRole.equals(ROLE_PHOTOGRAPHER))
+				{
+					
+					user = new UserInfo(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(4),
+							resultSet.getString(3), true, false, resultSet.getString(6), resultSet.getString(7), 
+							resultSet.getInt(8), resultSet.getInt(9));
+				}
+				else
+				{
+					if(userRole.equals(ROLE_ADMIN))
+					{
+						user = new UserInfo(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(4),
+								resultSet.getString(3), false, true, resultSet.getString(6), resultSet.getString(7), 
+								resultSet.getInt(8), resultSet.getInt(9));
+					}
+					else
+					{
+						user = new UserInfo(resultSet.getInt(1),resultSet.getString(2), resultSet.getString(4),
+								resultSet.getString(3), false, false, resultSet.getString(6), resultSet.getString(7), null, resultSet.getInt(9));
+					}
+				}
+				allUsers.add(user);
+			}
+		}
+		catch(SQLException e)
+		{
+			log.error(e);
+			throw new DAOException(SERVER_ERROR, e);
+		}
+		finally
+		{
+			closeAll(resultSet, preparedStatement, connection);
+		}
+		
+		return allUsers;
+	}
+	
+	public boolean blockUnlock(int userId, int action) throws DAOException
+	{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try 
+		{
+			connection = connectionPool.getConnection();
+		} 
+		catch (ConnectionException e) 
+		{
+			throw new DAOException(SERVER_ERROR, e);
+		}
+		
+		try
+		{
+			preparedStatement = connection.prepareStatement(BLOCK_UNLOCK);
+			preparedStatement.setInt(1, action);
+			preparedStatement.setInt(2, userId);
+			
+			if(preparedStatement.executeUpdate() < 1)
+			{
+				if(action == 1)
+				{
+					throw new DAOException(ERROR_WHILE_UNLOCK);
+				}
+				else
+				{
+					throw new DAOException(ERROR_WHILE_BLOCK);
+				}
+			}
+		}
+		catch(SQLException e)
+		{
+			log.error(e);
+			throw new DAOException(SERVER_ERROR, e);
+		}
+		finally
+		{
+			closeAll(null, preparedStatement, connection);
+		}
+		return true;
 	}
 	
 	private void closeAll(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection)
