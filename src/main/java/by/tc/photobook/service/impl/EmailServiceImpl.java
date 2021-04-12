@@ -22,7 +22,7 @@ public class EmailServiceImpl implements EmailService
         {
             protected PasswordAuthentication getPasswordAuthentication()
             {
-  	 	         return new PasswordAuthentication("darya.minina.11@gmail.com", "Snow877#"); 
+  	 	         return new PasswordAuthentication("darya.minina.11@gmail.com", ""); 
             }
         });
 
