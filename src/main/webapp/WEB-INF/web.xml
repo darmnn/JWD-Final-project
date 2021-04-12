@@ -18,6 +18,16 @@
     <url-pattern>/Controller</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>LoadImage</servlet-name>
+    <servlet-class>by.tc.photobook.controller.LoadImage</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>LoadImage</servlet-name>
+    <url-pattern>/LoadImage</url-pattern>
+  </servlet-mapping>
+  
   <filter>
   	<display-name>CharsetFilter</display-name>
   	<filter-name>CharsetFilter</filter-name>

@@ -11,76 +11,76 @@
     <fmt:setLocale value="${sessionScope.locale }"/>
     <fmt:setBundle basename="locale" var="loc"/>
     
-    <fmt:message bundle="${loc}" key="button.sign_in" var="sign_in"/>
-    <fmt:message bundle="${loc}" key="button.sign_up" var="sign_up"/>
-    <fmt:message bundle="${loc}" key="button.logout" var="logout"/>
-    <fmt:message bundle="${loc}" key="button.profile" var="profile"/>
     <fmt:message bundle="${loc}" key="button.en" var="en"/>
     <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
     <fmt:message bundle="${loc}" key="button.photoshoots" var="photoshoots"/>
+    <fmt:message bundle="${loc}" key="button.send_email" var="send_email"/>
     
 </head>
 <body>
 <div>
 
-	<nav class="navbar navbar-light">
-    	<c:choose>
-  			<c:when test="${sessionScope.auth != null}">
-    			<form class="header" action="Controller" method="get">
-                	<button class="btn btn-primary profile" type="submit" name = "command" value="loadprofilepage">${profile }</button>
-                   	<button class="btn btn-primary sign-up" type="submit" name = "command" value="logout">${logout }</button>
-                </form>
-  			</c:when>
-  			<c:otherwise>
-            	<form class="header" action="Controller" method="post">
-                	<div class="btn-group buttons" role="group" aria-label="Basic example">
-                    	<button class="btn btn-primary sign-in" type="submit" name = "command" value="loadauthpage">${sign_in }</button>
-                        <button class="btn btn-primary sign-up" type="submit" name = "command" value="loadregpage">${sign_up }</button>
-                    </div>
-                </form>
- 			</c:otherwise>
-		</c:choose>
-      </nav>
+	<c:choose>
+		<c:when test="${sessionScope.user.isAdmin == true }">
+			<jsp:include page="admin_navbar.jsp"/>
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="navbar.jsp"/>
+		</c:otherwise>
+	</c:choose>
       <form action="Controller" method="get" class="btn-group local" role="group" aria-label="Basic outlined example">
   				<button type="submit" name="command" value="en" class="btn btn-outline-primary">${en }</button>
   				<button type="submit" name="command" value="ru" class="btn btn-outline-primary">${ru }</button>
-			</form>
-	<div class="container outer">
+		</form>
+	<div class="container" id="outer">
     	<c:choose>
-    	<c:when test="${user.profilePicPath != null}">
-    		<img src="${user.profilePicPath }" class="rounded-circle float-left img"/>
+    	<c:when test="${this_user.profilePicPath != null}">
+    		<img src="${this_user.profilePicPath }" class="rounded-circle float-left img"/>
     	</c:when>
     	<c:otherwise>
     		<img src="images/user_pic.png" class="rounded-circle float-left"/>
     	</c:otherwise>
     	</c:choose>
-    	<div class="container inner">
-    		<p class="username"><c:out value ="${user.username }"/> </p>
-    		<div class="card about">
-            	<div class="card-body about-body">
-                	<p class="card-text">${user.profileDecs }</p>
+    	<div class="container" id="inner">
+    		<p id="username"><c:out value ="${this_user.username }"/> </p>
+    		<div class="card" id="about">
+            	<div class="card-body" id="about-body">
+                	<p class="card-text">${this_user.profileDecs }</p>
                 </div>
             </div>
-            <c:if test = "${user.isPhotographer == true }">
-            	<c:forEach var = "i" begin = "1" end = "${user.totalRating }">
-                	<img src="images/star.png" class="float-left star"/>
+            <c:if test = "${this_user.isPhotographer == true }">
+            	<c:forEach var = "i" begin = "1" end = "${this_user.totalRating }">
+                	<img src="images/star.png" class="float-left" id="star"/>
                 </c:forEach>
-                <c:if test ="${sessionScope.auth != null}">
-                <form action="Controller" method="post" class="form-edit">
-                	<input type="hidden" name="photographer" value="${user.id}"/>
-              		<button type="submit" name="command" value="loadphotoshoots" class="btn btn-primary edit">${photoshoots }</button>
+                <c:if test ="${sessionScope.auth != null && sessionScope.user != this_user}">
+                <c:choose>
+                	<c:when test="${sessionScope.user.isAdmin == true }">
+                		<form action="Controller" method="post" id="form-edit">
+      						<input type="hidden" name="userid" value="${this_user.id }"/>
+      						<input type="hidden" name="action" value="block"/>
+      						<button type="submit" name="command" value="blockunlock" class="btn btn-danger">Block</button>
+      					</form>
+                	</c:when>
+                	<c:otherwise>
+                		<form action="Controller" method="post" id="form-edit">
+                			<input type="hidden" name="photographer" value="${this_user.id}"/>
+              				<button type="submit" name="command" value="loadphotoshoots" class="btn btn-primary" id="edit">${photoshoots }</button>
+              			</form>
+                	</c:otherwise>
+                </c:choose>
+              	<form action="mailto:${this_user.email }" method="post" id="form-edit">
+              		<button type="submit" class="btn btn-primary" id="edit">${send_email }</button>
               	</form>
                 </c:if>
             </c:if>
     	</div>
     </div>
-	
-	<c:if test = "${user.isPhotographer == true }">
-    	<div class="container all-photos">
-    		 <c:if test="${message != null }">
+	    		 <c:if test="${message != null }">
     			<fmt:message bundle="${loc}" key="${message }" var="mess"/>
             		${mess }
     		</c:if> 
+	<c:if test = "${this_user.isPhotographer == true }">
+    	<div class="container" id="all-photos">
             <c:forEach var = "photo" items="${photos}">
             	<form action="Controller" method="get" class="form-photo">
             		<input type="hidden" name="photo" value="${photo }"/>

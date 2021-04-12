@@ -9,6 +9,7 @@
     <title>Photobook</title>
 </head>
 <body>
-    <c:redirect url="Controller?command=loadmainpage"/>
+	
+ <c:redirect url="Controller?command=loadmainpage"/>
 </body>
 </html>

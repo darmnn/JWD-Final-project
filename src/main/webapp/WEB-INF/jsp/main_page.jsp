@@ -16,27 +16,14 @@
     <fmt:message bundle="${loc}" key="button.profile" var="profile"/>
     <fmt:message bundle="${loc}" key="button.en" var="en"/>
     <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
+    <fmt:message bundle="${loc}" key="button.my_orders" var="my_orders"/>
+    <fmt:message bundle="${loc}" key="button.photoshoots" var="photoshoots"/>
 </head>
 <body>
 	<div class="main-container">
-            <nav class="navbar navbar-light">
-                <c:choose>
-  				<c:when test="${sessionScope.auth != null}">
-    				<form class="header" action="Controller" method="get">
-                    	<button class="btn btn-primary profile" type="submit" name = "command" value="loadprofilepage">${profile }</button>
-                    	<button class="btn btn-primary sign-up" type="submit" name = "command" value="logout">${logout }</button>
-                	</form>
-  				</c:when>
-  				<c:otherwise>
-                	<form class="header" action="Controller" method="post">
-                    <div class="btn-group buttons" role="group" aria-label="Basic example">
-                    	<button class="btn btn-primary sign-in" type="submit" name = "command" value="loadauthpage">${sign_in }</button>
-                        <button class="btn btn-primary sign-up" type="submit" name = "command" value="loadregpage">${sign_up }</button>
-                    </div>
-                	</form>
- 				 </c:otherwise>
-			</c:choose>
-            </nav>
+	
+		<jsp:include page="navbar-main.jsp"/>
+		
             <form action="Controller" method="get" class="btn-group local" role="group" aria-label="Basic outlined example">
   				<button type="submit" name="command" value="en" class="btn btn-outline-primary">${en }</button>
   				<button type="submit" name="command" value="ru" class="btn btn-outline-primary">${ru }</button>
@@ -49,7 +36,7 @@
             		${mess }
             	</c:if>
             </div>
-            <div class="container all-photos">
+            <div class="container" id="all-photos">
             <c:forEach var = "photo" items="${photos}">
             	<form action="Controller" method="get" class="form-photo">
             		<input type="hidden" name="photo" value="${photo }"/>
@@ -59,6 +46,6 @@
                  </form>
              </c:forEach>
             </div>
-        </div>
+     </div>
 </body>
 </html>

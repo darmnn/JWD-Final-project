@@ -12,7 +12,6 @@
     <fmt:setLocale value="${sessionScope.locale }"/>
     <fmt:setBundle basename="locale" var="loc"/>
     
-    <fmt:message bundle="${loc}" key="button.logout" var="logout"/>
     <fmt:message bundle="${loc}" key="button.en" var="en"/>
     <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
     <fmt:message bundle="${loc}" key="button.add_photoshoot" var="add"/>
@@ -28,12 +27,15 @@
 </head>
 <body>
 <div>
-	<nav class="navbar navbar-light">
-    	<a href = "index.jsp" class = "loadmain">PhotoBook</a>
-    	<form class="header-profile" action="Controller" method="get">
-        	<button class="btn btn-primary sign-up" type="submit" name = "command" value="logout">${logout }</button>
-         </form>
-    </nav>
+	<c:choose>
+		<c:when test="${sessionScope.user.isAdmin == true }">
+			<jsp:include page="admin_navbar.jsp"/>
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="navbar.jsp"/>
+		</c:otherwise>
+	</c:choose>
+	
     <form action="Controller" method="get" class="btn-group local" role="group" aria-label="Basic outlined example">
   				<button type="submit" name="command" value="en" class="btn btn-outline-primary">${en }</button>
   				<button type="submit" name="command" value="ru" class="btn btn-outline-primary">${ru }</button>

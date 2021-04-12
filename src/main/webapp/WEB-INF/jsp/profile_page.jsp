@@ -11,33 +11,29 @@
     <fmt:setLocale value="${sessionScope.locale }"/>
     <fmt:setBundle basename="locale" var="loc"/>
     
-    <fmt:message bundle="${loc}" key="button.logout" var="logout"/>
     <fmt:message bundle="${loc}" key="button.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="button.save" var="save"/>
     <fmt:message bundle="${loc}" key="button.en" var="en"/>
     <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
-    <fmt:message bundle="${loc}" key="button.photoshoots" var="photoshoots"/>
     <fmt:message bundle="${loc}" key="button.add_photo" var="add_photo"/>
-    <fmt:message bundle="${loc}" key="button.my_orders" var="my_orders"/>
     
 </head>
 <body>
 <div>
-	<nav class="navbar navbar-light">
-    	<a href = "index.jsp" class = "loadmain">PhotoBook</a>
-    	<form class="header-profile" action="Controller" method="get">
-        	<button class="btn btn-primary sign-up" type="submit" name = "command" value="logout">${logout }</button>
-         </form>
-    </nav>
+	<c:choose>
+		<c:when test="${sessionScope.user.isAdmin == true }">
+			<jsp:include page="admin_navbar.jsp"/>
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="navbar.jsp"/>
+		</c:otherwise>
+	</c:choose>
     <form action="Controller" method="get" class="btn-group local" role="group" aria-label="Basic outlined example">
   				<button type="submit" name="command" value="en" class="btn btn-outline-primary">${en }</button>
   				<button type="submit" name="command" value="ru" class="btn btn-outline-primary">${ru }</button>
 	</form>
-	<form action="Controller" method="get">
-		<button type="submit" name="command" value="loadorderspage" class="btn btn-primary">${my_orders }</button>
-	</form>
 			
-    <div class="container outer">
+    <div class="container" id="outer">
     	<c:choose>
     	<c:when test="${sessionScope.user.profilePicPath != null}">
     	<img src="${sessionScope.user.profilePicPath }" class="rounded-circle float-left img"/>
@@ -46,47 +42,42 @@
     	<img src="images/user_pic.png" class="rounded-circle float-left"/>
     	</c:otherwise>
     	</c:choose>
-    	<div class="container inner">
-    		<p class="username"><c:out value ="${sessionScope.user.username }"/> </p>
+    	<div class="container" id="inner">
+    		<p id="username"><c:out value ="${sessionScope.user.username }"/> </p>
     		<c:choose>
     			<c:when test="${requestScope.edit == true }">
-    			<form action="Controller" method="post" class="form-edit">
-    				<div class="card about">
-                        <div class="card-body about-body">
-                        	<textarea name="new_profile_desc" class="card-text">${sessionScope.user.profileDecs }</textarea>
+    			<form action="Controller" method="post" id="form-edit">
+    				<div class="card" id="about">
+                        <div class="card-body" id="about-body">
+                        	<textarea id="textar" name="new_profile_desc" class="card-text">${sessionScope.user.profileDecs }</textarea>
                         </div>
-                        <button type="submit" name="command" value="savechanges" class="btn btn-primary edit">${save }</button>
+                        <button type="submit" name="command" value="savechanges" class="btn btn-primary" id="edit">${save }</button>
              		</div>
              			<input type="file" name="new_profile_pic"></input>
-              			<button type="submit" name="command" value="savephotochanges" class="btn btn-primary edit">${save }</button>
+              			<button type="submit" name="command" value="savephotochanges" class="btn btn-primary" id="edit">${save }</button>
               	</form>
     			</c:when>
     			<c:otherwise>
-    				<div class="card about">
-                    	<div class="card-body about-body">
+    				<div class="card" id="about">
+                    	<div class="card-body" id="about-body">
                             <p class="card-text">${sessionScope.user.profileDecs }</p>
                         </div>
              		</div>
              		<c:if test = "${sessionScope.user.isPhotographer == true }">
                     	<c:forEach var = "i" begin = "1" end = "${sessionScope.user.totalRating }">
-                       		<img src="images/star.png" class="float-left star"/>
+                       		<img src="images/star.png" class="float-left" id="star"/>
                        	</c:forEach>
               		</c:if>
-              		<form action="Controller" method="post" class="form-edit">
+              		<form action="Controller" method="post" id="form-edit">
               			<input type="hidden" name="edit" value="true">
-              			<button type="submit" name="command" value="loadprofilepage" class="btn btn-primary edit">${edit }</button>
+              			<button type="submit" name="command" value="loadprofilepage" class="btn btn-primary" id="edit">${edit }</button>
               		</form>
-              		<c:if test = "${sessionScope.user.isPhotographer == true }">
-              		<form action="Controller" method="post" class="form-edit">
-              			<button type="submit" name="command" value="loadphotoshootpage" class="btn btn-primary edit">${photoshoots }</button>
-              		</form>
-              		</c:if>
     			</c:otherwise>
     		</c:choose>
     	</div>
     </div>
     <c:if test = "${sessionScope.user.isPhotographer == true }">
-    	<div class="container all-photos">
+    	<div class="container" id="all-photos">
     		<c:if test="${message != null }">
     			<fmt:message bundle="${loc}" key="${message }" var="mess"/>
             		${mess }
@@ -101,9 +92,9 @@
             </c:forEach>
             <c:choose>
             	<c:when test="${requestScope.add_photo == true }">
-            		<form action="Controller" method="post">
-            			<input type="file" name="new_photo"></input>
-              			<button type="submit" name="command" value="savenewphoto" class="btn btn-primary edit">${save }</button>
+            		<form action="LoadImage" method="post" enctype="multipart/form-data">
+            			<input type="file" name="new_photo" ></input>
+              			<button type="submit" name="command" value="savenewphoto" class="btn btn-primary" id="edit">${save }</button>
             		</form>
             	</c:when>
             	<c:otherwise>

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="mytag" uri="/WEB-INF/tld/taglib.tld" %>
 <html>
 <head>
     <title>Photobook</title>
@@ -35,7 +36,7 @@
             	</c:if>
             </div>
             
-            <mytag:welcome/>
+            <!--<mytag:welcome/>-->
             
             <form id="form" action="Controller" method="get">
                 <p class="display-5">${sign_in_message }</p>
