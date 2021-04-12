@@ -58,6 +58,7 @@ public class OrdersServiceImpl implements OrdersService
 		try
 		{
 			ordersDAO.processOrder(orderId, action);
+			
 		}
 		catch(DAOException e)
 		{

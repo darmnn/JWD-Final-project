@@ -7,6 +7,7 @@ import java.util.List;
 
 import by.tc.photobook.bean.Photo;
 import by.tc.photobook.controller.command.Command;
+import by.tc.photobook.service.EmailService;
 import by.tc.photobook.service.PhotosService;
 import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;

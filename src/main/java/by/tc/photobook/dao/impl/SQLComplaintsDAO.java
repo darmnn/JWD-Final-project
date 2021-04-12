@@ -30,11 +30,12 @@ public class SQLComplaintsDAO implements ComplaintsDAO
 	
 	private static final String ADD_COMPLAINT = "INSERT INTO complaints(complaint_text, user, photo_id) VALUES(?, ?, ?)";
 	private static final String ADD_COMMENT_COMPLAINT = "INSERT INTO complaints(complaint_text, user, comment_id, photo_id) VALUES(?, ?, ?, ?)";
-	private static final String GET_ALL_COMPLAINTS = "SELECT complaints.id, complaints.complaint_text, "
+	private static final String GET_COMMENTS_COMPLAINTS = "SELECT complaints.id, complaints.complaint_text, "
 			+ "complaints.user, complaints.comment_id, comments.comment_text, photos.photo_id, users.username, "
 			+ "photos.date_time, photos.image, photos.rating, complaints.state FROM complaints JOIN comments ON "
 			+ "complaints.comment_id = comments.comment_id JOIN photos ON complaints.photo_id = photos.photo_id  "
 			+ "JOIN users ON users.id_user = photos.photographer";
+	private static final String GET_ALL_COMPLAINTS = "SELECT complaints.id, complaints.complaint_text, complaints.user,  photos.photo_id, users.username, photos.date_time, photos.image, photos.rating, complaints.state FROM complaints JOIN photos ON complaints.photo_id = photos.photo_id  JOIN users ON users.id_user = photos.photographer";
 	private static final String MARK_AS_VIEWED = "UPDATE complaints SET state=2 WHERE id=?";
 	
 	@Override
@@ -108,7 +109,7 @@ public class SQLComplaintsDAO implements ComplaintsDAO
 		
 		try
 		{
-			preparedStatement = connection.prepareStatement(GET_ALL_COMPLAINTS);
+			preparedStatement = connection.prepareStatement(GET_COMMENTS_COMPLAINTS);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next())
@@ -117,8 +118,26 @@ public class SQLComplaintsDAO implements ComplaintsDAO
 						resultSet.getString(9), resultSet.getInt(10));
 				Complaint complaint = new Complaint(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), 
 						resultSet.getInt(4), resultSet.getString(5), photo, resultSet.getInt(11));
+				
 				allComplaints.add(complaint);
 			}
+			
+			preparedStatement = connection.prepareStatement(GET_ALL_COMPLAINTS);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next())
+			{
+				Photo photo = new Photo(resultSet.getInt(4), resultSet.getString(5), resultSet.getDate(6).toLocalDate(), 
+						resultSet.getString(7), resultSet.getInt(8));
+				Complaint complaint = new Complaint(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), 
+						photo, resultSet.getInt(9));
+				if(!allComplaints.contains(complaint))
+				{
+					allComplaints.add(complaint);
+				}
+			}
+			
+			
 		}
 		catch (SQLException e) 
 		{

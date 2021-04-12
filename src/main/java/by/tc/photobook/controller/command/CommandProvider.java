@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 
 
+
 import by.tc.photobook.controller.command.impl.AddPhotoshootType;
 import by.tc.photobook.controller.command.impl.Authorization;
 import by.tc.photobook.controller.command.impl.BlockUnlock;
@@ -36,11 +37,9 @@ import by.tc.photobook.controller.command.impl.RatePhoto;
 import by.tc.photobook.controller.command.impl.Registration;
 import by.tc.photobook.controller.command.impl.SaveChanges;
 import by.tc.photobook.controller.command.impl.SaveOrder;
-import by.tc.photobook.controller.command.impl.SavePhotoChanges;
 import by.tc.photobook.controller.command.impl.SavePhotoshoot;
 import by.tc.photobook.controller.command.impl.SavePhotoshootEdit;
 import by.tc.photobook.controller.command.impl.SearchUser;
-import by.tc.photobook.controller.command.impl.SendEmail;
 import by.tc.photobook.controller.command.impl.ViewComplaint;
 
 public class CommandProvider
@@ -57,7 +56,6 @@ public class CommandProvider
         commands.put(CommandName.LOGOUT, new Logout());
         commands.put(CommandName.LOADPROFILEPAGE, new LoadProfilePage());
         commands.put(CommandName.SAVECHANGES, new SaveChanges());
-        commands.put(CommandName.SAVEPHOTOCHANGES, new SavePhotoChanges());
         commands.put(CommandName.EN, new ChangeLocale());
         commands.put(CommandName.RU, new ChangeLocale());
         commands.put(CommandName.LOADPHOTOPAGE, new LoadPhotoPage());
@@ -77,7 +75,6 @@ public class CommandProvider
         commands.put(CommandName.CANCELORDER, new CancelOrder());
         commands.put(CommandName.ADDPHOTOSHOOTTYPE, new AddPhotoshootType());
         commands.put(CommandName.LOADEMAILPAGE, new LoadEmailPage());
-        commands.put(CommandName.SENDEMAIL, new SendEmail());
         commands.put(CommandName.SEARCHUSER, new SearchUser());
         commands.put(CommandName.LOADALLUSERSPAGE, new LoadAllUsers());
         commands.put(CommandName.BLOCKUNLOCK, new BlockUnlock());

@@ -25,6 +25,14 @@ public class Complaint implements Serializable
         this.photo = photo;
         this.state = state;
     }
+    
+    public Complaint(int id, String text, String user, Photo photo, int state) {
+        this.id = id;
+        this.text = text;
+        this.user = user;
+        this.photo = photo;
+        this.state = state;
+    }
 
     public Complaint(String text, String user, Integer commentId, Photo photo) {
         this.text = text;
