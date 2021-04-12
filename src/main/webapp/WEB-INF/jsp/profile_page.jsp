@@ -53,9 +53,12 @@
                         </div>
                         <button type="submit" name="command" value="savechanges" class="btn btn-primary" id="edit">${save }</button>
              		</div>
+             		</form>
+             			<form action="LoadUserPic" method="post" enctype="multipart/form-data">
              			<input type="file" name="new_profile_pic"></input>
               			<button type="submit" name="command" value="savephotochanges" class="btn btn-primary" id="edit">${save }</button>
-              	</form>
+              			</form>
+              	
     			</c:when>
     			<c:otherwise>
     				<div class="card" id="about">

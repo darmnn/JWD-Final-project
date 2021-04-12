@@ -13,7 +13,6 @@ div {
 .loadmain {
 	text-decoration: none;
 	margin-left: 3%;
-	margin-bottom: 1.5%;
 	font-size: 2rem;
 	line-height: 100%;
 }
@@ -126,4 +125,45 @@ div {
 	position:absolute;
 	right: 1%;
 	margin-top:0px;
+}
+
+.card-body p {
+	position:relative;
+}
+
+.btn-close {
+	position: absolute;
+	right:1px;
+}
+
+.complaint-btn {
+	display:inline-block;
+	position:absolute;
+	right:25%;
+}
+
+.complaint {
+	background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  /*input has OS specific font-family*/
+  color: #787878;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.complaint-form {
+	margin-top:15%;
+	text-align:right;
+}
+
+.comp
+{
+	margin-top:5%;
+}
+
+
+.comments-container .comment .card-body .complaint_comment {
+	border: 1px solid red;
 }

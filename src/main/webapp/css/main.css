@@ -12,7 +12,7 @@
 }
 
 div {
-    color: #007BFF
+    color: #007BFF;
 }
 
 .form-photo {
@@ -41,7 +41,7 @@ div {
     text-align: center;
 }
 
-.all-photos{
+#all-photos{
     margin-top: 3%;
     width: 70%;
     height: 90%;

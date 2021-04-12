@@ -28,6 +28,16 @@
     <url-pattern>/LoadImage</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>LoadUserPic</servlet-name>
+    <servlet-class>by.tc.photobook.controller.LoadUserPic</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>LoadUserPic</servlet-name>
+    <url-pattern>/LoadUserPic</url-pattern>
+  </servlet-mapping>
+  
   <filter>
   	<display-name>CharsetFilter</display-name>
   	<filter-name>CharsetFilter</filter-name>

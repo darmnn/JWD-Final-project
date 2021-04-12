@@ -116,7 +116,7 @@
     				<td>${user.username }</td>
     				<td>
     				<select name="photoshoot_type" class="form-select form-select-sm" aria-label="Default select example">
-  						<option selected>${photoshoot_types[0].type}</option>
+  						<option value="${photoshoot_types[0].id }" selected>${photoshoot_types[0].type}</option>
   						<c:forEach var="ph_type" items="${photoshoot_types }">
   							<c:if test="${ph_type.type !=  photoshoot_types[0].type}"><option value="${ph_type.id }">${ph_type.type }</option></c:if>
   							
@@ -190,6 +190,7 @@
   									<c:if test="${order.status == \"Не обработано\" }">
   										<form action="Controller" method="post">
   											<input type="hidden" name="order" value="${order.id }"/>
+  											<input type="hidden" name="client" value="${order.client }"/>
   											<input type="hidden" name="action" value="decline"/>
   											<button type="submit" name="command" value="processorder" class="btn btn-danger">${decline }</button>
   										</form>
@@ -199,6 +200,7 @@
   									<c:if test="${order.status == \"Не обработано\" }">
   										<form action="Controller" method="post">
   												<input type="hidden" name="order" value="${order.id }"/>
+  												<input type="hidden" name="client" value="${order.client }"/>
   												<input type="hidden" name="action" value="accept"/>
   												<button type="submit" name="command" value="processorder" class="btn btn-success">${accept }</button>
   										</form>
