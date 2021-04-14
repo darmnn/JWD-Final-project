@@ -43,7 +43,7 @@ public class EmailServiceImpl implements EmailService
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
 		
 			message.setSubject("Photobook order");
-			message.setText("Your order was processed");
+			message.setText("Your order was processed! Check out results in photobook");
 
 			transport = mailSession.getTransport();
 			transport.connect(emailResourceManager.getValue(MAIL_USERNAME), emailResourceManager.getValue(MAIL_PASSWORD));
