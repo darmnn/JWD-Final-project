@@ -164,6 +164,6 @@ div {
 }
 
 
-.comments-container .comment .card-body .complaint_comment {
-	border: 1px solid red;
+#complaint_comment {
+	background-color: red;
 }

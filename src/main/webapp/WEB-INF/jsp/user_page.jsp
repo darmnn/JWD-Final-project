@@ -15,6 +15,7 @@
     <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
     <fmt:message bundle="${loc}" key="button.photoshoots" var="photoshoots"/>
     <fmt:message bundle="${loc}" key="button.send_email" var="send_email"/>
+    <fmt:message bundle="${loc}" key="button.block" var="block"/>
     
 </head>
 <body>
@@ -58,7 +59,7 @@
                 		<form action="Controller" method="post" id="form-edit">
       						<input type="hidden" name="userid" value="${this_user.id }"/>
       						<input type="hidden" name="action" value="block"/>
-      						<button type="submit" name="command" value="blockunlock" class="btn btn-danger">Block</button>
+      						<button type="submit" name="command" value="blockunlock" class="btn btn-danger">${block }</button>
       					</form>
                 	</c:when>
                 	<c:otherwise>

@@ -13,6 +13,15 @@
     <fmt:message bundle="${loc}" key="button.logout" var="logout"/>
     <fmt:message bundle="${loc}" key="button.en" var="en"/>
     <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
+    <fmt:message bundle="${loc}" key="button.mark_viewed" var="mark_viewed"/>
+    <fmt:message bundle="${loc}" key="column.username" var="username"/>
+    <fmt:message bundle="${loc}" key="column.state" var="state"/>
+    <fmt:message bundle="${loc}" key="column.complaint_text" var="complaint_text"/>
+    <fmt:message bundle="${loc}" key="column.photo" var="photo"/>
+    <fmt:message bundle="${loc}" key="column.comment" var="comment"/>
+    <fmt:message bundle="${loc}" key="label.viewed" var="viewed"/>
+    <fmt:message bundle="${loc}" key="label.not_viewed" var="not_viewed"/>
+    <fmt:message bundle="${loc}" key="label.go_to_photo" var="go_to_photo"/>
     
 </head>
 <body>
@@ -27,28 +36,28 @@
 	<table class="table table-primary">
 		<thead>
     		<tr>
-      			<th scope="col">Username</th>
-      			<th scope="col">Complaint text</th>
-      			<th scope="col">Photo</th>
-      			<th scope="col">Comment</th>
-      			<th scope="col">State</th>
+      			<th scope="col">${username }</th>
+      			<th scope="col">${complaint_text }</th>
+      			<th scope="col">${photo }</th>
+      			<th scope="col">${comment }</th>
+      			<th scope="col">${state }</th>
       			<th scope="col"></th>
     		</tr>
   		</thead>
   		<tbody>
   			<c:forEach var="complaint" items="${complaints }">
   				<tr>
-  					<td>${complaint.user }</td>
+  					<td><a href="Controller?command=loaduserpage&user=${complaint.user}">${complaint.user }</a></td>
   					<td>${complaint.text }</td>
-  					<td><a href="Controller?command=loadphotopage&photo=${complaint.photo }">Go to photo</a></td>
+  					<td><a href="Controller?command=loadphotopage&photo=${complaint.photo }">${go_to_photo }</a></td>
   					<td><a href="Controller?command=loadphotopage&complaint_comment=${complaint.commentId}&photo=${complaint.photo }">${complaint.commentText }</a></td>
   					<td>
   						<c:choose>
   							<c:when test="${complaint.state == 1 }">
-  								Not viewed
+  								${not_viewed }
   							</c:when>
   							<c:otherwise>
-  								Viewed
+  								${viewed }
   							</c:otherwise>
   						</c:choose>
   					</td>
@@ -56,7 +65,7 @@
   						<c:if test="${complaint.state == 1 }">
   						<form action="Controller" method="post">
   							<input type="hidden" name="complaint_id" value="${complaint.id }"/>
-  							<button type="submit" name="command" value="viewcomplaint" class="btn btn-success">Mark as viewed</button>
+  							<button type="submit" name="command" value="viewcomplaint" class="btn btn-success">${mark_viewed }</button>
   						</form>
   						</c:if>
   					</td>

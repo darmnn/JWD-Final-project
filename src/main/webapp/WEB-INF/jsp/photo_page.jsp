@@ -18,8 +18,12 @@
     <fmt:message bundle="${loc}" key="button.ru" var="ru"/>
     <fmt:message bundle="${loc}" key="button.new_comment" var="new_comment"/>
     <fmt:message bundle="${loc}" key="placeholder.new_comment" var="new_comment_placeholder"/>
+    <fmt:message bundle="${loc}" key="placeholder.report" var="report_placeholder"/>
     <fmt:message bundle="${loc}" key="button.rate" var="rate_button"/>
     <fmt:message bundle="${loc}" key="button.delete" var="delete"/>
+    <fmt:message bundle="${loc}" key="button.make_complaint" var="make_complaint"/>
+    <fmt:message bundle="${loc}" key="button.report" var="report"/>
+    <fmt:message bundle="${loc}" key="label.describe" var="describe"/>
     <fmt:message bundle="${loc}" key="rate.message" var="rate"/>
     
     <style>
@@ -27,23 +31,23 @@
             	background-color: white;
                 height: 220px;  
                 width: 350px;
-                top: 20%; /* отступ сверху */
+                top: 20%;
                 right: 0;
                 left: 0;
                 font-size: 14px; 
                 margin: 0 auto;
-                z-index:2; /* поверх всех */
-                display: none;  /* сначала невидим */
-                position: fixed; /* фиксированное позиционирование, окно стабильно при прокрутке */
+                z-index:2;
+                display: none; 
+                position: fixed;
                 padding: 15px;
             }
             #shadow { 
                 position: fixed;
                 width:100%;
                 height:100%;
-                z-index:1; /* поверх всех  кроме окна*/
+                z-index:1; 
                 background:#000;
-                opacity: 0.5; /*прозрачность*/
+                opacity: 0.5; 
                 left:0;
                 top:0;
             }
@@ -52,16 +56,16 @@
         <script type="text/javascript">
             function showModalWin() {
  
-                var darkLayer = document.createElement('div'); // слой затемнения
-                darkLayer.id = 'shadow'; // id чтобы подхватить стиль
-                document.body.appendChild(darkLayer); // включаем затемнение
+                var darkLayer = document.createElement('div');
+                darkLayer.id = 'shadow'; 
+                document.body.appendChild(darkLayer); 
  
-                var modalWin = document.getElementById('popupWin'); // находим наше "окно"
-                modalWin.style.display = 'block'; // "включаем" его
+                var modalWin = document.getElementById('popupWin'); 
+                modalWin.style.display = 'block';
  
-                darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
-                    darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
-                    modalWin.style.display = 'none'; // делаем окно невидимым
+                darkLayer.onclick = function () {  
+                    darkLayer.parentNode.removeChild(darkLayer); 
+                    modalWin.style.display = 'none'; 
                     return false;
                 };
             }
@@ -119,10 +123,12 @@
 					<input type="hidden" name="photo" value="${photo}"/>
 					<button type="submit" name="command" value="ratephoto" class="btn btn-primary btn-sm">${rate_button }</button>
        			 	</form>
+       			 	<c:if test="${sessionScope.user.isAdmin == false }">
        			 	<form class="complaint-btn">
        			 		<input form="get_complaint" type="hidden" name="photo" value="${photo }"/>
-            			<input type="button" value="Report" onclick="showModalWin()" class="complaint">
+            			<input type="button" value="${report }" onclick="showModalWin()" class="complaint">
         			</form>
+        			</c:if>
        			 	</c:if>
        			 	
         
@@ -131,23 +137,19 @@
 			</div>
 			
 			<div style="text-align: center" id="popupWin" class="modalwin">
-            	<h3> Describe your complaint </h2>
+            	<h3> ${describe } </h3>
             		<form action="Controller" method="post" id="get_complaint" class="complaint-form">
-                		<input type="text" name="complaint_text" class="form-control" id="formGroupExampleInput" placeholder="What is wrong?">
-                		<button type="submit" name="command" value="newcomplaint" class="btn btn-primary btn-sm comp">Make a complaint</button>
+                		<input type="text" name="complaint_text" class="form-control" id="formGroupExampleInput" placeholder="${report_placeholder }">
+                		<button type="submit" name="command" value="newcomplaint" class="btn btn-primary btn-sm comp">${make_complaint }</button>
             		</form>
        		</div>
 			
 			<div class="card comments-container">
 			<c:forEach var = "comment" items = "${comments }">
-				<c:if test="${comment.id == complaint_comment }">
-					<script type="text/javascript">
-						var el = document.getElementById("${comment.id}");
-						el.classList.add("complaint_comment");
-					</script>
-				</c:if>
-				<div class="card comment">
-  				<div id="${comment.id }" class="card-body">
+				<c:choose>
+					<c:when test="${comment.id == complaint_comment }">
+									<div class="card comment">
+  				<div style="border: 3px solid red;" class="card-body">
   					<p>
   					<c:choose>
     				<c:when test="${comment.authorPic != null}">
@@ -163,16 +165,47 @@
   					</c:if>
   					<a href="Controller?command=loaduserpage&user=${comment.author}">${comment.author }</a></p>
     				<div class="comment-text">${comment.text }</div>
-    				<c:if test="${sessionScope.auth != null }">
+    				<c:if test="${sessionScope.auth != null && sessionScope.user.isAdmin == false}">
     					<form action="Controller" class="complaint-btn">
     						<input type="hidden" name="photo" value="${photo }"/>
     						<input  type="hidden" name="comment_id" value="${comment.id }"/>
-            				<button type="submit" name="command" value="loadreportpage" class="complaint">Report</button>
+            				<button type="submit" name="command" value="loadreportpage" class="complaint">${report }</button>
         				</form>
         			</c:if>
     				<div class="date-comment">${comment.date }</div>
     			</div>
     			</div>
+				</c:when>
+				<c:otherwise>
+					<div class="card comment">
+  				<div class="card-body">
+  					<p>
+  					<c:choose>
+    				<c:when test="${comment.authorPic != null}">
+    					<img src="${comment.authorPic }" class="rounded-circle float-left author_pic"/>
+    				</c:when>
+    				<c:otherwise>
+    					<img src="images/user_pic.png" class="rounded-circle float-left author_pic"/>
+    				</c:otherwise>
+    				</c:choose>
+    				<c:if test="${comment.author == sessionScope.user.username || sessionScope.user.isAdmin}">
+  						<button type="button" onclick="window.location.href='Controller?command=deletecomment&photo=${photo }&comment_id=${comment.id}'" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+  						</button>
+  					</c:if>
+  					<a href="Controller?command=loaduserpage&user=${comment.author}">${comment.author }</a></p>
+    				<div class="comment-text">${comment.text }</div>
+    				<c:if test="${sessionScope.auth != null && sessionScope.user.isAdmin == false}">
+    					<form action="Controller" class="complaint-btn">
+    						<input type="hidden" name="photo" value="${photo }"/>
+    						<input  type="hidden" name="comment_id" value="${comment.id }"/>
+            				<button type="submit" name="command" value="loadreportpage" class="complaint">${report }</button>
+        				</form>
+        			</c:if>
+    				<div class="date-comment">${comment.date }</div>
+    			</div>
+    			</div>
+				</c:otherwise>
+				</c:choose>
 			</c:forEach>
 			<c:if test="${sessionScope.auth != null }">
 				<form action="Controller" method="post" class="new-comment">

@@ -27,6 +27,13 @@
     <fmt:message bundle="${loc}" key="column.date" var="date_col"/>
     <fmt:message bundle="${loc}" key="column.status" var="status_col"/>
     <fmt:message bundle="${loc}" key="column.client" var="client_col"/>
+    <fmt:message bundle="${loc}" key="weekday.monday" var="monday"/>
+    <fmt:message bundle="${loc}" key="weekday.tuesday" var="tuesday"/>
+    <fmt:message bundle="${loc}" key="weekday.wednesday" var="wednesday"/>
+    <fmt:message bundle="${loc}" key="weekday.thursday" var="thursday"/>
+    <fmt:message bundle="${loc}" key="weekday.friday" var="friday"/>
+    <fmt:message bundle="${loc}" key="weekday.saturday" var="saturday"/>
+    <fmt:message bundle="${loc}" key="weekday.sunday" var="sunday"/>
     
 </head>
 <body>
@@ -181,7 +188,7 @@
   					<tbody>
   						<c:forEach var="order" items="${orders }">
   							<tr>
-  								<td>${order.client }</td>
+  								<td><a href="Controller?command=loaduserpage&user=${order.client}">${order.client }</a></td>
   								<td>${order.phOption.type }</td>
   								<td>${order.phOption.price }</td>
   								<td>${order.date }</td>
@@ -224,15 +231,16 @@
         <div class="carousel-item active">
             <div id="calendar-wrap">
     		<div id="calendar">
+    		<h2 class="year">${timetable[0].date.month } ${timetable[0].date.year }</h2>
     			<ul class="weekdays">
     				
-    				<li>Monday</li>
-    				<li>Tuesday</li>
-    				<li>Wednesday</li>
-    				<li>Thursday</li>
-    				<li>Friday</li>
-    				<li>Saturday</li>
-    				<li>Sunday</li>
+    				<li>${ monday}</li>
+    				<li>${tuesday}</li>
+    				<li>${wednesday}</li>
+    				<li>${thursday}</li>
+    				<li>${friday}</li>
+    				<li>${saturday}</li>
+    				<li>${sunday}</li>
     			</ul>
 
 
@@ -246,7 +254,7 @@
     						<c:if test="${i.value != null }">
     							<div class="event">
     								<div class="event-desc">
-    									${i.value.client }  ${i.value.phOption.type }
+    									<a href="Controller?command=loaduserpage&user=${i.value.client}">${i.value.client }</a>  ${i.value.phOption.type }
     								</div>
     					</div>
     						</c:if>  					
@@ -260,15 +268,16 @@
         <div class="carousel-item">
           <div id="calendar-wrap">
     		<div id="calendar">
+    		<h2 class="year">${timetable[1].date.month } ${timetable[0].date.year }</h2>
     			<ul class="weekdays">
     				
-    				<li>Monday</li>
-    				<li>Tuesday</li>
-    				<li>Wednesday</li>
-    				<li>Thursday</li>
-    				<li>Friday</li>
-    				<li>Saturday</li>
-    				<li>Sunday</li>
+    				<li>${ monday}</li>
+    				<li>${tuesday}</li>
+    				<li>${wednesday}</li>
+    				<li>${thursday}</li>
+    				<li>${friday}</li>
+    				<li>${saturday}</li>
+    				<li>${sunday}</li>
     			</ul>
 
 
@@ -282,7 +291,7 @@
     						<c:if test="${i.value != null }">
     							<div class="event">
     								<div class="event-desc">
-    									${i.value.client }  ${i.value.phOption.type }
+    									<a href="Controller?command=loaduserpage&user=${i.value.client}">${i.value.client }</a>  ${i.value.phOption.type }
     								</div>
     					</div>
     						</c:if>  					
@@ -296,15 +305,16 @@
         <div class="carousel-item">
          	<div id="calendar-wrap">
     		<div id="calendar">
+    			<h2 class="year">${timetable[2].date.month } ${timetable[0].date.year }</h2>
     			<ul class="weekdays">
     				
-    				<li>Monday</li>
-    				<li>Tuesday</li>
-    				<li>Wednesday</li>
-    				<li>Thursday</li>
-    				<li>Friday</li>
-    				<li>Saturday</li>
-    				<li>Sunday</li>
+    				<li>${ monday}</li>
+    				<li>${tuesday}</li>
+    				<li>${wednesday}</li>
+    				<li>${thursday}</li>
+    				<li>${friday}</li>
+    				<li>${saturday}</li>
+    				<li>${sunday}</li>
     			</ul>
 
 
@@ -318,7 +328,7 @@
     						<c:if test="${i.value != null }">
     							<div class="event">
     								<div class="event-desc">
-    									${i.value.client }  ${i.value.phOption.type }
+    									<a href="Controller?command=loaduserpage&user=${i.value.client}">${i.value.client }</a>  ${i.value.phOption.type }
     								</div>
     					</div>
     						</c:if>  					

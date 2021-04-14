@@ -145,3 +145,22 @@
 	background: #f5f5f5;
 	color: #666;
 }
+
+.year {
+	font-weight: 300;
+	font-size: 26px;
+	line-height: 28px;
+	text-transform: uppercase;
+	margin: 0px 0px 20px 0px;
+}
+
+.carousel-item {
+	position: relative;
+}
+
+.carousel-item p {
+	width:35%;
+	position: absolute;
+	right: 10%;
+	top: 10%;
+}

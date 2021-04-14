@@ -26,6 +26,7 @@
     <fmt:message bundle="${loc}" key="column.photographer" var="ph_col"/>
     <fmt:message bundle="${loc}" key="column.type" var="type_col"/>
     <fmt:message bundle="${loc}" key="column.price" var="price_col"/>
+    <fmt:message bundle="${loc}" key="calendar.text" var="calendar_text"/>
     
 </head>
 <body>
@@ -63,7 +64,7 @@
   		<c:forEach var = "option" items="${photoshoot_options}">
   		<tbody>
     		<tr>
-    			<td>${option.photographer }</td>
+    			<td><a href="Controller?command=loaduserpage&user=${option.photographer}">${option.photographer }</a></td>
       			<td>${option.type }</td>
       			<td>${option.price }</td>
       			<td>
@@ -136,6 +137,7 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
+		<p>${calendar_text }</p>
         </div>
         <div class="carousel-item">
             <div class="calendar">
@@ -173,6 +175,7 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
+		<p>${calendar_text }</p>
         </div>
         <div class="carousel-item">
             <div class="calendar">
@@ -210,6 +213,7 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
+		<p>${calendar_text }</p>
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

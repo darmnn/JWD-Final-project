@@ -65,7 +65,7 @@
   			<tbody>
   				<c:forEach var="order" items="${orders }">
   				<tr>
-  					<td>${order.phOption.photographer }</td>
+  					<td><a href="Controller?command=loaduserpage&user=${order.phOption.photographer}">${order.phOption.photographer }</a></td>
   					<td>${order.phOption.type }</td>
   					<td>${order.phOption.price }</td>
   					<td>${order.date }</td>

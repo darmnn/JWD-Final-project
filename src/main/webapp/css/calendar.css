@@ -10,9 +10,10 @@ a{
 	border-radius: 4px;
 	overflow: hidden;
 	width: 550px;
-	height: 450px;
+	height: 350px;
 	background-color: #ffffff;
 	color: #333333;
+	margin-bottom:15%;
 }
 
 .calendar h1, .calendar h2{
@@ -47,6 +48,7 @@ a{
 
 .calendar .rightCol{
 	width: 100%;
+	margin-bottom:15%;
 }
 
 .calendar .rightCol h2{
@@ -67,6 +69,7 @@ a{
 .calendar .days li a{
 	display: block;
 	color: #747978;
+	text-decoration: none;
 }
 
 .calendar .months li a{
@@ -95,7 +98,7 @@ a{
 
 .calendar .days li a{
 	width: 36px;
-	height: 24px;
+	height: 30px;
 	text-align: center;
 	margin: auto auto;
 	font-size: 12px;
