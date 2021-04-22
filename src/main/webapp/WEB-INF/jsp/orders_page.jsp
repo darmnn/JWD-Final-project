@@ -43,8 +43,10 @@
 	
 	<div>
             	<c:if test="${message != null }">
+            	<div class="alert alert-danger" role="alert">
             		<fmt:message bundle="${loc}" key="${message }" var="mess"/>
             		${mess }
+            		</div>
             	</c:if>
             </div>
 	

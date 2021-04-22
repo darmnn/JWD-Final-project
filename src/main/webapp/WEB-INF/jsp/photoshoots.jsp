@@ -46,9 +46,11 @@
 	
 	<div>
 		<c:if test="${message != null }">
-    			<fmt:message bundle="${loc}" key="${message }" var="mess"/>
+            	<div class="alert alert-danger" role="alert">
+            		<fmt:message bundle="${loc}" key="${message }" var="mess"/>
             		${mess }
-    	</c:if>
+            		</div>
+            	</c:if>
     </div>
 	
 	<div class="container">
@@ -74,14 +76,14 @@
       					<input type="hidden" name="photoshoot_option" value="${option.id }"/>
       					<input type="hidden" name="photographer" value="${photographer }"/>
       					<input type="date" name="date"/>
-      					<button type="submit" name="command" value="saveorder" class="btn btn-primary">${order }</button>
+      					<button type="submit" name="command" value="orderphotoshoot" class="btn btn-primary">${order }</button>
       				</form>
       				</c:when>
       				<c:otherwise>
       					<form action="Controller" method="post">
-      					<input type="hidden" name="photoshoot_option" value="${option.id }"/>
+      					<input type="hidden" name="option_to_order" value="${option.id }"/>
       					<input type="hidden" name="photographer" value="${photographer }"/>
-      					<button type="submit" name="command" value="orderphotoshoot" class="btn btn-primary">${order }</button>
+      					<button type="submit" name="command" value="loadphotoshoots" class="btn btn-primary">${order }</button>
       				</form>
       				</c:otherwise>
       				</c:choose>

@@ -88,9 +88,11 @@
 	</form>
 	<div>
 		<c:if test="${message != null }">
-    			<fmt:message bundle="${loc}" key="${message }" var="mess"/>
+            	<div class="alert alert-danger" role="alert">
+            		<fmt:message bundle="${loc}" key="${message }" var="mess"/>
             		${mess }
-    	</c:if>
+            		</div>
+            	</c:if>
     </div>
 	<div class="container">
         	<div class="card border-success mb-3 photo-container">
