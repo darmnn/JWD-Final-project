@@ -9,7 +9,11 @@ import by.tc.photobook.controller.command.CommandProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
-
+/** 
+ * Controller that processes http requests
+ * @see HttpServlet
+ * @author Darya Minina
+*/
 public class Controller extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
@@ -22,17 +26,38 @@ public class Controller extends HttpServlet
         super();
     }
 
+    /**
+     * Receives get requests
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         process(request, response);
     }
 
+    /**
+     * Receives posts requests
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
         process(request, response);
     }
 
+    /**
+	 * Processes all of requests using the command pattern
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
     private void process(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
     {
         String name;

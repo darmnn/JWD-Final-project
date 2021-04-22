@@ -1,5 +1,10 @@
 package by.tc.photobook.dao;
 
+/**
+ * Class that handles exceptions on DAO layer
+ * 
+ * @author Darya Minina
+ */
 public class DAOException extends Exception
 {
 	private static final long serialVersionUID = -5026629693456812271L;

@@ -17,6 +17,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
+/** 
+ * Controller that processes requests related to loading images from user's drive
+ * @see HttpServlet
+ * @author Darya Minina
+*/
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
 maxFileSize = 1024 * 1024 * 5, 
 maxRequestSize = 1024 * 1024 * 5 * 5)
@@ -38,17 +43,39 @@ public class LoadImage extends HttpServlet
         super();
     }
 
+	/**
+     * Receives get requests
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         process(request, response);
     }
 
+    /**
+     * Receives posts requests
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
         process(request, response);
     }
 
+    /**
+   	 * Processes a file loaded by user, stores it in specific folder with all app images
+   	 * and updates all user photos
+   	 * @param request  {@link HttpServletRequest}
+   	 * @param response {@link HttpServletResponse}
+   	 * @throws ServletException
+   	 * @throws IOException
+   	 */
     private void process(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
     {
     	String uploadPath = getServletContext().getRealPath(IMAGE_FOLDER);

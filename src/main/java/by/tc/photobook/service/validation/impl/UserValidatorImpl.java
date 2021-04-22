@@ -2,12 +2,18 @@ package by.tc.photobook.service.validation.impl;
 
 import java.util.regex.Matcher;
 
+
 import java.util.regex.Pattern;
 
 import by.tc.photobook.bean.UserInfo;
 import by.tc.photobook.service.validation.UserValidator;
 import by.tc.photobook.service.validation.ValidationException;
 
+/**
+ * Class that checks the accuracy of the input data
+ * 
+ * @author Darya Minina
+ */
 public class UserValidatorImpl implements UserValidator
 {
 	private static final String EMPTY_USERNAME = "message.empty_username";
@@ -19,12 +25,19 @@ public class UserValidatorImpl implements UserValidator
 	private static final String INVALID_USERNAME = "message.invalid_username";
 	private static final String INVALID_EMAIL = "message.invalid_email";
 	
-	private static final String NOT_CHARACTER_OR_NUMBER = "\\W";
+	private static final String CHARACTER_OR_NUMBER = "^[а-яА-Яa-zA-Z0-9]+$";
 	private static final String EMAIL_FORMAT = "([.[^@\\s]]+)@([.[^@\\s]]+)\\.([a-z]+)";
 	
 	private static final int MIN_LENGTH = 6;
 	private static final int MAX_LENGTH = 30;
 	
+	/**
+	 * Checks the input user's data while authorization
+	 * 
+	 * @param userInfo {@link UserInfo}
+	 * @return true if everything is correct
+	 * @throws ValidationException
+	 */
 	@Override
 	public boolean checkAuthData(UserInfo userInfo) throws ValidationException
 	{
@@ -53,17 +66,24 @@ public class UserValidatorImpl implements UserValidator
 			throw new ValidationException(LONG_USERNAME);
 		}
 		
-		/*Pattern usernamePattern = Pattern.compile(NOT_CHARACTER_OR_NUMBER);
+		Pattern usernamePattern = Pattern.compile(CHARACTER_OR_NUMBER);
 		Matcher usernameMatcher = usernamePattern.matcher(userInfo.getUsername());
 		
-		if(usernameMatcher.find())
+		if(!usernameMatcher.find())
 		{
-			throw new ServiceException(INVALID_USERNAME);
-		}*/
+			throw new ValidationException(INVALID_USERNAME);
+		}
 		
 		return true;
 	}
 	
+	/**
+	 * Checks the input user's data while registration
+	 * 
+	 * @param userInfo {@link UserInfo}
+	 * @return true if everything is correct
+	 * @throws ValidationException
+	 */
 	public boolean checkRegData(UserInfo userInfo) throws ValidationException
 	{
 		if(checkAuthData(userInfo))

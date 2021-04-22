@@ -12,6 +12,12 @@ import by.tc.photobook.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command accepts or declines client's order according to the parameter in http request
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class ProcessOrder implements Command
 {
 	private static final String LOAD_PHOTOSHOOT_PAGE = "Controller?command=loadphotoshootpage";
@@ -22,6 +28,14 @@ public class ProcessOrder implements Command
 	private static final String LOAD_MAIN_PAGE_WITH_MESSAGE = "Controller?command=loadmainpage&message=";
 	private static final String SESSION_EXPIRED_MESSAGE="message.session_expired";
 	
+	/**
+	 * Executes the processing order command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

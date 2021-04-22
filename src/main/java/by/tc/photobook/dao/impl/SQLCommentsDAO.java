@@ -16,6 +16,11 @@ import by.tc.photobook.dao.DAOException;
 import by.tc.photobook.dao.connection.ConnectionException;
 import by.tc.photobook.dao.connection.ConnectionPool;
 
+/**
+ * The implementation of comments dao class that works with comments table in database
+ * 
+ * @author Darya Minina
+ */
 public class SQLCommentsDAO implements CommentsDAO
 {
 	private static final String GET_COMMENTS_TO_PHOTO = "SELECT comments.comment_id, comments.comment_text, users.username, comments.date_time, "
@@ -36,6 +41,13 @@ public class SQLCommentsDAO implements CommentsDAO
 	ConnectionPool connectionPool = ConnectionPool.getInstance();
 	private static final Logger log = Logger.getLogger(SQLCommentsDAO.class);
 	
+	/**
+	 * Get all comments to a photo
+	 * 
+	 * @param photoId  id of a photo
+	 * @return {@link Comment} list of comments
+	 * @throws DAOException
+	 */
 	public List<Comment> takePhotoComments(int photoId) throws DAOException
 	{
 		Connection connection = null;
@@ -78,6 +90,15 @@ public class SQLCommentsDAO implements CommentsDAO
 		return comments;
 	}
 	
+	/**
+	 * Leaves new comment to a photo
+	 * 
+	 * @param comment new comment
+	 * @param photoId id of a photo
+	 * @param authorId - user who left the comment
+	 * @return true if the operation was successful
+	 * @throws DAOException
+	 */
 	public boolean loadNewComment(Comment comment, int photoId, int authorId) throws DAOException
 	{
 		Connection connection = null;
@@ -119,6 +140,13 @@ public class SQLCommentsDAO implements CommentsDAO
 		return true;
 	}
 	
+	/**
+	 * Deletes one comment specified by its id
+	 * 
+	 * @param commentId id of a comment to delete
+	 * @return true if the operation was successful
+	 * @throws DAOException
+	 */
 	public boolean deleteComment(int commentId) throws DAOException
 	{
 		Connection connection = null;
@@ -155,6 +183,14 @@ public class SQLCommentsDAO implements CommentsDAO
 		return true;
 	}
 	
+	/**
+	 * Closes result set, prepared statement and connection
+	 * 
+	 * @param resultSet {@link ResultSet}
+	 * @param preparedStatement {@link PreparedStatement}
+	 * @param connection {@link Connection}
+	 * @return true if the operation was successful
+	 */
 	private void closeAll(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection)
 	{
 		if(resultSet != null)

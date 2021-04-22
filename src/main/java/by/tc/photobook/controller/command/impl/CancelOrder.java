@@ -11,6 +11,12 @@ import by.tc.photobook.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * By this command a client can cancel his order if it wasn't processed yet
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class CancelOrder implements Command
 {
 	private static final String AUTH_ATTRIBUTE = "auth";
@@ -20,6 +26,14 @@ public class CancelOrder implements Command
 	private static final String LOAD_ORDER_PAGE = "Controller?command=loadorderspage";
 	private static final String LOAD_ORDER_PAGE_WITH_MESSAGE = "Controller?command=loadorderspage&message=";
 	
+	/**
+	 * Executes the canceling order command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

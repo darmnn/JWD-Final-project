@@ -3,6 +3,10 @@ package by.tc.photobook.bean;
 import java.io.Serializable;
 import java.util.Objects;
 
+/** 
+ * Class that describes a type of available photoshoot type
+ * @author Darya Minina
+*/
 public class PhotoshootType implements Serializable
 {
 	private static final long serialVersionUID = -883185574489861788L;
@@ -15,6 +19,8 @@ public class PhotoshootType implements Serializable
         this.id = id;
         this.type = type;
     }
+    
+    public PhotoshootType() {}
 
     public int getId() {
         return id;

@@ -13,6 +13,12 @@ import by.tc.photobook.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command creates a new photoshoot option specified by parameters from http request
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class SavePhotoshoot implements Command
 {
 	private static final String AUTH_ATTRIBUTE = "auth";
@@ -25,6 +31,14 @@ public class SavePhotoshoot implements Command
 	private static final String SESSION_EXPIRED_MESSAGE="message.session_expired";
 	private static final String LOAD_MAIN_PAGE_WITH_MESSAGE = "Controller?command=loadmainpage&message=";
 	
+	/**
+	 * Executes the saving new photoshoot option command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

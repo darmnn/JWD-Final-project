@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,8 +18,12 @@ import by.tc.photobook.dao.DAOException;
 import by.tc.photobook.dao.UserDAO;
 import by.tc.photobook.dao.connection.ConnectionException;
 import by.tc.photobook.dao.connection.ConnectionPool;
-import by.tc.photobook.service.ServiceException;
 
+/**
+ * The implementation of user dao class that works with users table in database
+ * 
+ * @author Darya Minina
+ */
 public class SQLUserDAO implements UserDAO
 {
 	private static final Logger log = Logger.getLogger(SQLUserDAO.class);
@@ -51,7 +56,6 @@ public class SQLUserDAO implements UserDAO
 			+ " ON users.role=user_roles.id_role";
 	private static final String BLOCK_UNLOCK = "UPDATE users SET state=? WHERE id_user=?";
 	
-	private static final String ROLE_CLIENT = "клиент";
 	private static final String ROLE_PHOTOGRAPHER = "фотограф";
 	private static final String ROLE_ADMIN = "администратор";
 	private static int role_client = 1;
@@ -59,6 +63,13 @@ public class SQLUserDAO implements UserDAO
 	
 	private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 	
+	/**
+	 * Adds a new user
+	 * 
+	 * @param userInfo {@link UserInfo} information about new user
+	 * @return true if the operation is successful
+	 * @throws DAOException
+	 */
 	@Override
 	public boolean registration(UserInfo userInfo) throws DAOException
 	{
@@ -106,6 +117,13 @@ public class SQLUserDAO implements UserDAO
 		return true;
 	}
 	
+	/**
+	 * Logs in a user into a system
+	 * 
+	 * @param userInfo {@link UserInfo} information about new user
+	 * @return true if the operation is successful
+	 * @throws DAOException
+	 */
 	@Override
 	public UserInfo authorization(UserInfo userInfo) throws DAOException
 	{
@@ -174,6 +192,15 @@ public class SQLUserDAO implements UserDAO
 		return authorizedUser;
 	}
 	
+	
+	/**
+	 * Updates a user's profile description
+	 * 
+	 * @param username username of the user
+	 * @param newProfileDesc new description of a profile
+	 * @return true if the operation is successful
+	 * @throws DAOException
+	 */
 	@Override
 	public boolean updateProfileDesc(String username, String newProfileDesc) throws DAOException
 	{
@@ -212,6 +239,14 @@ public class SQLUserDAO implements UserDAO
 		return true;
 	}
 	
+	/**
+	 * Updates a user's profile picture
+	 * 
+	 * @param username username of the user
+	 * @param newProfileDesc new profile picture
+	 * @return true if the operation is successful
+	 * @throws DAOException
+	 */
 	@Override
 	public boolean updateProfilePic(String username, String newProfilePicPath) throws DAOException
 	{
@@ -250,6 +285,13 @@ public class SQLUserDAO implements UserDAO
 		return true;
 	}
 	
+	/**
+	 * Get all information about the user by his username
+	 * 
+	 * @param username username of the user
+	 * @return information about the user {@link UserInfo}
+	 * @throws DAOException
+	 */
 	public UserInfo getInfoByUsername(String username) throws DAOException
 	{
 		Connection connection = null;
@@ -321,6 +363,12 @@ public class SQLUserDAO implements UserDAO
 		return user;
 	}
 	
+	/**
+	 * Get list of all users of the app
+	 * 
+	 * @return list of the users {@link UserInfo}
+	 * @throws DAOException
+	 */
 	public List<UserInfo> getAllUsers() throws DAOException
 	{
 		List<UserInfo> allUsers = new ArrayList<UserInfo>();
@@ -384,6 +432,14 @@ public class SQLUserDAO implements UserDAO
 		return allUsers;
 	}
 	
+	/**
+	 * Block or unlock a user depending on the action
+	 * 
+	 * @param userId the id of the user to block or unlock
+	 * @param action block or unlock
+	 * @return true if the operation is successful
+	 * @throws DAOException
+	 */
 	public boolean blockUnlock(int userId, int action) throws DAOException
 	{
 		Connection connection = null;
@@ -428,6 +484,14 @@ public class SQLUserDAO implements UserDAO
 		return true;
 	}
 	
+	/**
+	 * Closes result set, prepared statement and connection
+	 * 
+	 * @param resultSet {@link ResultSet}
+	 * @param preparedStatement {@link PreparedStatement}
+	 * @param connection {@link Connection}
+	 * @return true if the operation was successful
+	 */
 	private void closeAll(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection)
 	{
 		if(resultSet != null)

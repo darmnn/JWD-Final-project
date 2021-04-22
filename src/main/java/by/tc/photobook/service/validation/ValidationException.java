@@ -1,5 +1,10 @@
 package by.tc.photobook.service.validation;
 
+/**
+ * Class that handles exceptions in validation classes
+ * 
+ * @author Darya Minina
+ */
 public class ValidationException extends Exception
 {
 	private static final long serialVersionUID = -2438196178842268215L;

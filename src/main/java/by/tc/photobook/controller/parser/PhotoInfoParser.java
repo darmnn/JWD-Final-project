@@ -2,8 +2,13 @@ package by.tc.photobook.controller.parser;
 
 import java.time.LocalDate;
 
+
 import by.tc.photobook.bean.Photo;
 
+/** 
+ * Class to parse string information about a photo to a Photo bean object
+ * @author Darya Minina
+*/
 public class PhotoInfoParser 
 {
 	private static final String ID = "id=";
@@ -74,6 +79,11 @@ public class PhotoInfoParser
         return rating;
 	}
 	
+	/**
+	 * Get Photo object from string
+	 * 
+	 * @param photoInfo - information about photo in string
+	 */
 	public Photo getPhotoFromString(String photoInfo)
 	{
 		int id = this.getId(photoInfo);

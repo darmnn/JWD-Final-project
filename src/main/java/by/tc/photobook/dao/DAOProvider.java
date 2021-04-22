@@ -8,6 +8,11 @@ import by.tc.photobook.dao.impl.SQLPhotoshootOptionsDAO;
 import by.tc.photobook.dao.impl.SQLPhotoshootTypesDAO;
 import by.tc.photobook.dao.impl.SQLUserDAO;
 
+/**
+ * Class that provides DAO objects
+ * 
+ * @author Darya Minina
+ */
 public class DAOProvider 
 {
 	private static final DAOProvider instance = new DAOProvider();	

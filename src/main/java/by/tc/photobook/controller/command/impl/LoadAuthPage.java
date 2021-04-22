@@ -10,6 +10,12 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command displays an authorization page
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadAuthPage implements Command
 {
 	private static final String AUTH_PAGE_PATH = "/WEB-INF/jsp/authorization.jsp";
@@ -19,6 +25,14 @@ public class LoadAuthPage implements Command
 	private static final String LOAD_AUTH_PAGE_WITH_MESSAGE = "Controller?command=loadauthpage&message=";
 	private static final String LOAD_AUTH_PAGE = "Controller?command=loadauthpage";
 	
+	/**
+	 * Executes the loading authorization page command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
 		HttpSession session = request.getSession(true);

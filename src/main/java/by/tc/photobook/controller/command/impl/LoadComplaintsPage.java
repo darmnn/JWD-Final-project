@@ -14,6 +14,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+/**
+ * Command displays a page with all reports
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadComplaintsPage implements Command
 {
 	private static final String COMPLAINTS_PAGE_PATH = "/WEB-INF/jsp/complaints_page.jsp";
@@ -27,6 +33,14 @@ public class LoadComplaintsPage implements Command
 	private static final String LOAD_COMPLAINTS_PAGE = "Controller?command=loadcomplaintspage";
 	private static final String MESSAGE_PARAM = "message";
 	
+	/**
+	 * Executes the loading complaints page command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{

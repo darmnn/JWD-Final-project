@@ -18,6 +18,11 @@ import by.tc.photobook.dao.OrdersDAO;
 import by.tc.photobook.dao.connection.ConnectionException;
 import by.tc.photobook.dao.connection.ConnectionPool;
 
+/**
+ * The implementation of orders dao class that works with orders table in database
+ * 
+ * @author Darya Minina
+ */
 public class SQLOrdersDAO implements OrdersDAO 
 {
 	private static final Logger log = Logger.getLogger(SQLPhotosDAO.class);
@@ -51,6 +56,15 @@ public class SQLOrdersDAO implements OrdersDAO
 	private static final String PROCESS_ORDER = "UPDATE orders SET status=? WHERE order_id=?";
 	private static final String DELETE_ORDER = "DELETE FROM orders WHERE order_id=?";
 	
+	/**
+	 * Add one order to user's orders
+	 * 
+	 * @param user user who makes an order
+	 * @param photoshootOption the id of the photoshoot option to order
+	 * @param date {@link LocalDate} date of the order
+	 * @return true if the operation was successful
+	 * @throws DAOException
+	 */
 	public boolean addOrder(int user, int photoshootOption, LocalDate date) throws DAOException
 	{
 		Connection connection = null;
@@ -90,6 +104,13 @@ public class SQLOrdersDAO implements OrdersDAO
 		return true;
 	}
 	
+	/**
+	 * Takes all photographer's orders
+	 * 
+	 * @param photographerId the id of the photographer
+	 * @return list of the orders {@link Order}
+	 * @throws DAOException
+	 */
 	public List<Order> getOrdersByPhotographer(int photographerId) throws DAOException
 	{
 		Connection connection = null;
@@ -134,6 +155,13 @@ public class SQLOrdersDAO implements OrdersDAO
 		return allOrders;
 	}
 	
+	/**
+	 * Takes all client's orders
+	 * 
+	 * @param clientId the id of the client
+	 * @return list of the orders {@link Order}
+	 * @throws DAOException
+	 */
 	public boolean processOrder(int orderId, String action) throws DAOException
 	{
 		Connection connection = null;
@@ -181,6 +209,14 @@ public class SQLOrdersDAO implements OrdersDAO
 		return true;
 	}
 	
+	/**
+	 * Marks an order as declined or accepted depending on the action parameter
+	 * 
+	 * @param orderId the id of the order to process
+	 * @param action decline or accept
+	 * @return true if the operation was successful
+	 * @throws DAOException
+	 */
 	public List<Order> getOrdersByClient(int clientId) throws DAOException
 	{
 		Connection connection = null;
@@ -227,6 +263,13 @@ public class SQLOrdersDAO implements OrdersDAO
 		return allOrders;
 	}
 	
+	/**
+	 * Cancels user's order
+	 * 
+	 * @param orderId the id of the order to cancel
+	 * @return true if the operation was successful
+	 * @throws DAOException
+	 */
 	public boolean cancelOrder(int orderId) throws DAOException
 	{
 		Connection connection = null;
@@ -264,6 +307,14 @@ public class SQLOrdersDAO implements OrdersDAO
 		return true;
 	}
 	
+	/**
+	 * Closes result set, prepared statement and connection
+	 * 
+	 * @param resultSet {@link ResultSet}
+	 * @param preparedStatement {@link PreparedStatement}
+	 * @param connection {@link Connection}
+	 * @return true if the operation was successful
+	 */
 	private void closeAll(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection)
 	{
 		if(resultSet != null)

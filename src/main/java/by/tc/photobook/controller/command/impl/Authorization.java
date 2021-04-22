@@ -12,6 +12,12 @@ import by.tc.photobook.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * The command does the logging in user into a system
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class Authorization implements Command
 {
 	private static final String USERNAME_PARAM = "username";
@@ -21,7 +27,14 @@ public class Authorization implements Command
 	private static final String AUTH_ATTRIBUTE = "auth";
 	private static final String USER_ATTRIBUTE = "user";
 	
-	
+	/**
+	 * Executes the authorization command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         String username = request.getParameter(USERNAME_PARAM);

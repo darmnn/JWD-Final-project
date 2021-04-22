@@ -15,6 +15,12 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command displays a page with all user's orders
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadOrdersPage implements Command
 {
 	private static final String AUTH_ATTRIBUTE = "auth";
@@ -29,6 +35,14 @@ public class LoadOrdersPage implements Command
 	private static final String LOAD_ORDER_PAGE = "Controller?command=loadorderspage";
 	private static final String LOAD_ORDER_PAGE_WITH_MESSAGE = "Controller?command=loadorderspage&message=";
 	
+	/**
+	 * Executes the loading orders page command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

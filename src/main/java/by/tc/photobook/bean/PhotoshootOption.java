@@ -3,6 +3,10 @@ package by.tc.photobook.bean;
 import java.io.Serializable;
 import java.util.Objects;
 
+/** 
+ * Class that describes a photoshoot option that photographer can offer to clients, it includes photoshoot type and price
+ * @author Darya Minina
+*/
 public class PhotoshootOption implements Serializable
 {
 	private static final long serialVersionUID = -6356175759430040066L;
@@ -19,6 +23,8 @@ public class PhotoshootOption implements Serializable
         this.type = type;
         this.price = price;
     }
+    
+    public PhotoshootOption() {}
 
     public int getId() {
         return id;

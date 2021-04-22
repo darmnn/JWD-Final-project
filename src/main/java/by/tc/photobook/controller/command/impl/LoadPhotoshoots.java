@@ -18,6 +18,12 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command displays a page with all the photoshoot options from a specific photographer
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadPhotoshoots implements Command
 {
 	private static final String PHOTOSHOOT_PAGE_PATH = "/WEB-INF/jsp/photoshoots.jsp";
@@ -35,6 +41,14 @@ public class LoadPhotoshoots implements Command
 	private static final String TIMETABLE_PARAM = "timetable";
 	private static final String DAYS_PARAM = "days";
 	
+	/**
+	 * Executes the loading photoshoots page command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

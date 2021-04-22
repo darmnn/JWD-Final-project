@@ -1,26 +1,32 @@
 package by.tc.photobook.service.impl;
 
-import java.io.*;
+
 
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 import org.apache.log4j.Logger;
 
-import by.tc.photobook.service.EmailResourceManager;
+import by.tc.photobook.dao.email.EmailResourceManager;
 import by.tc.photobook.service.EmailService;
 import by.tc.photobook.service.ServiceException;
 
-
+/**
+ * The implementation of operations with emails
+ * 
+ * @author Darya Minina
+ */
 public class EmailServiceImpl implements EmailService
 {
-	private final String MAIL_SMTP_AUTH = "mail.smtp.auth";
-	private final String MAIL_SMTP_STARTTLS_ENABLE = "mail.smtp.starttls.enable";
-	private final String MAIL_SMTP_HOST = "mail.smtp.host";
-	private final String MAIL_SMTP_PORT = "mail.smtp.port";
-	private final String MAIL_USERNAME = "mail.username";
-	private final String MAIL_PASSWORD = "mail.password";
-	private final String MAIL_PROTOCOL = "mail.protocol";
+	private static final String MAIL_SMTP_AUTH = "mail.smtp.auth";
+	private static final String MAIL_SMTP_STARTTLS_ENABLE = "mail.smtp.starttls.enable";
+	private static final String MAIL_SMTP_HOST = "mail.smtp.host";
+	private static final String MAIL_SMTP_PORT = "mail.smtp.port";
+	private static final String MAIL_USERNAME = "mail.username";
+	private static final String MAIL_PASSWORD = "mail.password";
+	private static final String MAIL_PROTOCOL = "mail.protocol";
+	private static final String SUBJECT = "Photobook order";
+	private static final String MESSAGE_TEXT = "Your order was processed! Check out results in photobook";
 	
 	private static final EmailResourceManager emailResourceManager = EmailResourceManager.getInstance();
 	private final static Logger log = Logger.getLogger(EmailServiceImpl.class);
@@ -42,8 +48,8 @@ public class EmailServiceImpl implements EmailService
 			message.setFrom(new InternetAddress(emailResourceManager.getValue(MAIL_USERNAME)));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
 		
-			message.setSubject("Photobook order");
-			message.setText("Your order was processed! Check out results in photobook");
+			message.setSubject(SUBJECT);
+			message.setText(MESSAGE_TEXT);
 
 			transport = mailSession.getTransport();
 			transport.connect(emailResourceManager.getValue(MAIL_USERNAME), emailResourceManager.getValue(MAIL_PASSWORD));

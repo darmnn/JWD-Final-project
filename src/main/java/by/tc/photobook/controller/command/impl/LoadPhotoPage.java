@@ -17,6 +17,12 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command displays a page with one photo and all comments to it
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadPhotoPage implements Command
 {
 	private static final String PHOTO_PAGE_PATH = "/WEB-INF/jsp/photo_page.jsp";
@@ -30,7 +36,14 @@ public class LoadPhotoPage implements Command
 	private static final String COMMENTS_ATTR = "comments";
 	private static final String COMPLAINT_COMMENT_PARAM = "complaint_comment";
 	
-	
+	/**
+	 * Executes the loading photo page command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		String photoInfo = request.getParameter(PHOTO_PARAM);

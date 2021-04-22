@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/** 
+ * Class that describes monthly timetable of a photographer, where his busy days are showna
+ * @author Darya Minina
+*/
 public class Timetable implements Serializable
 {
 	private static final long serialVersionUID = -5317795226797312705L;
@@ -23,6 +27,8 @@ public class Timetable implements Serializable
         this.lengthOfMonth = lengthOfMonth;
         this.firstDayOfMonth = firstDayOfMonth;
     }
+	
+	public Timetable() {}
 
     public LocalDate getDate() {
         return date;

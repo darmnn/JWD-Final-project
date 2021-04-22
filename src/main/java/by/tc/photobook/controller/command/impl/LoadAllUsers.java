@@ -14,6 +14,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+/**
+ * Command loads information about all users of an app
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadAllUsers implements Command
 {
 	private static final String ALL_USERS_PAGE_PATH = "/WEB-INF/jsp/all_users_page.jsp";
@@ -27,6 +33,14 @@ public class LoadAllUsers implements Command
 	private static final String ALL_USERS_ATTRIBUTE = "users";
 	private static final String MESSAGE_PARAM = "message";
 	
+	/**
+	 * Executes the loading users command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

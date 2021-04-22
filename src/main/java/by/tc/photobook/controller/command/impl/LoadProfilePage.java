@@ -16,6 +16,12 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command displays a page with all the information about authorized user
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadProfilePage implements Command
 {
 	private static final String PROFILE_PAGE_PATH = "/WEB-INF/jsp/profile_page.jsp";
@@ -33,6 +39,14 @@ public class LoadProfilePage implements Command
 	private static final String LOAD_PROFILE_PAGE = "Controller?command=loadprofilepage";
 	private static final String NO_PHOTOS_MESSAGE = "message.no_photos";
 	
+	/**
+	 * Executes the loading profile page command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

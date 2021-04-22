@@ -11,6 +11,12 @@ import by.tc.photobook.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command deletes one specified by a http request parameter photoshoot option
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class DeletePhotoshoot implements Command
 {
 	private static final String AUTH_ATTRIBUTE = "auth";
@@ -21,6 +27,14 @@ public class DeletePhotoshoot implements Command
 	private static final String LOAD_MAIN_PAGE_WITH_MESSAGE = "Controller?command=loadmainpage&message=";
 	private static final String LOAD_PHOTOSHOOT_PAGE_WITH_MESSAGE = "Controller?command=loadphotoshootpage&message=";
 	
+	/**
+	 * Executes the deleting photoshoot option command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

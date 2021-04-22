@@ -13,6 +13,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+/**
+ * Command deletes one specified by a http request parameter comment
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class DeleteComment implements Command
 {
 	private static final String COMMENT_ID_PARAM = "comment_id";
@@ -22,6 +28,14 @@ public class DeleteComment implements Command
 	private static final String LOAD_PHOTO_PAGE = "Controller?command=loadphotopage&photo=";
 	private static final String PHOTO_PARAM = "photo";
 	
+	/**
+	 * Executes the deleting comment command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{

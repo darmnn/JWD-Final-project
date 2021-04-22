@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import by.tc.photobook.bean.Comment;
 import by.tc.photobook.bean.Complaint;
 import by.tc.photobook.bean.Photo;
 import by.tc.photobook.dao.ComplaintsDAO;
@@ -16,6 +17,11 @@ import by.tc.photobook.dao.DAOException;
 import by.tc.photobook.dao.connection.ConnectionException;
 import by.tc.photobook.dao.connection.ConnectionPool;
 
+/**
+ * The implementation of complaints dao class that works with complaints table in database
+ * 
+ * @author Darya Minina
+ */
 public class SQLComplaintsDAO implements ComplaintsDAO
 {
 	ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -38,6 +44,13 @@ public class SQLComplaintsDAO implements ComplaintsDAO
 	private static final String GET_ALL_COMPLAINTS = "SELECT complaints.id, complaints.complaint_text, complaints.user,  photos.photo_id, users.username, photos.date_time, photos.image, photos.rating, complaints.state FROM complaints JOIN photos ON complaints.photo_id = photos.photo_id  JOIN users ON users.id_user = photos.photographer";
 	private static final String MARK_AS_VIEWED = "UPDATE complaints SET state=2 WHERE id=?";
 	
+	/**
+	 * Leaves new complaint to a photo or comment
+	 * 
+	 * @param newComplaint {@link Complaint} information about new complaint
+	 * @return true if the operation was successful
+	 * @throws DAOException
+	 */
 	@Override
 	public boolean addComplaint(Complaint newComplaint) throws DAOException 
 	{
@@ -90,6 +103,12 @@ public class SQLComplaintsDAO implements ComplaintsDAO
 		return true;
 	}
 
+	/**
+	 * Get all reports
+	 * 
+	 * @return {@link Comment} list of comments
+	 * @throws DAOException
+	 */
 	public List<Complaint> getAllComplaints() throws DAOException
 	{
 		Connection connection = null;
@@ -152,6 +171,13 @@ public class SQLComplaintsDAO implements ComplaintsDAO
 		return allComplaints;
 	}
 	
+	/**
+	 * Marks one report as viewed by the administrator
+	 * 
+	 * @param complaintId the id of the report to mark
+	 * @return true if the operation was successful
+	 * @throws DAOException
+	 */
 	public void viewComplaint(int complaintId) throws DAOException
 	{
 		Connection connection = null;
@@ -187,6 +213,14 @@ public class SQLComplaintsDAO implements ComplaintsDAO
 		}
 	}
 	
+	/**
+	 * Closes result set, prepared statement and connection
+	 * 
+	 * @param resultSet {@link ResultSet}
+	 * @param preparedStatement {@link PreparedStatement}
+	 * @param connection {@link Connection}
+	 * @return true if the operation was successful
+	 */
 	private void closeAll(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection)
 	{
 		if(resultSet != null)

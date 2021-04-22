@@ -1,5 +1,10 @@
 package by.tc.photobook.dao.connection;
 
+/**
+ * Class that stores all parameters for connection to database
+ * 
+ * @author Darya Minina
+ */
 public class DBParameter 
 {
 	private DBParameter() {}

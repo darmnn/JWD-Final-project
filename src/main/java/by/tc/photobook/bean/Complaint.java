@@ -2,8 +2,13 @@ package by.tc.photobook.bean;
 
 import java.io.Serializable;
 
+
 import java.util.Objects;
 
+/** 
+ * Class that describes a report to an inappropriate photo or comment
+ * @author Darya Minina
+*/
 public class Complaint implements Serializable
 {
 	private static final long serialVersionUID = 4087889626402998840L;
@@ -40,6 +45,8 @@ public class Complaint implements Serializable
         this.commentId = commentId;
         this.photo = photo;
     }
+    
+    public Complaint() {}
 
     public int getId() {
         return id;

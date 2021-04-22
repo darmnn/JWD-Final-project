@@ -20,6 +20,12 @@ import by.tc.photobook.service.CommentsService;
 import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 
+/**
+ * Command adds new comment written by a user
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class NewComment implements Command
 {
 	private static final String COMMENT_ERROR_MESSAGE = "message.comment_error";
@@ -30,6 +36,14 @@ public class NewComment implements Command
 	private static final String LOAD_PHOTO_PAGE = "Controller?command=loadphotopage";
 	private static final String EMPTY_COMMENT_ERROR = "message.empty_comment";
 	
+	/**
+	 * Executes the adding new comment command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

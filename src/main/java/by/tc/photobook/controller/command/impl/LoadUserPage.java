@@ -17,6 +17,12 @@ import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 import by.tc.photobook.service.UserService;
 
+/**
+ * Command displays a page with all the information about one user by his username
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadUserPage implements Command
 {
 	private static final String GET_USER_PARAM = "user";
@@ -28,8 +34,15 @@ public class LoadUserPage implements Command
 	private static final String LOAD_USER_PAGE = "Controller?command=loaduserpage&user=";
 	private static final String USER_PAGE_PATH = "/WEB-INF/jsp/user_page.jsp";
 	private static final String NO_PHOTOS_MESSAGE = "message.no_photos";
-	private static final String LOAD_MAIN_PAGE_WITH_MESSAGE = "Controller?command=loadmainpage&message=";
 	
+	/**
+	 * Executes the loading user page command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		String username = request.getParameter(GET_USER_PARAM);

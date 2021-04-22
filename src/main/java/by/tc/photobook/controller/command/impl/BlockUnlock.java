@@ -11,6 +11,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+/**
+ * By this command administrator can block or unlock a user
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class BlockUnlock implements Command
 {
 	private static final String ACTION_PARAM = "action";
@@ -20,6 +26,14 @@ public class BlockUnlock implements Command
 	private static final String LOAD_ALL_USERS_PAGE = "Controller?command=loadalluserspage";
 	private static final String LOAD_ALL_USERS_PAGE_WITH_MESSAGE = "Controller?command=loadalluserspage&message=";
 	
+	/**
+	 * Executes the blocking or unlocking depending on the parameter of a request
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

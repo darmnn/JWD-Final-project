@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 
 
+
+
 import by.tc.photobook.controller.command.impl.AddPhotoshootType;
 import by.tc.photobook.controller.command.impl.Authorization;
 import by.tc.photobook.controller.command.impl.BlockUnlock;
@@ -18,7 +20,6 @@ import by.tc.photobook.controller.command.impl.DeletePhotoshoot;
 import by.tc.photobook.controller.command.impl.LoadAllUsers;
 import by.tc.photobook.controller.command.impl.LoadAuthPage;
 import by.tc.photobook.controller.command.impl.LoadComplaintsPage;
-import by.tc.photobook.controller.command.impl.LoadEmailPage;
 import by.tc.photobook.controller.command.impl.LoadMainPage;
 import by.tc.photobook.controller.command.impl.LoadOrdersPage;
 import by.tc.photobook.controller.command.impl.LoadPhotoPage;
@@ -36,16 +37,26 @@ import by.tc.photobook.controller.command.impl.ProcessOrder;
 import by.tc.photobook.controller.command.impl.RatePhoto;
 import by.tc.photobook.controller.command.impl.Registration;
 import by.tc.photobook.controller.command.impl.SaveChanges;
-import by.tc.photobook.controller.command.impl.SaveOrder;
 import by.tc.photobook.controller.command.impl.SavePhotoshoot;
 import by.tc.photobook.controller.command.impl.SavePhotoshootEdit;
 import by.tc.photobook.controller.command.impl.SearchUser;
 import by.tc.photobook.controller.command.impl.ViewComplaint;
+import jakarta.servlet.http.HttpServlet;
 
+/** 
+ * Class that maps names of the commands to their implementation
+ * @author Darya Minina
+*/
 public class CommandProvider
 {
+	/** 
+	 * A map that contains all names of commands as a key and their implementation as a value
+	*/
     private HashMap<CommandName, Command> commands = new HashMap<>();
 
+    /** 
+     * Fills the map with keys and values
+    */
     public CommandProvider()
     {
         commands.put(CommandName.LOADMAINPAGE, new LoadMainPage());
@@ -69,12 +80,10 @@ public class CommandProvider
         commands.put(CommandName.SAVEPHOTOSHOOTEDIT, new SavePhotoshootEdit());
         commands.put(CommandName.LOADPHOTOSHOOTS, new LoadPhotoshoots());
         commands.put(CommandName.ORDERPHOTOSHOOT, new OrderPhotoshoot());
-        commands.put(CommandName.SAVEORDER, new SaveOrder());
         commands.put(CommandName.PROCESSORDER, new ProcessOrder());
         commands.put(CommandName.LOADORDERSPAGE, new LoadOrdersPage());
         commands.put(CommandName.CANCELORDER, new CancelOrder());
         commands.put(CommandName.ADDPHOTOSHOOTTYPE, new AddPhotoshootType());
-        commands.put(CommandName.LOADEMAILPAGE, new LoadEmailPage());
         commands.put(CommandName.SEARCHUSER, new SearchUser());
         commands.put(CommandName.LOADALLUSERSPAGE, new LoadAllUsers());
         commands.put(CommandName.BLOCKUNLOCK, new BlockUnlock());
@@ -85,6 +94,12 @@ public class CommandProvider
         commands.put(CommandName.VIEWCOMPLAINT, new ViewComplaint());
     }
 
+    /**
+	 * Takes command by its name
+	 * 
+	 * @param name {@link String} command name
+	 * @return {@link Command}
+	 */
     public Command takeCommand(String name)
     {
         CommandName commandName;

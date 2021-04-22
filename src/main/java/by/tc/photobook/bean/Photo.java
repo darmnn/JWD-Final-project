@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/** 
+ * Class that describes a photo
+ * @author Darya Minina
+*/
 public class Photo implements Serializable
 { 
 	private static final long serialVersionUID = -2504730301599204099L;
@@ -28,6 +32,8 @@ public class Photo implements Serializable
         this.imagePath = imagePath;
         this.rating = rating;
     }
+    
+    public Photo() {}
 
     public int getId() {
         return id;

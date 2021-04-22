@@ -16,6 +16,11 @@ import by.tc.photobook.dao.PhotoshootTypesDAO;
 import by.tc.photobook.dao.connection.ConnectionException;
 import by.tc.photobook.dao.connection.ConnectionPool;
 
+/**
+ * The implementation of photoshoot types dao class that works with photoshoot types table in database
+ * 
+ * @author Darya Minina
+ */
 public class SQLPhotoshootTypesDAO implements PhotoshootTypesDAO
 {
 	private static final String GET_ALL_PHOTOSHOOT_TYPES = "SELECT * FROM photoshoot_types";
@@ -29,6 +34,12 @@ public class SQLPhotoshootTypesDAO implements PhotoshootTypesDAO
 	private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 	private static final Logger log = Logger.getLogger(SQLPhotoshootOptionsDAO.class);
 	
+	/**
+	 * Gets list of all types that exist in the system
+	 * 
+	 * @return list of photoshoot types {@link PhotoshootType}
+	 * @throws DAOException
+	 */
 	public List<PhotoshootType> takeAll() throws DAOException
 	{
 		Connection connection = null;
@@ -67,6 +78,13 @@ public class SQLPhotoshootTypesDAO implements PhotoshootTypesDAO
 		return allTypes;
 	}
 	
+	/**
+	 * Adds a new photoshoot type
+	 * 
+	 * @param type the name of a new type
+	 * @return true if the operation is successful
+	 * @throws DAOException
+	 */
 	public boolean addNewType(String type) throws DAOException
 	{
 		Connection connection = null;
@@ -104,6 +122,14 @@ public class SQLPhotoshootTypesDAO implements PhotoshootTypesDAO
 		return true;
 	}
 	
+	/**
+	 * Closes result set, prepared statement and connection
+	 * 
+	 * @param resultSet {@link ResultSet}
+	 * @param preparedStatement {@link PreparedStatement}
+	 * @param connection {@link Connection}
+	 * @return true if the operation was successful
+	 */
 	private void closeAll(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection)
 	{
 		if(resultSet != null)

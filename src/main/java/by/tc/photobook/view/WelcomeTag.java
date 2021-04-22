@@ -9,7 +9,11 @@ import jakarta.servlet.jsp.JspTagException;
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
 
-
+/**
+ * Custom jstl tag
+ * 
+ * @author Darya Minina
+ */
 public class WelcomeTag extends TagSupport
 {
 	private static final Logger log = Logger.getLogger(WelcomeTag.class);

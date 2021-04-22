@@ -3,6 +3,10 @@ package by.tc.photobook.bean;
 import java.io.Serializable;
 import java.util.Objects;
 
+/** 
+ * Class that describes a user and provides all necessary information about one user
+ * @author Darya Minina
+*/
 public class UserInfo implements Serializable
 {
 	private static final long serialVersionUID = 3493166085402697331L;
@@ -46,6 +50,8 @@ public class UserInfo implements Serializable
 		this.totalRating = totalRating;
 		this.state = state;
 	}
+	
+	public UserInfo() {}
 
 	public int getId() {
         return id;
@@ -134,12 +140,12 @@ public class UserInfo implements Serializable
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserInfo userInfo = (UserInfo) o;
-        return id == userInfo.id && isPhotographer == userInfo.isPhotographer && totalRating == userInfo.totalRating && username.equals(userInfo.username) && email.equals(userInfo.email) && password.equals(userInfo.password) && Objects.equals(profileDecs, userInfo.profileDecs) && Objects.equals(profilePicPath, userInfo.profilePicPath);
+        return id == userInfo.id && isPhotographer == userInfo.isPhotographer && isAdmin == userInfo.isAdmin && state == userInfo.state && username.equals(userInfo.username) && email.equals(userInfo.email) && password.equals(userInfo.password) && profileDecs.equals(userInfo.profileDecs) && profilePicPath.equals(userInfo.profilePicPath) && Objects.equals(totalRating, userInfo.totalRating);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, email, password, isPhotographer, profileDecs, profilePicPath, totalRating);
+        return Objects.hash(id, username, email, password, isPhotographer, isAdmin, profileDecs, profilePicPath, totalRating, state);
     }
 
     @Override
@@ -150,9 +156,11 @@ public class UserInfo implements Serializable
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", isPhotographer=" + isPhotographer +
+                ", isAdmin=" + isAdmin +
                 ", profileDecs='" + profileDecs + '\'' +
                 ", profilePicPath='" + profilePicPath + '\'' +
                 ", totalRating=" + totalRating +
+                ", state=" + state +
                 '}';
     }
 }

@@ -16,6 +16,12 @@ import by.tc.photobook.service.PhotosService;
 import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 
+/**
+ * Command gives a photo the grade from 1 to 5
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class RatePhoto implements Command
 {
 	private static final String USER_PARAM = "user";
@@ -26,6 +32,14 @@ public class RatePhoto implements Command
 	private static final String EMPTY_RATING_ERROR = "message.empty_rating";
 	private static final String SESSION_EXPIRED_MESSAGE="message.session_expired";
 	
+	/**
+	 * Executes the rating photo command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

@@ -12,10 +12,24 @@ import by.tc.photobook.dao.OrdersDAO;
 import by.tc.photobook.service.OrdersService;
 import by.tc.photobook.service.ServiceException;
 
+/**
+ * The implementation of operations with orders
+ * 
+ * @author Darya Minina
+ */
 public class OrdersServiceImpl implements OrdersService
 {
 	private static final String APPROVED = "Одобрено";
 	
+	/**
+	 * Add one order to user's orders
+	 * 
+	 * @param user user who makes an order
+	 * @param photoshootOption the id of the photoshoot option to order
+	 * @param date {@link LocalDate} date of the order
+	 * @return true if the operation was successful
+	 * @throws ServiceException
+	 */
 	public boolean addOrder(int user, int photoshootOption, LocalDate date) throws ServiceException
 	{
 		DAOProvider daoProvider = DAOProvider.getInstance();
@@ -32,6 +46,13 @@ public class OrdersServiceImpl implements OrdersService
 		return true;
 	}
 	
+	/**
+	 * Takes all photographer's orders
+	 * 
+	 * @param photographerId the id of the photographer
+	 * @return list of the orders {@link Order}
+	 * @throws ServiceException
+	 */
 	public List<Order> getOrdersByPhotographer(int photographerId) throws ServiceException
 	{
 		DAOProvider daoProvider = DAOProvider.getInstance();
@@ -50,6 +71,14 @@ public class OrdersServiceImpl implements OrdersService
 		return allOrders;
 	}
 	
+	/**
+	 * Marks an order as declined or accepted depending on the action parameter
+	 * 
+	 * @param orderId the id of the order to process
+	 * @param action decline or accept
+	 * @return true if the operation was successful
+	 * @throws ServiceException
+	 */
 	public boolean processOrder(int orderId, String action) throws ServiceException
 	{
 		DAOProvider daoProvider = DAOProvider.getInstance();
@@ -68,6 +97,13 @@ public class OrdersServiceImpl implements OrdersService
 		return true;
 	}
 	
+	/**
+	 * Takes all client's orders
+	 * 
+	 * @param clientId the id of the client
+	 * @return list of the orders {@link Order}
+	 * @throws ServiceException
+	 */
 	public List<Order> getOrdersByClient(int clientId) throws ServiceException
 	{
 		DAOProvider daoProvider = DAOProvider.getInstance();
@@ -86,6 +122,13 @@ public class OrdersServiceImpl implements OrdersService
 		return allOrders;
 	}
 	
+	/**
+	 * Cancels user's order
+	 * 
+	 * @param orderId the id of the order to cancel
+	 * @return true if the operation was successful
+	 * @throws ServiceException
+	 */
 	public boolean cancelOrder(int orderId) throws ServiceException
 	{
 		DAOProvider daoProvider = DAOProvider.getInstance();
@@ -103,6 +146,14 @@ public class OrdersServiceImpl implements OrdersService
 		return true;
 	}
 	
+	/**
+	 * Gets all days of a month and all orders assigned to each day
+	 * 
+	 * @param photographerId the id of the photographer
+	 * @param date the month that is checked
+	 * @return a map that shows days of the month and orders
+	 * @throws ServiceException
+	 */
 	public HashMap<Integer, Order> getBusyDaysOfMonth(int photographerId, LocalDate date) throws ServiceException
 	{
 		HashMap<Integer, Order> daysOfMonth = new HashMap<Integer, Order>();
@@ -133,6 +184,11 @@ public class OrdersServiceImpl implements OrdersService
 		return daysOfMonth;
 	}
 	
+	/**
+	 * A helper method that gets three month date represented in {@link Timetable} objects
+	 * 
+	 * @return an array on {@link Timetable}
+	 */
 	public Timetable[] getTimetable()
 	{
 		Timetable[] timetable = new Timetable[3];

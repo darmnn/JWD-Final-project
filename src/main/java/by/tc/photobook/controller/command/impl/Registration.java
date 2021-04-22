@@ -13,6 +13,12 @@ import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 import by.tc.photobook.service.UserService;
 
+/**
+ * Command taking user's info from htt requests parameters and signs up a new user
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class Registration implements Command
 {
 	private static final String USERNAME_PARAM = "username";
@@ -23,6 +29,14 @@ public class Registration implements Command
 	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage";
 	private static final String LOAD_REG_PAGE_WITH_MESSAGE = "Controller?command=loadregpage&message=";
 	
+	/**
+	 * Executes the registration command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         String username = request.getParameter(USERNAME_PARAM);

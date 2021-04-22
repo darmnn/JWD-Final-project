@@ -11,6 +11,12 @@ import jakarta.servlet.http.*;
 
 import by.tc.photobook.controller.command.Command;
 
+/**
+ * Command displays a page with fields a user needs to fill in to sign up to the app
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadRegPage implements Command 
 {
 	private static final String REG_PAGE_PATH = "/WEB-INF/jsp/registration.jsp";
@@ -20,6 +26,14 @@ public class LoadRegPage implements Command
 	private static final String LOAD_REG_PAGE_WITH_MESSAGE = "Controller?command=loadregpage&message=";
 	private static final String LOAD_REG_PAGE = "Controller?command=loadregpage";
 	
+	/**
+	 * Executes the loading registration page command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
 		HttpSession session = request.getSession(true);

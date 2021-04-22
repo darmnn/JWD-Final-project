@@ -10,6 +10,11 @@ import java.util.concurrent.BlockingQueue;
 
 import org.apache.log4j.Logger;
 
+/**
+ * All connections that are used while the app is running gathered in pool
+ * 
+ * @author Darya Minina
+ */
 public final class ConnectionPool 
 {
 	private static final Logger log = Logger.getLogger(ConnectionPool.class);

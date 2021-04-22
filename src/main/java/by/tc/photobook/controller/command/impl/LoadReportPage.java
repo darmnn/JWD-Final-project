@@ -9,6 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+/**
+ * Command displays a page that is used to make a complaint
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadReportPage implements Command
 {
 	private static final String COMMENT_ID_PARAM = "comment_id";
@@ -18,6 +24,14 @@ public class LoadReportPage implements Command
 	private static final String USER_PARAM = "user";
 	private static final String REPORT_PAGE_PATH = "/WEB-INF/jsp/report_page.jsp";
 	
+	/**
+	 * Executes the loading report page command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{

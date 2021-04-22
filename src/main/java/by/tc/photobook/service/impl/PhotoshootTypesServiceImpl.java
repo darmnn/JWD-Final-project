@@ -9,8 +9,19 @@ import by.tc.photobook.dao.PhotoshootTypesDAO;
 import by.tc.photobook.service.PhotoshootTypesService;
 import by.tc.photobook.service.ServiceException;
 
+/**
+ * The implementation of operations with photoshoot types
+ * 
+ * @author Darya Minina
+ */
 public class PhotoshootTypesServiceImpl implements PhotoshootTypesService
 {
+	/**
+	 * Gets list of all types that exist in the system
+	 * 
+	 * @return list of photoshoot types {@link PhotoshootType}
+	 * @throws ServiceException
+	 */
 	public List<PhotoshootType> takeAll() throws ServiceException
 	{
 		DAOProvider daoProvider = DAOProvider.getInstance();
@@ -30,6 +41,13 @@ public class PhotoshootTypesServiceImpl implements PhotoshootTypesService
 		return allTypes;
 	}
 	
+	/**
+	 * Adds a new photoshoot type
+	 * 
+	 * @param type the name of a new type
+	 * @return true if the operation is successful
+	 * @throws ServiceException
+	 */
 	public boolean addNewType(String type) throws ServiceException
 	{
 		DAOProvider daoProvider = DAOProvider.getInstance();

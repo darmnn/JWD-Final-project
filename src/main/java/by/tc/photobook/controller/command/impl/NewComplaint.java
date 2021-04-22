@@ -16,6 +16,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+/**
+ * Command adds new report written by a user
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class NewComplaint implements Command 
 {
 	private static final String COMMENT_ID_PARAM = "comment_id";
@@ -27,6 +33,14 @@ public class NewComplaint implements Command
 	private static final String LOAD_PHOTO_PAGE_WITH_MESSAGE = "Controller?command=loadphotopage&message=";
 	private static final String LOAD_PHOTO_PAGE = "Controller?command=loadphotopage";
 	
+	/**
+	 * Executes the adding new complaint command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{

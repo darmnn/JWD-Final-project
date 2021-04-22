@@ -13,6 +13,12 @@ import by.tc.photobook.service.ServiceException;
 import by.tc.photobook.service.ServiceProvider;
 import by.tc.photobook.service.UserService;
 
+/**
+ * Command sets new profile description of a user
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class SaveChanges implements Command
 {
 	private static String NEW_PROFILE_DESC_PARAM = "new_profile_desc";
@@ -23,6 +29,14 @@ public class SaveChanges implements Command
 	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage&message=";
 	private static final String LOAD_PROFILE_PAGE = "Controller?command=loadprofilepage";
 	
+	/**
+	 * Executes the changing profile desctiption command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String newProfileDesc = request.getParameter(NEW_PROFILE_DESC_PARAM);

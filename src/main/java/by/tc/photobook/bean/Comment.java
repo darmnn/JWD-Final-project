@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/** 
+ * Class that describes a comment to a photo
+ * @author Darya Minina
+*/
 public class Comment implements Serializable
 {
 	private static final long serialVersionUID = 6932883176165943198L;
@@ -28,6 +32,11 @@ public class Comment implements Serializable
         this.date = date;
         this.authorPic = authorPic;
     }
+	
+	public Comment()
+	{
+		
+	}
 
 	public int getId()
 	{
@@ -76,18 +85,19 @@ public class Comment implements Serializable
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return text.equals(comment.text) && author.equals(comment.author) && date.equals(comment.date) && Objects.equals(authorPic, comment.authorPic);
+        return id == comment.id && text.equals(comment.text) && author.equals(comment.author) && date.equals(comment.date) && authorPic.equals(comment.authorPic);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(text, author, date, authorPic);
+        return Objects.hash(id, text, author, date, authorPic);
     }
 
     @Override
     public String toString() {
         return "Comment{" +
-                "text='" + text + '\'' +
+                "id=" + id +
+                ", text='" + text + '\'' +
                 ", author='" + author + '\'' +
                 ", date=" + date +
                 ", authorPic='" + authorPic + '\'' +

@@ -9,15 +9,27 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+/**
+ * Command searches user by his username from the http request parameter and redirects to his page
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class SearchUser implements Command
 {
 	private static final String USER_TO_SEARCH_PARAM = "user_to_search";
-	private static final String MESSAGE_PARAM = "message";
 	private static final String URL_ATTRIBUTE = "url";
-	private static final String NO_USER_MESSAGE = "message.no_such_user";
 	private static final String PARAM_ATTRIBUTE = "parameter";
 	private static final String LOAD_USER_PAGE = "Controller?command=loaduserpage&user=";
 	
+	/**
+	 * Executes the searching user command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String userToSearch = request.getParameter(USER_TO_SEARCH_PARAM);

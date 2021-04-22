@@ -11,6 +11,12 @@ import by.tc.photobook.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * The command adds new type of photoshoots provided by a user
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class AddPhotoshootType implements Command
 {
 	private static final String AUTH_ATTRIBUTE = "auth";
@@ -21,6 +27,14 @@ public class AddPhotoshootType implements Command
 	private static final String LOAD_PHOTOSHOOT_PAGE = "Controller?command=loadphotoshootpage";
 	private static final String EMPTY_TYPE = "message.empty_photoshoot_type";
 	
+	/**
+	 * Executes the adding photoshoot type command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

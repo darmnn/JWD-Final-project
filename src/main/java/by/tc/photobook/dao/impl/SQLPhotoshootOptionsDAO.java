@@ -15,6 +15,11 @@ import by.tc.photobook.dao.PhotoshootOptionsDAO;
 import by.tc.photobook.dao.connection.ConnectionException;
 import by.tc.photobook.dao.connection.ConnectionPool;
 
+/**
+ * The implementation of photoshoot options dao class that works with photoshoot options table in database
+ * 
+ * @author Darya Minina
+ */
 public class SQLPhotoshootOptionsDAO implements PhotoshootOptionsDAO
 {
 	private static final String GET_PHOTOSHOOT_OPTIONS = "SELECT photoshoot_options.id, users.username, "
@@ -37,6 +42,13 @@ public class SQLPhotoshootOptionsDAO implements PhotoshootOptionsDAO
 	private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 	private static final Logger log = Logger.getLogger(SQLPhotoshootOptionsDAO.class);
 	
+	/**
+	 * Gets all photoshoot options by one photographer
+	 * 
+	 * @param photographer the id of the photographer
+	 * @return list of photoshoot option {@link PhotoshootOption}
+	 * @throws DAOException
+	 */
 	public List<PhotoshootOption> getPhotoshootOptions(int photographer) throws DAOException
 	{
 		Connection connection = null;
@@ -79,6 +91,15 @@ public class SQLPhotoshootOptionsDAO implements PhotoshootOptionsDAO
 		return allOptions;
 	}
 	
+	/**
+	 * Adds new photoshoot option created by a photographer
+	 * 
+	 * @param photographer the id of the photographer
+	 * @param photoshootType the id of the photoshoot type
+	 * @param price the price of photoshoot
+	 * @return true if the operation is successful
+	 * @throws DAOException
+	 */
 	public boolean addPhotoshootOption(int photographer, int photoshootType, double price) throws DAOException
 	{
 		Connection connection = null;
@@ -118,6 +139,13 @@ public class SQLPhotoshootOptionsDAO implements PhotoshootOptionsDAO
 		return true;
 	}
 	
+	/**
+	 * Deletes one photoshoot option
+	 * 
+	 * @param photoshootOption the of the photoshoot option to delete
+	 * @return true if the operation is successful
+	 * @throws DAOException
+	 */
 	public boolean deletePhotoshootOption(int photoshootOption) throws DAOException
 	{
 		Connection connection = null;
@@ -154,6 +182,15 @@ public class SQLPhotoshootOptionsDAO implements PhotoshootOptionsDAO
 		return true;
 	}
 	
+	/**
+	 * Edits one photoshoot option
+	 * 
+	 * @param photographer the id of the photographer
+	 * @param photoshootType the id of the photoshoot type
+	 * @param price the price of photoshoot
+	 * @return true if the operation is successful
+	 * @throws DAOException
+	 */
 	public boolean editPhotoshootOption(int photoshootOption, int photoshootType, double price) throws DAOException
 	{
 		Connection connection = null;
@@ -193,6 +230,14 @@ public class SQLPhotoshootOptionsDAO implements PhotoshootOptionsDAO
 		return true;
 	}
 	
+	/**
+	 * Closes result set, prepared statement and connection
+	 * 
+	 * @param resultSet {@link ResultSet}
+	 * @param preparedStatement {@link PreparedStatement}
+	 * @param connection {@link Connection}
+	 * @return true if the operation was successful
+	 */
 	private void closeAll(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection)
 	{
 		if(resultSet != null)

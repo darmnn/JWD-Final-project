@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/** 
+ * Class that describes an order to photoshoot from some photographer
+ * @author Darya Minina
+*/
 public class Order implements Serializable
 {
 	private static final long serialVersionUID = 4806355737773490301L;
@@ -22,6 +26,8 @@ public class Order implements Serializable
         this.status = status;
         this.date = date;
     }
+	
+	public Order() {}
 
     public int getId() {
         return id;

@@ -11,6 +11,12 @@ import by.tc.photobook.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command deletes one specified by a http request parameter photo
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class DeletePhoto implements Command
 {
 	private static final String PHOTOID_PARAM = "photo_id";
@@ -19,6 +25,14 @@ public class DeletePhoto implements Command
 	private static final String LOAD_MAIN_PAGE_WITH_MESSAGE = "Controller?command=loadmainpage&message=";
 	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage";
 	
+	/**
+	 * Executes the deleting photo command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();

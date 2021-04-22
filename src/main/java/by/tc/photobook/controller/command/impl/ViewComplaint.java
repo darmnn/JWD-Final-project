@@ -11,6 +11,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+/**
+ * Command marks a report as viewed by administrator
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class ViewComplaint implements Command
 {
 	private static final String LOAD_COMPLAINTS_PAGE = "Controller?command=loadcomplaintspage";
@@ -21,6 +27,14 @@ public class ViewComplaint implements Command
 	private static final String AUTH_ATTRIBUTE = "auth";
 	private static final String USER_ATTRIBUTE = "user";
 	
+	/**
+	 * Executes the marking report as viewed command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{

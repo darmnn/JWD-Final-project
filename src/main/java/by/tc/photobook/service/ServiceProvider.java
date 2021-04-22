@@ -9,6 +9,11 @@ import by.tc.photobook.service.impl.PhotoshootOptionsServiceImpl;
 import by.tc.photobook.service.impl.PhotoshootTypesServiceImpl;
 import by.tc.photobook.service.impl.UserServiceImpl;
 
+/**
+ * Class that provides service objects
+ * 
+ * @author Darya Minina
+ */
 public class ServiceProvider 
 {
 	private static final ServiceProvider instance = new ServiceProvider(); 

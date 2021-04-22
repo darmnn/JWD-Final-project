@@ -9,6 +9,12 @@ import by.tc.photobook.controller.command.Command;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command changes interface language of all app to the language passed as a parameter to http request
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class ChangeLocale implements Command
 {
 	private static final String URL_ATTRIBUTE = "url";
@@ -16,6 +22,14 @@ public class ChangeLocale implements Command
 	private static final String COMMAND_PARAM = "command";
 	private static final String LOCALE_ATTRIBUTE = "locale";
 	
+	/**
+	 * Executes the changing locale command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{

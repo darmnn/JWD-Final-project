@@ -16,6 +16,12 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
+/**
+ * Command displays a main page with all the photos
+ * 
+ * @author Darya Minina
+ * @see Command
+ */
 public class LoadMainPage implements Command
 {
 	private static final String MAIN_PAGE_PATH = "/WEB-INF/jsp/main_page.jsp";
@@ -26,6 +32,14 @@ public class LoadMainPage implements Command
 	private static final String LOAD_MAIN_PAGE = "Controller?command=loadmainpage";
 	private static final String URL_ATTRIBUTE = "url";
 	
+	/**
+	 * Executes the loading main page command
+	 * 
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	HttpSession session = request.getSession(true);
