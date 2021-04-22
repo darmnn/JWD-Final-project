@@ -105,9 +105,11 @@
   					</form>
   				</c:if>
   				</div>
+  				
   				<div class="card-body text-success image-container">
     				<img class="photo" src="${requestScope.photo.imagePath }"/>
   				</div>
+  				
   				<div class="card-footer bg-transparent border-success footer-container">
   					<c:forEach var = "i" begin = "1" end = "${requestScope.photo.rating }">
          				<img src="images/star.png" class="float-left star"/>
@@ -132,8 +134,7 @@
         			</form>
         			</c:if>
        			 	</c:if>
-       			 	
-        
+       			 
   					<div class="date">${requestScope.photo.date }</div>
        			 </div>
 			</div>
