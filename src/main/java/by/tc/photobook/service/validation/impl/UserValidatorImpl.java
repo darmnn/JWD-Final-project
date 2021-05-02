@@ -24,9 +24,11 @@ public class UserValidatorImpl implements UserValidator
 	private static final String LONG_USERNAME = "message.long_username";
 	private static final String INVALID_USERNAME = "message.invalid_username";
 	private static final String INVALID_EMAIL = "message.invalid_email";
+	private static final String INVALID_TEXT = "message.invalid_text";
 	
 	private static final String CHARACTER_OR_NUMBER = "^[а-яА-Яa-zA-Z0-9]+$";
 	private static final String EMAIL_FORMAT = "([.[^@\\s]]+)@([.[^@\\s]]+)\\.([a-z]+)";
+	private static final String ONLY_LETTERS = "^[\\\\p{L} .'-]+$";
 	
 	private static final int MIN_LENGTH = 6;
 	private static final int MAX_LENGTH = 30;
@@ -101,6 +103,27 @@ public class UserValidatorImpl implements UserValidator
 				throw new ValidationException(INVALID_EMAIL);
 			}
 		}
+		
+		return true;
+	}
+	
+	/**
+	 * Checks if some text contains only letters
+	 * 
+	 * @param text text to validate
+	 * @return true if text contains only letters
+	 * @throws ValidationException
+	 */
+	public boolean checkText(String text) throws ValidationException
+	{
+		Pattern onlyLetters = Pattern.compile(ONLY_LETTERS);
+		Matcher onlyLettersMatcher = onlyLetters.matcher(text);
+		
+		if(!onlyLettersMatcher.find())
+		{
+			throw new ValidationException(INVALID_TEXT);
+		}
+		
 		
 		return true;
 	}

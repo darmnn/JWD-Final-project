@@ -144,8 +144,13 @@ public class UserInfo implements Serializable
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, username, email, password, isPhotographer, isAdmin, profileDecs, profilePicPath, totalRating, state);
+    public int hashCode() 
+    {
+    	final int prime = 72;
+    	return prime * (id + state + ((username == null) ? 3 : username.hashCode()) + ((email == null) ? 3 : email.hashCode()) +
+    			((password == null) ? 3 : password.hashCode()) + ((isPhotographer == false) ? 3 : 10 +
+    			((isAdmin == false) ? 3 : 10)) + ((profileDecs == null) ? 3 : profileDecs.hashCode()) + 
+    			((profilePicPath == null) ? 3 : profilePicPath.hashCode()) + ((totalRating == null) ? 3 : totalRating));
     }
 
     @Override

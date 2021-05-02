@@ -4,6 +4,7 @@ import java.io.IOException;
 
 
 
+
 import by.tc.photobook.controller.command.Command;
 import by.tc.photobook.service.PhotoshootTypesService;
 import by.tc.photobook.service.ServiceException;
@@ -46,6 +47,7 @@ public class AddPhotoshootType implements Command
 		else
 		{
 			String newPhotoshootType = request.getParameter(TYPE_NAME_PARAM);
+			
 			if(newPhotoshootType == null || newPhotoshootType.isEmpty())
 			{
 				response.sendRedirect(LOAD_PHOTOSHOOT_PAGE_WITH_MESSAGE+EMPTY_TYPE);

@@ -3,7 +3,7 @@ package by.tc.photobook.bean;
 import java.io.Serializable;
 
 
-import java.util.Objects;
+
 
 /** 
  * Class that describes a report to an inappropriate photo or comment
@@ -107,7 +107,8 @@ public class Complaint implements Serializable
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) 
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Complaint complaint = (Complaint) o;
@@ -115,8 +116,12 @@ public class Complaint implements Serializable
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, text, user, commentId, photo, state);
+    public int hashCode() 
+    {
+    	final int prime = 72;
+    	return prime * (id + state + ((text == null) ? 3 : text.hashCode()) + ((user == null) ? 3 : user.hashCode()) +
+    			((commentId == null) ? 3 : commentId.hashCode()) + ((commentText == null) ? 3 : commentText.hashCode()) +
+    			((photo == null) ? 3 : photo.hashCode()));
     }
 
     @Override

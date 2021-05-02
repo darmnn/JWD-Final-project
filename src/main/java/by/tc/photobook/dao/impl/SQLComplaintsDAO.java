@@ -141,6 +141,7 @@ public class SQLComplaintsDAO implements ComplaintsDAO
 				allComplaints.add(complaint);
 			}
 			
+			closeAll(resultSet, preparedStatement, null);
 			preparedStatement = connection.prepareStatement(GET_ALL_COMPLAINTS);
 			resultSet = preparedStatement.executeQuery();
 			

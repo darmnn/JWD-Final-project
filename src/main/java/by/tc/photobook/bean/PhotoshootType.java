@@ -1,7 +1,7 @@
 package by.tc.photobook.bean;
 
 import java.io.Serializable;
-import java.util.Objects;
+
 
 /** 
  * Class that describes a type of available photoshoot type
@@ -47,8 +47,10 @@ public class PhotoshootType implements Serializable
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, type);
+    public int hashCode() 
+    {
+    	final int prime = 72;
+    	return prime * (id +((type == null) ? 3 : type.hashCode()));
     }
 
     @Override

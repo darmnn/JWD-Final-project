@@ -1,8 +1,8 @@
 package by.tc.photobook.bean;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
-import java.util.Objects;
 
 /** 
  * Class that describes a comment to a photo
@@ -81,7 +81,8 @@ public class Comment implements Serializable
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) 
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
@@ -89,8 +90,11 @@ public class Comment implements Serializable
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, text, author, date, authorPic);
+    public int hashCode() 
+    {
+    	final int prime = 72;
+    	return prime * (id + ((text == null) ? 3 : text.hashCode()) + ((author == null) ? 3 : author.hashCode()) +
+    			((date == null) ? 3 : date.hashCode()) + ((authorPic == null) ? 3 : authorPic.hashCode()));
     }
 
     @Override

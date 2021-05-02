@@ -1,8 +1,8 @@
 package by.tc.photobook.bean;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
-import java.util.Objects;
 
 /** 
  * Class that describes a photo
@@ -76,7 +76,8 @@ public class Photo implements Serializable
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) 
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Photo photo = (Photo) o;
@@ -84,8 +85,11 @@ public class Photo implements Serializable
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, photographer, date, imagePath, rating);
+    public int hashCode() 
+    {
+    	final int prime = 72;
+    	return prime * (id + rating + ((photographer == null) ? 3 : photographer.hashCode()) + ((date == null) ? 3 : date.hashCode()) +
+    			((imagePath == null) ? 3 : imagePath.hashCode()));
     }
 
     @Override

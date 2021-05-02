@@ -1,7 +1,7 @@
 package by.tc.photobook.bean;
 
 import java.io.Serializable;
-import java.util.Objects;
+
 
 /** 
  * Class that describes a photoshoot option that photographer can offer to clients, it includes photoshoot type and price
@@ -59,7 +59,8 @@ public class PhotoshootOption implements Serializable
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) 
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PhotoshootOption that = (PhotoshootOption) o;
@@ -67,8 +68,10 @@ public class PhotoshootOption implements Serializable
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, photographer, type, price);
+    public int hashCode() 
+    {
+    	final int prime = 72;
+    	return prime * (id + (int)price + ((photographer == null) ? 3 : photographer.hashCode()) + ((type == null) ? 3 : type.hashCode()));
     }
 
     @Override

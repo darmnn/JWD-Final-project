@@ -26,4 +26,13 @@ public interface UserValidator
 	 * @throws ValidationException
 	 */
 	public boolean checkRegData(UserInfo userInfo) throws ValidationException;
+	
+	/**
+	 * Checks if some text contains only letters
+	 * 
+	 * @param text text to validate
+	 * @return true if text contains only letters
+	 * @throws ValidationException
+	 */
+	public boolean checkText(String text) throws ValidationException;
 }

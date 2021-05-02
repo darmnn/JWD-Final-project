@@ -1,6 +1,7 @@
 package by.tc.photobook.bean;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -55,7 +56,8 @@ public class Timetable implements Serializable
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) 
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Timetable timetable = (Timetable) o;
@@ -63,8 +65,10 @@ public class Timetable implements Serializable
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(date, lengthOfMonth, firstDayOfMonth);
+    public int hashCode() 
+    {
+    	final int prime = 72;
+    	return prime * (lengthOfMonth + ((date == null) ? 3 : date.hashCode()) + ((firstDayOfMonth == null) ? 3 : firstDayOfMonth.hashCode()));
     }
 
     @Override

@@ -187,6 +187,7 @@ public class SQLPhotosDAO implements PhotosDAO
 				throw new DAOException(ERROR_WHILE_UPLOADING_MESSAGE);
 			}
 			
+			closeAll(resultSet, preparedStatement, null);
 			
 			preparedStatement = connection.prepareStatement(UPLOAD_NEW_PHOTO);
 			preparedStatement.setInt(1, userId);

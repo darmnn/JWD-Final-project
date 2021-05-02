@@ -8,6 +8,9 @@ import by.tc.photobook.dao.DAOProvider;
 import by.tc.photobook.dao.PhotoshootTypesDAO;
 import by.tc.photobook.service.PhotoshootTypesService;
 import by.tc.photobook.service.ServiceException;
+import by.tc.photobook.service.validation.UserValidator;
+import by.tc.photobook.service.validation.ValidationException;
+import by.tc.photobook.service.validation.ValidatorProvider;
 
 /**
  * The implementation of operations with photoshoot types
@@ -50,6 +53,18 @@ public class PhotoshootTypesServiceImpl implements PhotoshootTypesService
 	 */
 	public boolean addNewType(String type) throws ServiceException
 	{
+		ValidatorProvider validatorProvider = ValidatorProvider.getInstance();
+		UserValidator validator = validatorProvider.getUserValidator();
+		
+		try
+		{
+			validator.checkText(type);
+		}
+		catch(ValidationException e)
+		{
+			throw new ServiceException(e.getDescription(), e);
+		}
+		
 		DAOProvider daoProvider = DAOProvider.getInstance();
 		PhotoshootTypesDAO phTypesDAO = daoProvider.getPhotoshootTypesDAO();
 		

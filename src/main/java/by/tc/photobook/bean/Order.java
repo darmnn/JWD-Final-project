@@ -1,8 +1,8 @@
 package by.tc.photobook.bean;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
-import java.util.Objects;
 
 /** 
  * Class that describes an order to photoshoot from some photographer
@@ -78,8 +78,11 @@ public class Order implements Serializable
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, client, phOption, date, status);
+    public int hashCode() 
+    {
+    	final int prime = 72;
+    	return prime * (id + ((client == null) ? 3 : client.hashCode()) + ((phOption == null) ? 3 : phOption.hashCode()) +
+    			((date == null) ? 3 : date.hashCode()) + ((status == null) ? 3 : status.hashCode()));
     }
 
     @Override
